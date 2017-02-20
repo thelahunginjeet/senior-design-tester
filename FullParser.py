@@ -17,96 +17,20 @@ def indices(lst, element):
 
 
 def checkingOfficical(currentCheck):
-    p1 = re.compile(".+\d$")
+    p1 = re.compile(r"\b[A-Za-z]+(vir|cillin|mab|ximab|zumab|tinib|vastatin|prazole|lukast|axine|olol|oxetine|sartan|pril|oxacin|xaban|afil|ine|parib|tide)\b")
+    p2 = re.compile(r"\b[A-Za-z]+(grel|barb|prost)[A-Za-z]+\b")
+    p3 = re.compile(r"\b(cef)[A-Za-z]+\b")
+    p4 = re.compile(r"[A-Z].+\d$")
     drug_target="N/A"
     currentLast=len(currentCheck);
-    if  "vir" in currentCheck:
-        drug_target="Antiviral";
+    if  re.match(p1, currentCheck):
         return currentCheck
-    elif "cillin" in currentCheck:
-        drug_target="Penicillin-derived antibiotics";
+    elif re.match(p2, currentCheck):
         return currentCheck
-    elif "cef" in currentCheck:
-        drug_target="Cephem-type antibiotics";
+    elif re.match(p3, currentCheck):
         return currentCheck
-
-    elif "ximab" in currentCheck:
-        drug_target="Chimeric antibody";
+    elif re.match(p4, currentCheck):
         return currentCheck
-    elif "zumab" in currentCheck:
-        drug_target="humanized antibody";
-        return currentCheck
-    elif "mab" in currentCheck:
-        drug_target="monoclonal antiboies";
-        return currentCheck
-    elif "tinib" in currentCheck:
-        drug_target="tyrosine-kinase inhibitor";
-        return currentCheck
-    elif "vastatin" in currentCheck:
-        return currentCheck
-    elif "prazole" in currentCheck:
-        return currentCheck
-    elif "lukast" in currentCheck:
-        return currentCheck
-    elif "grel" in currentCheck:
-        return currentCheck
-    elif "axine" in currentCheck:
-        return currentCheck
-    elif "olol" in currentCheck:
-        return currentCheck
-    elif "oxetine" in currentCheck:
-        return currentCheck
-    elif "sartan" in currentCheck:
-        return currentCheck
-    elif "pril" in currentCheck:
-        return currentCheck
-    elif "oxacin" in currentCheck:
-        return currentCheck
-    elif "barb" in currentCheck:
-        return currentCheck
-    elif "xaban" in currentCheck:
-        return currentCheck
-    elif "afil" in currentCheck:
-        return currentCheck
-    elif "prost" in currentCheck:
-        return currentCheck
-    elif "ine" in currentCheck:
-        return currentCheck
-    elif "parib" in currentCheck:
-        return currentCheck
-    elif "tide" in currentCheck:
-        return currentCheck
-    elif "vastatin" in currentCheck:
-        return currentCheck
-    elif re.match(p1, currentCheck):
-        return currentCheck
-
-
-
-    '''
-    elif currentCheck[currentLast-1]=="1":
-        return currentCheck
-    elif currentCheck[currentLast-1]=="2":
-        return currentCheck
-    elif currentCheck[currentLast-1]=="0":
-        return currentCheck
-    elif currentCheck[currentLast-1]=="3":
-        return currentCheck
-    elif currentCheck[currentLast-1]=="4":
-        return currentCheck
-    elif currentCheck[currentLast-1]=="5":
-        return currentCheck
-    elif currentCheck[currentLast-1]=="6":
-        return currentCheck
-    elif currentCheck[currentLast-1]=="7":
-        return currentCheck
-    elif currentCheck[currentLast-1]=="8":
-        return currentCheck
-    elif currentCheck[currentLast-1]=="9":
-        return currentCheck
-    elif currentCheck[currentLast-1]=="0":
-        return currentCheck
-    '''
 
     return "false", drug_target
 
@@ -225,9 +149,11 @@ for x in range(0, iterat):
                 if temps>=2:
                     if "-" in newstr:
                         #Some sort of check to detemine what this really is
-                        print('Processing...')
+                        # print('Processing...')
+                        pass
                     elif company_name in newstr:
-                        print('Processing...')
+                        # print('Processing...')
+                        pass
                     elif "/" in newstr:
                         newstr.split("/")
                         permA=eng.check(newstr[0])
