@@ -1,7 +1,7 @@
 import re
 from bs4 import BeautifulSoup as bs
 import requests
-import enchant 
+import enchant
 #import pdftables
 eng= enchant.Dict("en_US");
 
@@ -17,6 +17,7 @@ def indices(lst, element):
 
 
 def checkingOfficical(currentCheck):
+    p1 = re.compile(".+\d$")
     drug_target="N/A"
     currentLast=len(currentCheck);
     if  "vir" in currentCheck:
@@ -28,7 +29,7 @@ def checkingOfficical(currentCheck):
     elif "cef" in currentCheck:
         drug_target="Cephem-type antibiotics";
         return currentCheck
-        
+
     elif "ximab" in currentCheck:
         drug_target="Chimeric antibody";
         return currentCheck
@@ -77,6 +78,12 @@ def checkingOfficical(currentCheck):
         return currentCheck
     elif "vastatin" in currentCheck:
         return currentCheck
+    elif re.match(p1, currentCheck):
+        return currentCheck
+
+
+
+    '''
     elif currentCheck[currentLast-1]=="1":
         return currentCheck
     elif currentCheck[currentLast-1]=="2":
@@ -99,18 +106,18 @@ def checkingOfficical(currentCheck):
         return currentCheck
     elif currentCheck[currentLast-1]=="0":
         return currentCheck
-    
-    
+    '''
+
     return "false", drug_target
 
-    
+
 def phaseFinder(drugWebsite, current_entry ):
-    
-    
-    
+
+
+
     totalChecks=indices(drugWebsite,current_entry )
    # print(totalChecks)
-    
+
     for q in range(0, len(totalChecks)):
         start=0;
         if totalChecks[q]>=55:
@@ -127,14 +134,14 @@ def phaseFinder(drugWebsite, current_entry ):
                 return "phase 2"
              elif futureEntry=="3":
                 return "phase 3"
-            
-            
-             
-       
-            
-    
-    
-    
+
+
+
+
+
+
+
+
     return "false"
 def validatePhase(ComparisonHtml, drugTargetList):
     totalDuration=len(drugTargetList)
@@ -144,15 +151,15 @@ def validatePhase(ComparisonHtml, drugTargetList):
         if currentTruth!="false":
             adder=drugTargetList[x]+','+currentTruth
             validatedDrugs.append(adder)
-   
-    return validatedDrugs
-#medicine= enchant("en-medical.multi"); 
 
-#http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.html"
-#https://www.biogen.com/en_us/research-pipeline/biogen-pipeline.html
-#https://www.astrazeneca.com/our-science/pipeline.html
+    return validatedDrugs
+#medicine= enchant("en-medical.multi");
+
+# url = "http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.html"
+# url = "https://www.biogen.com/en_us/research-pipeline/biogen-pipeline.html"
+# url = https://www.astrazeneca.com/our-science/pipeline.html"
 url = "http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.html"
-url_BaseLine = "https://www.biogen.com/en_us/research-pipeline/biogen-pipeline.html"
+# url_BaseLine = "https://www.biogen.com/en_us/research-pipeline/biogen-pipeline.html"
 company_name="Biogen"
 r = requests.get(url)
 data = r.text
@@ -200,24 +207,24 @@ for x in range(0, iterat):
     newstr10 = newstr9.replace("[", "")
     newstr = newstr10.replace(")", "")
     #newstr = newstr10.replace("", "")
-   
-    
-    
-    
-    
+
+
+
+
+
     sizeCheck=len(newstr)
-    
+
     if sizeCheck!=0:
-        
+
         appe=eng.check(newstr)
-    
+
         if appe==False:
             temp=len(newstr)
             if temp>=5:
                 temps=FinalList2.count(FinalList2[x])
                 if temps>=2:
                     if "-" in newstr:
-                        #Some sort of check to detemine what this really is 
+                        #Some sort of check to detemine what this really is
                         print('Processing...')
                     elif company_name in newstr:
                         print('Processing...')
@@ -228,11 +235,11 @@ for x in range(0, iterat):
                         if permA & permB==False:
                             news=checkingOfficical(newstr)
                             FirstFilter.append(news)
-    
+
                     else:
                         news=checkingOfficical(newstr)
                         FirstFilter.append(news)
-    
+
 apple=eng.check(FinalList[x])
 SecondFilter=list(set(FirstFilter))
 '''
@@ -243,8 +250,8 @@ iteratI=len(FinalList2)
 for x in range(0, iterat2):
     for x in range(0, iteratI):
         if FirstFilter[iteratI]==FinalList2[iterat2]:
-  '''          
-        
+  '''
+
 
 
 
@@ -259,4 +266,3 @@ for x in range(0, len(SecondFilter)):
     print(SecondFilter[x])
     if SecondFilter[x]!=('false', 'N/A'):
         print(phaseFinder(visible_text,SecondFilter[x]))
-        
