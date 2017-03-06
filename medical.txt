@@ -937,3 +937,5 @@ yersiniosis
 yersinia
 tumor
 zygomycosis
+tumorigenesis
+neuromyelitis
