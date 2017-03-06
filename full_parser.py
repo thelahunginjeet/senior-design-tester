@@ -72,11 +72,11 @@ class FullParser:
                                 permA=self.eng.check(newstr[0])
                                 permB=self.eng.check(newstr[1])
                                 if permA & permB==False:
-                                    news=self.checkingOfficical(newstr)
+                                    news=self.checking_official(newstr)
                                     self.FirstFilter.append(news)
 
                             else:
-                                news=self.checkingOfficical(newstr)
+                                news=self.checking_official(newstr)
                                 self.FirstFilter.append(news)
 
         #apple=eng.check(FinalList[x])
@@ -107,6 +107,27 @@ class FullParser:
                 return result
             result.append(offset)
 
+    def checking_official(self, currentCheck):
+        p1 = re.compile(r"\b[A-Za-z]+(vir|cillin|mab|ximab|zumab|tinib|vastatin|prazole|lukast|axine|olol|oxetine|sartan|pril|oxacin|xaban|afil|ine|parib|tide)\b")
+        p2 = re.compile(r"\b[A-Za-z]+(grel|barb|prost)[A-Za-z]+\b")
+        p3 = re.compile(r"\b(cef)[A-Za-z]+\b")
+        p4 = re.compile(r"[A-Z].+\d$")
+        drug_target="N/A"
+        currentLast=len(currentCheck);
+
+        if re.match(p1, currentCheck): # Suffix testing
+            return currentCheck
+        elif re.match(p2, currentCheck): # Infix testing
+            return currentCheck
+        elif re.match(p3, currentCheck): # Prefix testing
+            return currentCheck
+        elif re.match(p4, currentCheck): # Number ending
+            drug_target="Some Weird Number Thing"
+            return currentCheck
+
+        return "false", drug_target
+
+    # kept this because there is some drug info yet to be transferred
     def checkingOfficical(self, currentCheck):
         pattern1=re.compile('^[A-Z].+\d')
         a=pattern1.findall(currentCheck)
