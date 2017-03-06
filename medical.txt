@@ -939,3 +939,4 @@ tumor
 zygomycosis
 tumorigenesis
 neuromyelitis
+psychiatric
