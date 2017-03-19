@@ -369,6 +369,38 @@ class FullParser:
                 bob.append(drugWebsite[x])
             
         return bob
+    def BestBreakA(self, drugWebsite, current_entry, indexNumber):
+        bob=[]
+        baselines=[]
+        pwl = enchant.request_pwl_dict("medical.txt")
+        start=0;
+        joe=0
+        if indexNumber>=11:
+                start=indexNumber-11
+        else:
+                start=0;
+        end=indexNumber+15
+        for x in range(indexNumber, end):
+            if self.checking_official(drugWebsite[x+1])=='null':
+                truths=pwl.check(drugWebsite[x])
+                baselines.append(drugWebsite[x])
+                if truths==True:
+                    bob.append(drugWebsite[x])
+            else:
+                break
+                
+                    
+        for x in range(1, 10):
+            if self.checking_official(drugWebsite[indexNumber-x])=='null':
+                truths=pwl.check(drugWebsite[indexNumber-x])
+                baselines.append(drugWebsite[indexNumber-x])
+                if truths==True:
+                
+                    bob.append(drugWebsite[indexNumber-x])
+            else:
+                break
+            
+        return bob
     def UltimateBreak(self, drugWebsite, current_entry, indexNumber):
          #This breaker will achieve the best result by attempting to 
          #filter out the drug names based om prior entries. IT will scout only 
@@ -584,7 +616,7 @@ class FullParser:
                 
                 if presetValue!=[]:
                     presetValues.append(presetValue)
-        presetValue=''
+        presetValue=[]
         for u in range(0, len(presetValues)): 
             presetValue=presetValues[u]
         HighPEntry=[self.company_name,current_entry,presetValue,phaseing]
@@ -667,7 +699,7 @@ class FullParser:
         
         for q in range(0, len(totalChecks)):
            # print(current_entry)
-            presetValue=self.UltimateBreak(drugWebsite, current_entry, totalChecks[q])
+            presetValue=self.BestBreakA(drugWebsite, current_entry, totalChecks[q])
             if presetValue==[]:
                 #If the appended informatiion is lacking, a more intensive search will be possibly performed
                 presetValue=self.BetterBreak(drugWebsite, current_entry, totalChecks[q])
@@ -686,7 +718,8 @@ class FullParser:
             truthful.append(known)
         bobby=self.FullReference(truthful,bob)
         if bobby==[]:
-            bobby=self.HighPrecisionFilter(drugWebsite,current_entry)
+            bob=self.HighPrecisionFilter(drugWebsite,current_entry)
+            bobby.append(bob)
         return bobby
     def FullReference(self,current_entry, listValues):
         wholeV=0
@@ -788,10 +821,26 @@ class FullParser:
 # Any testing code goes here
     def TotalWebPageParse(self,ProposedDrugs, DrugWebsite):
         finalList=[]
+        phaseCorrect=0
+        EntryCorrect=0
+        totalEntry=0
         for q in range(0, len(ProposedDrugs)):
             currentDrug=self.UltimateAnalytics(ProposedDrugs[q],DrugWebsite)
             for z in range(0, len(currentDrug)):
                 finalList.append(currentDrug[z])
+                
+        for z in range(0,len(finalList)):
+            entrV=finalList[z] 
+            if len(entrV)!=[]:
+                if entrV[3]==False:
+                    phaseCorrect=phaseCorrect+1
+                if entrV[2]==[]:
+                    EntryCorrect=EntryCorrect+1
+            totalEntry=totalEntry+1
+            
+        self.PhasesRight=phaseCorrect
+        self.InfoFilled=EntryCorrect
+        self.TotalEntries=totalEntry
         return finalList
 if __name__ == "__main__":
     
@@ -809,26 +858,29 @@ if __name__ == "__main__":
     # medicine= enchant("en-medical.multi");
    # url='http://www.alexion.com/research-development/pipeline'
     #url='https://www.shire.com/research-and-development/pipeline'
-
-   # url = "http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.html"
-    #url = "https://www.biogen.com/en_us/research-pipeline/biogen-pipeline.html"
+   # url='http://www.gsk.com/en-gb/research/what-we-are-working-on/product-pipeline/'
+    url = "http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.html"
+   # url = "https://www.biogen.com/en_us/research-pipeline/biogen-pipeline.html"
     #url='https://www.abbvie.com/our-science/pipeline.html'
    # url='https://www.abbvie.com/our-science/pipeline/abbv-2451.html'
     #url='http://www.amgenpipeline.com/pipeline/'
    # url = "https://www.astrazeneca.com/our-science/pipeline.html"
-    url = "https://www.lilly.com/pipeline/"
+   # url = "https://www.lilly.com/pipeline/"
     #url='http://www.tevapharm.com/research_development/rd_focus/pipeline/'
     #url='http://www.bms.com/research/pipeline/Pages/default.aspx'
+    #url='https://www.chugai-pharm.co.jp/english/ir/reports_downloads/pipeline.html'
+    #url='https://www.drugs.com/manufacturer/edwards-pharmaceuticals-253.html'
+    #url='http://mobile.cslbehring.com/productpipeline.htm'
     #url='http://www.novonordisk.com/rnd/rd-pipeline.html'
     #url='http://www.daiichisankyo.com/rd/pipeline/development_pipeline/index.html'
     #url='http://www.gsk.com/en-gb/research/what-we-are-working-on/product-pipeline/'
     #url='http://www.ds-pharma.com/rd/clinical/pipeline.html'
     #url='http://www.valeant.com/operational-expertise/valeant-united-states/pipeline' ---Works Well
     #url='http://investor.lundbeck.com/pipeline.cfm'
-    #url='http://www.endo.com/endopharma/r-d/clinical-research/clinical-trials-and-studies'
+ #   url='http://www.endo.com/endopharma/r-d/clinical-research/clinical-trials-and-studies'
     #url= 'https://www1.actelion.com/en/scientists/development-pipeline/index.page'
-    #url='http://www.teijin-pharma.com/business/research.html'
-    #url='http://www.ucb.com/our-science/pipeline'
+  #  url='http://www.teijin-pharma.com/business/research.html'
+   # url='http://www.ucb.com/our-science/pipeline'
     company_name = "Roche"
 
     full_parser = FullParser(company_name, url)
@@ -837,7 +889,7 @@ if __name__ == "__main__":
     
     jo=full_parser.FinalList2
     shmo=full_parser.SecondFilter
-    full_parser.Masterful(shmo[8],jo)
+    full_parser.Masterful(shmo[1],jo)
     #full_parser.PreciseMasterful(shmo[12],jo,shmo[11])
     #full_parser.Masterful(shmo[3],jo)
     #full_parser.Masterful(shmo[4],jo)
@@ -851,12 +903,16 @@ if __name__ == "__main__":
     #print(full_parser.strdata.split('<'))
     #print(full_parser.HighPrecisionFilter(full_parser.strdata.split('<'),shmo[4]))
     #print(full_parser.HighPrecisionFilter(jo,shmo[4]))
-    print(full_parser.UltimateAnalytics(shmo[8],jo))
+    print(full_parser.UltimateAnalytics(shmo[1],jo))
     print(full_parser.HighPrecisionPhase(full_parser.strdata.split('<'),shmo[0]))
     print(full_parser.QuickPhasing(shmo[0],full_parser.strdata.split('<') ))
-    print(shmo[8])
+    print(shmo[1])
     print(full_parser.TotalWebPageParse(shmo,jo))
-    print(full_parser.UltimateAnalytics(shmo[7],jo))
-    print(full_parser.HighPrecisionFilter(jo,shmo[7]))
-    print(shmo[7])
+    print(full_parser.UltimateAnalytics(shmo[1],jo))
+    print(full_parser.HighPrecisionFilter(jo,shmo[1]))
+    print(shmo[1])
+    print((((1-(full_parser.PhasesRight/full_parser.TotalEntries))*100)))
+    print(full_parser.InfoFilled)
+    print(full_parser.TotalEntries)
+    
    # print(full_parser.strdata.split('<'))
