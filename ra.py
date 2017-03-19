@@ -828,7 +828,7 @@ class FullParser:
             currentDrug=self.UltimateAnalytics(ProposedDrugs[q],DrugWebsite)
             for z in range(0, len(currentDrug)):
                 finalList.append(currentDrug[z])
-                
+               
         for z in range(0,len(finalList)):
             entrV=finalList[z] 
             if len(entrV)!=[]:
@@ -856,10 +856,10 @@ if __name__ == "__main__":
     
     # This function will return possible treatments
     # medicine= enchant("en-medical.multi");
-   # url='http://www.alexion.com/research-development/pipeline'
-    #url='https://www.shire.com/research-and-development/pipeline'
+    url='http://www.alexion.com/research-development/pipeline'
+   # url='https://www.shire.com/research-and-development/pipeline'
    # url='http://www.gsk.com/en-gb/research/what-we-are-working-on/product-pipeline/'
-    url = "http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.html"
+   # url = "http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.html"
    # url = "https://www.biogen.com/en_us/research-pipeline/biogen-pipeline.html"
     #url='https://www.abbvie.com/our-science/pipeline.html'
    # url='https://www.abbvie.com/our-science/pipeline/abbv-2451.html'
@@ -911,8 +911,11 @@ if __name__ == "__main__":
     print(full_parser.UltimateAnalytics(shmo[1],jo))
     print(full_parser.HighPrecisionFilter(jo,shmo[1]))
     print(shmo[1])
+    print('Percentage of Drugs with phase information available:')
     print((((1-(full_parser.PhasesRight/full_parser.TotalEntries))*100)))
-    print(full_parser.InfoFilled)
-    print(full_parser.TotalEntries)
+    print('Percentage of Drugs with treatment information available:')
+    print((((1-(full_parser.InfoFilled/full_parser.TotalEntries))*100)))
+    
+    #print(full_parser.TotalEntries)
     
    # print(full_parser.strdata.split('<'))
