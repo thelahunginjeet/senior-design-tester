@@ -28,14 +28,17 @@ class FullParser:
         """
         Runs program and determines anlytics
         """
-        print(self.total_web_page_parse(second_filter, final_list))
-        print(self.ultimate_analytics(second_filter[1], final_list))
-        print(self.high_precision_filter(final_list, second_filter[1]))
-        print(second_filter[1])
-        print('Percentage of Drugs with phase information available:')
-        print((((1-(self.PhasesRight/self.TotalEntries))*100)))
-        print('Percentage of Drugs with treatment information available:')
-        print((((1-(self.InfoFilled/self.TotalEntries))*100)))
+        self.total_web_page_parse(second_filter, final_list)
+        self.ultimate_analytics(second_filter[1], final_list)
+        self.high_precision_filter(final_list, second_filter[1])
+
+        # print('Percentage of Drugs with phase information available:')
+        self.__drug_data_scrape_rate = (((1-(self.PhasesRight/self.TotalEntries))*100))
+        # print(self.__drug_data_scrape_rate)
+
+        # print('Percentage of Drugs with treatment information available:')
+        self.__drug_mech_scrape_rate = (((1-(self.InfoFilled/self.TotalEntries))*100))
+        # print(self.__drug_mech_scrape_rate)
 
     """ PRE PROCESSERS """
 
@@ -158,7 +161,8 @@ class FullParser:
         :return: Boolean
         """
         p1 = re.compile(r"phase2?$", re.I)
-        return re.match(p1, drug_entry)
+        # print(bool(re.match(p1, drug_entry)))
+        return bool(re.match(p1, drug_entry))
 
     def phase_finder(self, drug_website, current_entry ):
         """
@@ -215,24 +219,7 @@ class FullParser:
                          return 7
         return "false"
 
-    # FLAGGED FOR REMOVAL IN NEXT COMMIT (NOT USED)
-    def validate_phase(self, comparision_html, drug_target_list):
-        """
-        This method determines if there is a phase next to the word
-        :param comparision_html: string
-        :param drug_target_list: list
-        :return: list
-        """
-        validated_drugs = []
-        for x in range(0, len(drug_target_list)):
-            current_truth = self.phase_finder(comparision_html, drug_target_list[x])
-            if current_truth != "false":
-                temp = drug_target_list[x] + ',' + current_truth
-                validated_drugs.append(temp)
-
-        return validated_drugs
-
-    # FLAGGED FOR REMOVAL IN NEXT COMMIT (NOT USED)
+    # FLAGGED FOR REMOVAL IN FINAL COMMIT (NOT USED)
     def nearby_search(self, drug_website, current_entry):
         """
         This method searches the nearby words and creates a new list
@@ -254,26 +241,6 @@ class FullParser:
                  _future_entry = drug_website[x+1]
                  entry.append(_current_entry)
 
-        return entry
-
-    # FLAGGED FOR REMOVAL IN NEXT COMMIT (NOT USED)
-    def advanced_filter(self, drug_website, current_entry):
-        total_checks = indices(drug_website, current_entry )
-        entry = []
-        for q in range(0, len(total_checks)):
-            start = 0;
-            if total_checks[q] >= 10:
-                start = total_checks[q] - 10
-            else:
-                start = 0;
-            end = total_checks[q] + 10
-            for x in range(start, end):
-                 _current_entry = drug_website[x]
-                 _future_entry = drug_website[x+1]
-                 if _current_entry == "treatment":
-                     if _future_entry == "of":
-                         for y in range(x+1, x+5):
-                             entry.append(drug_website[y])
         return entry
 
     def mech_action(self, drug_website, current_entry, index_number):
@@ -310,7 +277,7 @@ class FullParser:
         return return_list
 
     """ BREAKERS """
-    # FLAGGED FOR REMOVAL IN NEXT COMMIT (NOT USED)
+    # FLAGGED FOR BETTER VERSION (ONLY USED ONCE)
     def block_breaker(self, drug_website, current_entry):
         return_list = []
         pwl = enchant.request_pwl_dict("medical.txt")
@@ -329,7 +296,7 @@ class FullParser:
             for x in range(start, end):
                 if pwl.check(drug_website[x]):
                     return_list.append(drug_website[x])
-        print(return_list)
+        # print(return_list)
 
     def better_break(self, drug_website, current_entry, index_number):
         """
@@ -391,32 +358,73 @@ class FullParser:
 
         return return_list
 
-    def phase_diagnostic(self, drug_website, current_entry, index_number):
-        """
-        This breaker will achieve the best result by attempting to
-        filter out the drug names based om prior entries. IT will scout only
-        a minimum distance in either direction
-        :param drug_website: list
-        :param current_entry: string
-        :param index_number: int
-        :return: list
-        """
-        return_list = []
-        pwl = enchant.request_pwl_dict("medical.txt")
-        start = 0
-
-        if index_number >= 3:
-            start = index_number - 3
+    def phase_diagnostic(self, drugWebsite, current_entry, indexNumber):
+        bob=[]
+        start=0;
+        joe=0
+        if indexNumber>=15:
+            start=indexNumber-15
         else:
-            start = 0
-
-        end = index_number + 4
-
+            start=0;
+        end=indexNumber+15
         for x in range(start, end):
-            if pwl.check(drug_website[x]):
-                return_list.append(drug_website[x])
 
-        return return_list
+                 currentEntry=drugWebsite[x]
+                 futureEntry=drugWebsite[x+1]
+                 pattern1=re.compile('^[Phase]')
+                 pattern2=re.compile('^[phase]')
+                 a=pattern1.findall(currentEntry)
+                 lengths=len(a)
+                 b=pattern2.findall(currentEntry)
+                 lengthsb=len(b)
+                 #bob.append(drugWebsite[99])
+                 if self.reiterated_phases(currentEntry)==True:
+                     if 'phase3' in currentEntry:
+                         return 'phase 3'
+                     elif 'phase3' in futureEntry:
+                         return 'phase 3'
+                     if 'phase1' in currentEntry:
+                         return 'phase 1'
+                     elif 'phase1' in futureEntry:
+                         return 'phase 1'
+                     if 'phase2' in currentEntry:
+                         return 'phase 2'
+                     elif 'phase2' in futureEntry:
+                         return 'phase 2'
+                     if '3' in currentEntry:
+                         return 'phase 3'
+                     elif '3' in futureEntry:
+                         return 'phase 3'
+                     if '1' in currentEntry:
+                         return 'phase 1'
+                     elif '1' in futureEntry:
+                         return 'phase 1'
+                     if '2' in currentEntry:
+                         return 'phase 2'
+                     elif '2' in futureEntry:
+                         return 'phase 2'
+                     if 'III' in currentEntry:
+                         return 3
+                     elif 'III' in futureEntry:
+                         return 3
+                     if 'II' in currentEntry:
+                         return 2
+                     elif 'II' in futureEntry:
+                         return 2
+                     if 'I' in currentEntry:
+                         return 'phase 1'
+                     elif 'I' in futureEntry:
+                         return 'phase 1'
+                     elif 'P1' in currentEntry:
+                         return 'phase 1'
+                     elif 'P2' in currentEntry:
+                         return 'phase 2'
+                     elif 'P3' in currentEntry:
+                         return 'phase 3'
+
+                     else :
+                         return False
+        return False
 
     def best_break2(self, drug_website, current_entry, index_number, future_entry):
         """
@@ -490,108 +498,8 @@ class FullParser:
                      return int(test5.group(1))
         return False
 
-    # FLAGGED FOR REMOVAL IN NEXT COMMIT (NOT USED)
-    def adjacent_check(self, drug_website, current_entry, index_number):
-        """
-        Check for adjacunt drug names and combine if appropriate
-        """
-        bob = []
-        baselines = []
-        pwl = enchant.request_pwl_dict("medical.txt")
-        start = 0;
-        if index_number >= 2:
-                start = index_number - 2
-        else:
-                start = 0;
-        end = index_number + 2
-        for x in range(start, end):
-            truths = pwl.check(drug_website[x])
-            baselines.append(drug_website[x])
-            if truths == True:
-                bob.append(drug_website[x])
-        print(bob)
-
 
     """ FILTERS """
-    # FLAGGED FOR REMOVAL IN NEXT COMMIT (NOT USED)
-    def lousy_helper(self):
-        return 'false'
-
-    # FLAGGED FOR REMOVAL IN NEXT COMMIT (NOT USED)
-    def lousy_filter(self, drug_website, current_entry):
-        #This filter parameter serves primarily as a last resort in case there are
-        #high rates of failure
-        app = drug_website.split();
-        lengthing = len(app)
-
-        for qur in range(0, lengthing-2):
-
-
-            if current_entry in app[qur]:
-
-                if 'phase' in app[qur]:
-                    if 'III' in app[qur]:
-                        return 'phase3'
-                    elif 'II' in app[qur]:
-                        return 'phase2'
-                    elif 'I' in app[qur]:
-                        return 'phase1'
-                    elif '1' in app[qur]:
-                        return 'phase1'
-                    elif '2' in app[qur]:
-                        return 'phase2'
-                    elif '3' in app[qur]:
-                        return 'phase3'
-                    return'nope'
-
-                elif 'phase' in app[qur+1]:
-                    if 'III' in app[qur]:
-                        return 'phase3'
-                    elif 'II' in app[qur]:
-                        return 'phase2'
-                    elif 'I' in app[qur]:
-                        return 'phase1'
-                    elif '1' in app[qur]:
-                        return 'phase1'
-                    elif '2' in app[qur]:
-                        return 'phase2'
-                    elif '3' in app[qur]:
-                        return 'phase3'
-                    return'nope'
-
-                elif 'phase' in app[qur+2]:
-                    if 'III' in app[qur+2]:
-                        return 'phase3'
-                    elif 'II' in app[qur+2]:
-                        return 'phase2'
-                    elif 'I' in app[qur+2]:
-                        return 'phase1'
-                    elif '1' in app[qur+2]:
-                        return 'phase1'
-                    elif '2' in app[qur+2]:
-                        return 'phase2'
-                    elif '3' in app[qur+2]:
-                        return 'phase3'
-                    return'nope'
-
-
-                elif 'phase' in app[qur+3]:
-                    if 'III' in app[qur+3]:
-                        return 'phase3'
-                    elif 'II' in app[qur+3]:
-                        return 'phase2'
-                    elif 'I' in app[qur+3]:
-                        return 'phase1'
-                    elif '1' in app[qur+3]:
-                        return 'phase1'
-                    elif '2' in app[qur+3]:
-                        return 'phase2'
-                    elif '3' in app[qur+3]:
-                        return 'phase3'
-                    return'nope'
-
-        return 'False'
-
     def high_precision_filter(self, drug_website, current_entry):
         """
         This filter is very precise
@@ -646,12 +554,12 @@ class FullParser:
 
         for u in range(0, len(preset_values)):
             preset_value = preset_values[u]
-
+        # print(phase_info)
         return phase_info
 
 
     """ ANALYTICS """
-    # FLAGGED FOR REMOVAL IN NEXT COMMIT (NOT USED)
+    # FLAGGED FOR REMOVAL IN FINAL COMMIT (NOT USED)
     def masterful(self, drug_website, current_entry):
         """
 
@@ -665,24 +573,21 @@ class FullParser:
         bobby = []
 
         for q in range(0, len(total_checks)):
-           # print(current_entry)
             preset_value = self.better_break(drug_website, current_entry, total_checks[q])
             preset_list = list(set(preset_value))
 
-            #print(preset_list)
             phase_info = self.phase_diagnostic(drug_website, current_entry, total_checks[q])
             known = self.truth_check(preset_list, phase_info)
-            #fullList=[True,]
             joe = [self.company_name, current_entry, preset_list, phase_info]
             bob.append(joe)
             truthful.append(known)
 
-        print(bob)
-        print(truthful)
+        # print(bob)
+        # print(truthful)
         bobby = self.full_reference(truthful, bob)
-        print(bobby)
+        # print(bobby)
 
-    # FLAGGED FOR REMOVAL IN NEXT COMMIT (NOT USED)
+    # FLAGGED FOR REMOVAL IN FINAL COMMIT (NOT USED)
     def precise_masterful(self, current_entry, drug_website, nextEntry):
         total_checks = self.indices(drug_website,current_entry )
         bob=[]
@@ -701,10 +606,10 @@ class FullParser:
             bob.append(joe)
             truthful.append(known)
 
-        print(bob)
-        print(truthful)
+        # print(bob)
+        # print(truthful)
         bobby = self.full_reference(truthful,bob)
-        print(bobby)
+        # print(bobby)
 
         return 'false'
 
@@ -734,16 +639,15 @@ class FullParser:
 
             preset_list = list(set(preset_values))
             phase_info = self.phase_diagnostic(drug_website, current_entry, total_checks[q])
-
             if not phase_info:
                 phase_info = self.high_precision_phase(self.strdata.split('<'), current_entry)
                 if not phase_info:
+                    # print("running")
                     phase_info = self.quick_phasing(current_entry, self.strdata.split('<'))
-
-            known = self.truth_check(preset_list,phase_info)
+                    # print(phase_info)
+            known = self.truth_check(preset_list, phase_info)
             joe = [self.company_name, final_drug_name, preset_list, phase_info, mechanics_info]
             bob.append(joe)
-            truthful.append(known)
 
         bobby = self.full_reference(truthful, bob)
 
@@ -880,29 +784,6 @@ class FullParser:
 
         return False
 
-        def adder_check(self, drug_website, current_entry, index_number):
-            """
-
-            """
-            if '+' in drug_website[index_number+1]:
-                if self.checking_official(drug_website[index_number+2]) != 'null':
-                    temp = drug_website[index_number]
-                    temp2 = drug_website[index_number+2]
-                    temp3 = '+'
-                    intermediate = temp + temp3 + temp2
-                    return intermediate
-                else:
-                    return drug_website[index_number]
-            elif '+' in drug_website[index_number]:
-                if self.checking_official(drug_website[index_number+2]) != 'null':
-                    if '+' in drug_website[index_number]:
-                         temp = drug_website[index_number]
-                    temp2 = drug_website[index_number+2]
-                    temp3 = '+'
-                    intermediate = temp + temp3 + temp2
-                    return intermediate
-            else:
-                return current_entry
 
     def adder_check(self, drug_website, current_entry, index_number):
         """
@@ -954,10 +835,24 @@ class FullParser:
         self.TotalEntries = totalEntry
         return finalList
 
+    @property
+    def final_drug_data(self):
+        # return __final_drug_data
+        pass
+
+    @property
+    def drug_data_scrape_rate(self):
+        return self.__drug_data_scrape_rate
+
+    @property
+    def drug_mech_scrape_rate(self):
+        return self.__drug_mech_scrape_rate
+
 # Class method to run only when called from terminal
 def main():
-    url = "https://www.biogen.com/en_us/research-pipeline/biogen-pipeline.html"
-    company_name = "Biogen"
+    url='https://www.shire.com/research-and-development/pipeline'
+    # url = "https://www.biogen.com/en_us/research-pipeline/biogen-pipeline.html"
+    company_name = "Shire"
     full_parser = FullParser(company_name, url)
 
 if __name__ == "__main__":
