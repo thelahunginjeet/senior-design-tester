@@ -9,9 +9,6 @@ class FullParser:
     eng = enchant.Dict("en_US")  # English dictionary to compare
 
     def __init__(self, _company_name, url):
-        """
-        Constructer to request link and receive data
-        """
         # Getting data from website
         r = requests.get(url)
 
@@ -19,13 +16,14 @@ class FullParser:
         self.company_name = _company_name
         data = r.text
 
-        # Creating
-        visible_text = self.create_lists(data)
-        self.search_list(visible_text)
+        # Creating and searching lists
+        final_list = self.create_list(data)
+        (self.final_list, self.second_filter) = self.search_list(final_list)
 
 
+    """ PRE PROCESSERS """
 
-    def create_lists(self, data):
+    def create_list(self, data):
         """
         Creates list of words to search and compare against dictionaries.
         """
@@ -36,74 +34,71 @@ class FullParser:
 
         # Extracting texts from objects
         [s.extract() for s in primitive_soup(['style', 'script', '[document]', 'head', 'title'])]
-        visible_text = primitive_soup.getText()
-        self.strdata = primitive_soup.prettify()
-        strdata2 = soup2.prettify()
+        visible_text = primitive_soup.getText()  # Raw text
+        self.strdata = primitive_soup.prettify()  # BS Object
 
         # Creating lists of words to search
-        self.FinalList = strdata2.split()
-        self.FinalList2 = visible_text.split()
+        final_list = visible_text.split()
 
         # Stating completion
-        return visible_text
+        return final_list
 
-
-    def search_list(self, visible_text):
+    def search_list(self, final_list):
+        """
+        This method searches a list of words and chooses which words to processing
+        :param final_list: list
+        :return: tuple
+        """
+        # Initializing empty filter
         FirstFilter = []
 
-        for x in range(0, len(self.FinalList2)):
-            newstr4 = self.FinalList2[x].replace(",", "")
-            newstr3 = newstr4.replace(":", "")
-            newstr2 = newstr3.replace("<", "")
-            newstr1 = newstr2.replace(">", "")
-          #  newstr7 = newstr1.replace("'", "")
-            newstr9 = newstr1.replace("]", "")
-            newstr10 = newstr9.replace("[", "")
-            newstr = newstr10.replace(")", "")
-            #newstr = newstr10.replace("", "")
+        # Iterating through every word in the list and processing word
+        for x in range(0, len(final_list)):
+            # Removing punctuation
+            current_word = final_list[x]
+            current_word = current_word.replace(",", "").replace(":", "").replace("<", "")
+            current_word = current_word.replace(">", "").replace("]", "").replace("[", "")
+            current_word = current_word.replace(")", "")
 
-            sizeCheck = len(newstr)
+            # if there is a word in this index, then process it
+            if len(current_word) != 0:
+                # Check if it is not in the english dictionary
+                if not self.eng.check(current_word):
+                    # If the word is longer than 5 letters
+                    if len(current_word) >= 5:
+                        # If it appears in the list more than once
+                        if final_list.count(final_list[x]) >= 1:
+                            # If the selected word contains a backslash
+                            if "/" in current_word:
+                                current_word.split("/")  # Split it into seperate words
+                                # If both words are not in the english dictionary
+                                if not (self.eng.check(current_word[0]) & self.eng.check(current_word[1])):
+                                    processed_word = self.checking_official(current_word)
+                                    # Only add it to the filter if word matches
+                                    if processed_word != 'null':
+                                        FirstFilter.append(processed_word)
 
-            if sizeCheck != 0:
+                            else:  # If selected word is only one word
+                                processed_word = self.checking_official(current_word)
+                                if processed_word != 'null':
+                                    FirstFilter.append(processed_word)
 
-                appe = self.eng.check(newstr)
+        second_filter = list(set(FirstFilter))  # Conversion to new list
 
-                if appe == False:
-                    temp = len(newstr)
-                    if temp >= 5:
-                        temps = self.FinalList2.count(self.FinalList2[x])
-                        if temps >= 1:
-                            if self.company_name in newstr:
-                               # print('Processing...')
-                                pass
-                            elif "/" in newstr:
-                                newstr.split("/")
-                                permA = self.eng.check(newstr[0])
-                                permB = self.eng.check(newstr[1])
-                                if (permA & permB) == False:
-                                    news = self.checking_official(newstr)
-                                    if news != 'null':
-                                        FirstFilter.append(news)
+        # Test all words against second filter and check
+        for x in range(0, len(second_filter)):
+            if second_filter[x] != ('false', 'N/A'):
+                self.block_breaker(final_list, second_filter[x])
 
-                            else:
-                                news = self.checking_official(newstr)
-                                if news != 'null':
-                                    FirstFilter.append(news)
-
-        self.SecondFilter = list(set(FirstFilter))
-
-        print(self.SecondFilter)
-        print(self.phaseFinder(self.visible_text,'Dapirolizumab'))
-        for x in range(0, len(self.SecondFilter)):
-            print(self.SecondFilter[x])
-            if self.SecondFilter[x] != ('false', 'N/A'):
-                print(self.phaseFinder(self.FinalList2,self.SecondFilter[x]))
-                self.BlockBreaker(self.FinalList2,self.SecondFilter[x] )
-
-        print(self.LousyFilter('AZD3293', data ))
-        self.BlockBreaker(self.FinalList2,'AZD3293' )
+        return (final_list, second_filter)
 
     def indices(self, lst, element):
+        """
+        This method does something
+        :param lst: list
+        :param element: string
+        :return: list
+        """
         result = []
         offset = -1
         while True:
@@ -113,364 +108,373 @@ class FullParser:
                 return result
             result.append(offset)
 
-    def checking_official(self, currentCheck):
+    def checking_official(self, current_check):
+        """
+        Checks to see if word follows certain patterns
+        :param current_check: string
+        :return: string
+        """
+        # Compiling patterns
         p1 = re.compile(r"\b[A-Za-z]+(vir|cillin|mab|ximab|zumab|tinib|vastatin|prazole|lukast|axine|olol|oxetine|sartan|pril|pib|oxacin|xaban|afil|ine|parib|tide)\b")
         p2 = re.compile(r"\b[A-Za-z]+(grel|barb|prost)[A-Za-z]+\b")
         p3 = re.compile(r"\b(cef)[A-Za-z]+\b")
         p4 = re.compile(r"[A-Z].+\d$")
-        drug_target = "N/A"
-        currentLast = len(currentCheck);
 
-        if re.match(p1, currentCheck): # Suffix testing
-            return currentCheck
-        elif re.match(p2, currentCheck): # Infix testing
-            return currentCheck
-        elif re.match(p3, currentCheck): # Prefix testing
-            return currentCheck
-        elif re.match(p4, currentCheck): # Number ending
-            drug_target = "Some Weird Number Thing"
-            return currentCheck
-
-        return 'null'
-
-
-    def reiteratedPhases(self, drugEntry):
-        if 'phase' in drugEntry:
-            return True
-        elif 'Phase' in drugEntry:
-            return True
-        elif 'PHASE' in drugEntry:
-            return True
-        elif 'phase2' in drugEntry:
-            return True
+        # Testing each pattern
+        if re.match(p1, current_check): # Suffix testing
+            return current_check
+        elif re.match(p2, current_check): # Infix testing
+            return current_check
+        elif re.match(p3, current_check): # Prefix testing
+            return current_check
+        elif re.match(p4, current_check): # Number ending
+            return current_check
         else:
-            return False
+            return 'null'  # If no match
 
-    def phaseFinder(self, drugWebsite, current_entry ):
-        bob = []
 
-        totalChecks = self.indices(drugWebsite, current_entry )
-        # print(totalChecks)
+    """ PHASE IDENTIFIERS """
 
-        for q in range(0, len(totalChecks)):
+    def reiterated_phases(self, drug_entry):
+        """
+        Tests word to see if it tells you a phase
+        :param drug_entry: string
+        :return: Boolean
+        """
+        p1 = re.compile(r"phase2?$", re.I)
+        return re.match(p1, drug_entry)
+
+    def phase_finder(self, drug_website, current_entry ):
+        """
+        Finds the phase number next to a drug name
+        :param drug_website: string
+        :param current_entry: string
+        :return: string
+        """
+        # Find the number of indices
+        total_checks = self.indices(drug_website, current_entry )
+
+        # For every index in the range, test it
+        for q in range(0, len(total_checks)):
+            # Starting variables
             bob = []
-            start = 0;
-            joe = 0
-            if totalChecks[q] >= 15:
-                start = totalChecks[q]-15
+            start = 0
+
+            # If the checks at that index is greater than 15
+            if total_checks[q] >= 15:
+                start = total_checks[q]-15
             else:
                 start = 0;
-            end = totalChecks[q]+15
-            for x in range(start, end):
+            end = total_checks[q]+15
 
-                 currentEntry = drugWebsite[x]
-                 futureEntry = drugWebsite[x+1]
+            for x in range(start, end):
+                 current_entry = drug_website[x]
+                 future_entry = drug_website[x+1]
+
                  pattern1 = re.compile('^[Phase]')
                  pattern2 = re.compile('^[phase]')
-                 a = pattern1.findall(currentEntry)
-                 lengths = len(a)
-                 b = pattern2.findall(currentEntry)
-                 lengthsb = len(b)
-                 bob.append(drugWebsite[99])
-                 if self.reiteratedPhases(currentEntry) == True:
-                     if '3' in currentEntry:
-                         return 'phase 3'
-                     elif '3' in futureEntry:
-                         return 'phase 3'
-                     if '1' in currentEntry:
-                         return 'phase 1'
-                     elif '1' in futureEntry:
-                         return 'phase 1'
-                     if '2' in currentEntry:
-                         return 'phase 2'
-                     elif '2' in futureEntry:
-                         return 'phase 2'
-                     if 'III' in currentEntry:
-                         return 3
-                     elif 'III' in futureEntry:
-                         return 3
-                     elif 'lll' in futureEntry:
-                         return 3
-                     if 'II' in currentEntry:
-                         return 2
-                     elif 'II' in futureEntry:
-                         return 2
-                     elif 'll' in futureEntry:
-                         return 2
-                     if 'I' in currentEntry:
-                         return 'phase 1'
-                     elif 'I' in futureEntry:
-                         return 'phase 1'
 
-                     else :
+                 a = pattern1.findall(current_entry)
+                 b = pattern2.findall(current_entry)
+                 bob.append(drug_website[99])
+
+                 if self.reiterated_phases(current_entry):
+
+                     # Extracting if phase number comes after the word phase
+                     test1 = re.search(r"(\d)", current_entry)
+                     test2 = re.search(r"(\d)", future_entry)
+                     if test1:
+                         return ("phase " + test1.group(1))
+                     elif test2:
+                        return ("phase " + test2.group(1))
+
+                    # Extracting if phase number is roman numeral
+                     test3 = re.search(r"([Il]+)", current_entry)
+                     test4 = re.search(r"([Il]+)", future_entry)
+                     if test3:
+                         return int(test3.group(1))
+                     elif test4:
+                         return int(test4.group(1))
+                     else:
                          return 7
         return "false"
 
-    def validatePhase(self, ComparisonHtml, drugTargetList):
-        totalDuration = len(drugTargetList)
-        validatedDrugs = []
-        for x in range(0, totalDuration):
-            currentTruth = phaseFinder(ComparisonHtml, drugTargetList[x])
-            if currentTruth != "false":
-                adder = drugTargetList[x] + ',' + currentTruth
-                validatedDrugs.append(adder)
+    # FLAGGED FOR REMOVAL IN NEXT COMMIT (NOT USED)
+    def validate_phase(self, comparision_html, drug_target_list):
+        """
+        This method determines if there is a phase next to the word
+        :param comparision_html: string
+        :param drug_target_list: list
+        :return: list
+        """
+        validated_drugs = []
+        for x in range(0, len(drug_target_list)):
+            current_truth = self.phase_finder(comparision_html, drug_target_list[x])
+            if current_truth != "false":
+                temp = drug_target_list[x] + ',' + current_truth
+                validated_drugs.append(temp)
 
-        return validatedDrugs
+        return validated_drugs
 
-    def nearbySearch(self, drugWebsite, current_entry):
-        totalChecks = indices(drugWebsite,current_entry )
+    # FLAGGED FOR REMOVAL IN NEXT COMMIT (NOT USED)
+    def nearby_search(self, drug_website, current_entry):
+        """
+        This method searches the nearby words and creates a new list
+        :param drug_website: string
+        :param current_entry: string
+        :return: list
+        """
+        total_checks = self.indices(drug_website, current_entry )
         entry = []
-        entry2 = []
-        for q in range(0, len(totalChecks)):
+        for q in range(0, len(total_checks)):
+            start = 0
+            if total_checks[q] >= 20:
+                start = total_checks[q] - 20
+            else:
+                start = 0
+            end = total_checks[q] + 20
+            for x in range(start, end):
+                 _current_entry = drug_website[x]
+                 _future_entry = drug_website[x+1]
+                 entry.append(_current_entry)
+
+        return entry
+
+    # FLAGGED FOR REMOVAL IN NEXT COMMIT (NOT USED)
+    def advanced_filter(self, drug_website, current_entry):
+        total_checks = indices(drug_website, current_entry )
+        entry = []
+        for q in range(0, len(total_checks)):
             start = 0;
-            if totalChecks[q] >= 20:
-                start = totalChecks[q] - 20
+            if total_checks[q] >= 10:
+                start = total_checks[q] - 10
             else:
                 start = 0;
-            end = totalChecks[q] + 20
+            end = total_checks[q] + 10
             for x in range(start, end):
-                 currentEntry = drugWebsite[x]
-                 futureEntry = drugWebsite[x+1]
-                 entry.append(currentEntry)
-
-        return entry, entry2
-
-    def advancedFilter(self, drugWebsite, current_entry):
-        totalChecks = indices(drugWebsite,current_entry )
-        entry = []
-        entry2 = []
-        for q in range(0, len(totalChecks)):
-            start = 0;
-            if totalChecks[q] >= 10:
-                start = totalChecks[q] - 10
-            else:
-                start = 0;
-            end = totalChecks[q] + 10
-            for x in range(start, end):
-                 currentEntry = drugWebsite[x]
-                 futureEntry = drugWebsite[x+1]
-                 if currentEntry == "treatment":
-                     if futureEntry == "of":
-
+                 _current_entry = drug_website[x]
+                 _future_entry = drug_website[x+1]
+                 if _current_entry == "treatment":
+                     if _future_entry == "of":
                          for y in range(x+1, x+5):
-                             entry2.append(drugWebsite[y])
-        return entry, entry2
+                             entry.append(drug_website[y])
+        return entry
 
-    def BlockBreaker(self, drugWebsite, current_entry):
-        bob = []
-        baselines = []
+
+    """ BREAKERS """
+    # FLAGGED FOR REMOVAL IN NEXT COMMIT (NOT USED)
+    def block_breaker(self, drug_website, current_entry):
+        return_list = []
         pwl = enchant.request_pwl_dict("medical.txt")
 
-        totalChecks = self.indices(drugWebsite, current_entry )
-       # print(totalChecks)
+        total_checks = self.indices(drug_website, current_entry )
 
-        for q in range(0, len(totalChecks)):
+        for q in range(0, len(total_checks)):
 
             start = 0;
             joe = 0
-            if totalChecks[q] >= 15:
-                start = totalChecks[q] - 15
+            if total_checks[q] >= 15:
+                start = total_checks[q] - 15
             else:
                 start = 0;
-            end = totalChecks[q] + 15
+            end = total_checks[q] + 15
             for x in range(start, end):
-                truths = pwl.check(drugWebsite[x])
-                baselines.append(drugWebsite[x])
-                if truths == True:
-                    bob.append(drugWebsite[x])
-        print(bob)
+                if pwl.check(drug_website[x]):
+                    return_list.append(drug_website[x])
+        print(return_list)
 
-    def BetterBreak(self, drugWebsite, current_entry, indexNumber):
-        bob = []
-        baselines = []
+    def better_break(self, drug_website, current_entry, index_number):
+        """
+        This method can extract a block of words around the drug name
+        :param drug_website: list
+        :param current_entry: string
+        :param index_number: int
+        :return: list
+        """
+        return_list = []
         pwl = enchant.request_pwl_dict("medical.txt")
-        start = 0;
-        joe = 0
-        if indexNumber >= 11:
-            start = indexNumber - 11
+        start = 0
+
+        if index_number >= 11:
+            start = index_number - 11
         else:
-            start = 0;
-        end = indexNumber + 15
+            start = 0
+
+        end = index_number + 15
+
         for x in range(start, end):
-            truths = pwl.check(drugWebsite[x])
-            baselines.append(drugWebsite[x])
-            if truths == True:
-                bob.append(drugWebsite[x])
+            if pwl.check(drug_website[x]):
+                return_list.append(drug_website[x])
 
-        return bob
+        return return_list
 
-    def BestBreakA(self, drugWebsite, current_entry, indexNumber):
-        bob = []
-        baselines = []
+    def best_break(self, drug_website, current_entry, index_number):
+        """
+        This does what better_break does but better
+        :param drug_website: list
+        :param current_entry: string
+        :param index_number: int
+        :return: list
+        """
+        return_list = []
         pwl = enchant.request_pwl_dict("medical.txt")
-        start = 0;
-        joe = 0
-        if indexNumber >= 11:
-                start = indexNumber-11
+        start = 0
+
+        if index_number >= 11:
+            start = index_number-11
         else:
-                start = 0;
-        end = indexNumber+15
-        for x in range(indexNumber, end):
-            if self.checking_official(drugWebsite[x+1]) == 'null':
-                truths = pwl.check(drugWebsite[x])
-                baselines.append(drugWebsite[x])
-                if truths == True:
-                    bob.append(drugWebsite[x])
+            start = 0
+
+        end = index_number+15
+
+        for x in range(index_number, end):
+            if self.checking_official(drug_website[x+1]) == 'null':
+                if pwl.check(drug_website[x]):
+                    return_list.append(drug_website[x])
             else:
                 break
-
 
         for x in range(1, 10):
-            if self.checking_official(drugWebsite[indexNumber-x]) == 'null':
-                truths = pwl.check(drugWebsite[indexNumber-x])
-                baselines.append(drugWebsite[indexNumber-x])
-                if truths == True:
-
-                    bob.append(drugWebsite[indexNumber-x])
+            if self.checking_official(drug_website[index_number-x]) == 'null':
+                if pwl.check(drug_website[index_number-x]):
+                    return_list.append(drug_website[index_number-x])
             else:
                 break
 
-        return bob
+        return return_list
 
-    def UltimateBreak(self, drugWebsite, current_entry, indexNumber):
-         #This breaker will achieve the best result by attempting to
-         #filter out the drug names based om prior entries. IT will scout only
-         # a minimum distance in either direction
-
-        bob = []
-        baselines = []
+    def phase_diagnostic(self, drug_website, current_entry, index_number):
+        """
+        This breaker will achieve the best result by attempting to
+        filter out the drug names based om prior entries. IT will scout only
+        a minimum distance in either direction
+        :param drug_website: list
+        :param current_entry: string
+        :param index_number: int
+        :return: list
+        """
+        return_list = []
         pwl = enchant.request_pwl_dict("medical.txt")
-        start = 0;
-        joe = 0
-        if indexNumber >= 3:
-                start = indexNumber - 3
+        start = 0
+
+        if index_number >= 3:
+            start = index_number - 3
         else:
-                start = 0;
-        end = indexNumber + 4
+            start = 0
+
+        end = index_number + 4
+
         for x in range(start, end):
-            truths = pwl.check(drugWebsite[x])
-            baselines.append(drugWebsite[x])
-            if truths == True:
-                bob.append(drugWebsite[x])
+            if pwl.check(drug_website[x]):
+                return_list.append(drug_website[x])
 
-        return bob
+        return return_list
 
-    def BestBreak(self, drugWebsite, current_entry, indexNumber,futureEntry):
-        bob = []
-        baselines = []
+    def best_break2(self, drug_website, current_entry, index_number, future_entry):
+        """
+        This does what better_break does but better than best
+        :param drug_website: list
+        :param current_entry: string
+        :param index_number: int
+        :param future_entry: string
+        :return: list
+        """
+        return_list = []
         pwl = enchant.request_pwl_dict("medical.txt")
-        start = 0;
-        joe = 0
-        if indexNumber >= 2:
-                start = indexNumber - 2
+        start = 0
+
+        if index_number >= 2:
+            start = index_number - 2
         else:
-                start = 0;
-        end = indexNumber + 5
+            start = 0
+
+        end = index_number + 5
+
         for x in range(start, end):
+            if pwl.check(drug_website[x]):
+                return_list.append(drug_website[x])
+            if future_entry in drug_website[x]:
+                return return_list
+        return return_list
+        """
+        Checks the phase number for the drug
+        :param drug_website: list
+        :param current_entry: string
+        :param index_number: int
+        :return: string
+        """
+        start = 0
 
-            truths = pwl.check(drugWebsite[x])
-            baselines.append(drugWebsite[x])
-            if truths == True:
-                bob.append(drugWebsite[x])
-            if futureEntry in drugWebsite[x]:
-                return bob
-        return bob
-
-
-    def PhaseDiognostic(self,drugWebsite, current_entry, indexNumber ):
-        bob = []
-        start = 0;
-        joe = 0
-        if indexNumber >= 15:
-            start = indexNumber - 15
+        if index_number >= 15:
+            start = index_number - 15
         else:
             start = 0;
-        end = indexNumber + 15
+
+        end = index_number + 15
+
         for x in range(start, end):
 
-                 currentEntry = drugWebsite[x]
-                 futureEntry = drugWebsite[x+1]
-                 pattern1 = re.compile('^[Phase]')
-                 pattern2 = re.compile('^[phase]')
-                 a = pattern1.findall(currentEntry)
-                 lengths = len(a)
-                 b = pattern2.findall(currentEntry)
-                 lengthsb = len(b)
-                 #bob.append(drugWebsite[99])
-                 if self.reiteratedPhases(currentEntry) == True:
-                     if 'phase3' in currentEntry:
-                         return 'phase 3'
-                     elif 'phase3' in futureEntry:
-                         return 'phase 3'
-                     if 'phase1' in currentEntry:
-                         return 'phase 1'
-                     elif 'phase1' in futureEntry:
-                         return 'phase 1'
-                     if 'phase2' in currentEntry:
-                         return 'phase 2'
-                     elif 'phase2' in futureEntry:
-                         return 'phase 2'
-                     if '3' in currentEntry:
-                         return 'phase 3'
-                     elif '3' in futureEntry:
-                         return 'phase 3'
-                     if '1' in currentEntry:
-                         return 'phase 1'
-                     elif '1' in futureEntry:
-                         return 'phase 1'
-                     if '2' in currentEntry:
-                         return 'phase 2'
-                     elif '2' in futureEntry:
-                         return 'phase 2'
-                     if 'III' in currentEntry:
-                         return 3
-                     elif 'III' in futureEntry:
-                         return 3
-                     if 'II' in currentEntry:
-                         return 2
-                     elif 'II' in futureEntry:
-                         return 2
-                     if 'I' in currentEntry:
-                         return 'phase 1'
-                     elif 'I' in futureEntry:
-                         return 'phase 1'
-                     elif 'P1' in currentEntry:
-                         return 'phase 1'
-                     elif 'P2' in currentEntry:
-                         return 'phase 2'
-                     elif 'P3' in currentEntry:
-                         return 'phase 3'
+             _current_entry = drug_website[x]
+             future_entry = drug_website[x+1]
+             p1 = re.compile('^[Phase]')
+             p2 = re.compile('^[phase]')
+             a = p1.findall(_current_entry)
+             b = p2.findall(_current_entry)
 
-                     else :
-                         return False
+             if self.reiterated_phases(_current_entry):
+                 # Extracting if phase number comes after the word phase
+                 test1 = re.search(r"(\d)", _current_entry)
+                 test2 = re.search(r"(\d)", future_entry)
+                 test3 = re.search(r"P([123])", _current_entry)
+                 if test1:
+                     return ("phase " + test1.group(1))
+                 elif test2:
+                    return ("phase " + test2.group(1))
+                 elif test3:
+                    return ("phase " + test3.group(1))
+
+                 # Extracting if phase number is roman numeral
+                 test4 = re.search(r"([Il]+)", _current_entry)
+                 test5 = re.search(r"([Il]+)", future_entry)
+                 if test4:
+                     return int(test4.group(1))
+                 elif test5:
+                     return int(test5.group(1))
         return False
 
-    def AdjasuntCheck(self, drugWebsite, current_entry, indexNumber):
-        #Check for adjacunt drug names and combine if appropriate
+    # FLAGGED FOR REMOVAL IN NEXT COMMIT (NOT USED)
+    def adjacent_check(self, drug_website, current_entry, index_number):
+        """
+        Check for adjacunt drug names and combine if appropriate
+        """
         bob = []
         baselines = []
         pwl = enchant.request_pwl_dict("medical.txt")
         start = 0;
-        joe = 0
-        if indexNumber >= 2:
-                start = indexNumber - 2
+        if index_number >= 2:
+                start = index_number - 2
         else:
                 start = 0;
-        end = indexNumber + 2
+        end = index_number + 2
         for x in range(start, end):
-            truths = pwl.check(drugWebsite[x])
-            baselines.append(drugWebsite[x])
+            truths = pwl.check(drug_website[x])
+            baselines.append(drug_website[x])
             if truths == True:
-                bob.append(drugWebsite[x])
+                bob.append(drug_website[x])
         print(bob)
-    def LousyHelper():
+
+
+    """ FILTERS """
+    # FLAGGED FOR REMOVAL IN NEXT COMMIT (NOT USED)
+    def lousy_helper(self):
         return 'false'
 
-    def LousyFilter(self, drugWebsite, current_entry):
+    # FLAGGED FOR REMOVAL IN NEXT COMMIT (NOT USED)
+    def lousy_filter(self, drug_website, current_entry):
         #This filter parameter serves primarily as a last resort in case there are
         #high rates of failure
-        app=drugWebsite.split();
-        lengthing=len(app)
+        app = drug_website.split();
+        lengthing = len(app)
 
         for qur in range(0, lengthing-2):
 
@@ -539,316 +543,364 @@ class FullParser:
                     return'nope'
 
         return 'False'
-    def HighPrecisionFilter(self, drugWebsite, current_entry):
-        phaseing='Unknown'
-        presetValue=''
-        presetValues=[]
-        for q in range(0, len(drugWebsite)):
-            if current_entry in drugWebsite[q]:
-                phaseing=self.PhaseDiognostic(drugWebsite,current_entry, q)
-                presetValue=self.BetterBreak(drugWebsite, current_entry, q)
 
-                if presetValue!=[]:
-                    presetValues.append(presetValue)
-        presetValue=[]
-        for u in range(0, len(presetValues)):
-            presetValue=presetValues[u]
-        HighPEntry=[self.company_name,current_entry,presetValue,phaseing]
-        return HighPEntry
-    def HighPrecisionPhase(self, drugWebsite, current_entry):
-        phaseInfo=False
-        presetValue=''
-        presetValues=[]
-        randsc=[]
-        for q in range(0, len(drugWebsite)):
-            if current_entry in drugWebsite[q]:
-                randsc.append(drugWebsite[q])
-                phaseInfo=self.PhaseDiognostic(drugWebsite,current_entry, q)
-                presetValue=self.BetterBreak(drugWebsite, current_entry, q)
+    def high_precision_filter(self, drug_website, current_entry):
+        """
+        This filter is very precise
+        :param drug_website: string
+        :param current_entry: string
+        :return: list
+        """
+        # Pre-set values
+        phase_info = 'Unknown'
+        preset_value = ''
+        preset_values = []
 
-                if phaseInfo!=False:
-                    return phaseInfo
-        presetValue=''
-        for u in range(0, len(presetValues)):
-            presetValue=presetValues[u]
-       # print(randsc)
-        return phaseInfo
+        for q in range(0, len(drug_website)):
+            if current_entry in drug_website[q]:
+                phase_info = self.phase_diagnostic(drug_website, current_entry, q)
+                preset_value = self.better_break(drug_website, current_entry, q)
 
-    def Masterful(self,current_entry, drugWebsite):
-        totalChecks = self.indices(drugWebsite,current_entry )
-        bob=[]
-        truthful=[]
-        bobby=[]
-        for q in range(0, len(totalChecks)):
+                if preset_value != []:
+                    preset_values.append(preset_value)
+
+        preset_value = []
+
+        for u in range(0, len(preset_values)):
+            preset_value = preset_values[u]
+
+        hp_entry = [self.company_name, current_entry, preset_value, phase_info]
+
+        return hp_entry
+
+    def high_precision_phase(self, drug_website, current_entry):
+        """
+        Some high precision phase detector
+        :param drug_website: string
+        :param current_entry: string
+        :return: list
+        """
+        phase_info = False
+        preset_value = ''
+        preset_values = []
+        randsc = []
+
+        for q in range(0, len(drug_website)):
+            if current_entry in drug_website[q]:
+                randsc.append(drug_website[q])
+                phase_info = self.phase_diagnostic(drug_website, current_entry, q)
+                preset_value = self.better_break(drug_website, current_entry, q)
+
+                if phase_info != False:
+                    return phase_info
+
+        preset_value = ''
+
+        for u in range(0, len(preset_values)):
+            preset_value = preset_values[u]
+
+        return phase_info
+
+
+    """ ANALYTICS """
+    # FLAGGED FOR REMOVAL IN NEXT COMMIT (NOT USED)
+    def masterful(self, drug_website, current_entry):
+        """
+
+        :param drug_website: string
+        :param current_entry: string
+        :return: list
+        """
+        total_checks = self.indices(drug_website, current_entry )
+        bob = []
+        truthful = []
+        bobby = []
+
+        for q in range(0, len(total_checks)):
            # print(current_entry)
-            presetValue=self.BetterBreak(drugWebsite, current_entry, totalChecks[q])
-            pre=list(set(presetValue))
+            preset_value = self.better_break(drug_website, current_entry, total_checks[q])
+            preset_list = list(set(preset_value))
 
-            #print(pre)
-            phasing=self.PhaseDiognostic(drugWebsite,current_entry, totalChecks[q])
-            known=self.TruthCheck(pre,phasing)
+            #print(preset_list)
+            phase_info = self.phase_diagnostic(drug_website, current_entry, total_checks[q])
+            known = self.truth_check(preset_list, phase_info)
             #fullList=[True,]
-            joe=[self.company_name,current_entry,pre,phasing]
+            joe = [self.company_name, current_entry, preset_list, phase_info]
             bob.append(joe)
             truthful.append(known)
 
         print(bob)
         print(truthful)
-        bobby=self.FullReference(truthful,bob)
+        bobby = self.full_reference(truthful, bob)
         print(bobby)
-    def PreciseMasterful(self,current_entry, drugWebsite,nextEntry):
-        totalChecks = self.indices(drugWebsite,current_entry )
+
+    # FLAGGED FOR REMOVAL IN NEXT COMMIT (NOT USED)
+    def precise_masterful(self, current_entry, drug_website, nextEntry):
+        total_checks = self.indices(drug_website,current_entry )
         bob=[]
         truthful=[]
         bobby=[]
-        for q in range(0, len(totalChecks)):
+        for q in range(0, len(total_checks)):
            # print(current_entry)
-            presetValue=self.BestBreak(drugWebsite, current_entry, totalChecks[q],nextEntry)
-            pre=list(set(presetValue))
+            preset_value = self.best_break2(drug_website, current_entry, total_checks[q],nextEntry)
+            preset_list = list(set(preset_value))
 
-            #print(pre)
-            phasing=self.PhaseDiognostic(drugWebsite,current_entry, totalChecks[q])
-            known=self.TruthCheck(pre,phasing)
+            #print(preset_list)
+            phase_info = self.phase_diagnostic(drug_website,current_entry, total_checks[q])
+            known = self.truth_check(preset_list,phase_info)
             #fullList=[True,]
-            joe=[self.company_name,current_entry,pre,phasing]
+            joe=[self.company_name,current_entry,preset_list,phase_info]
             bob.append(joe)
             truthful.append(known)
 
         print(bob)
         print(truthful)
-        bobby=self.FullReference(truthful,bob)
+        bobby = self.full_reference(truthful,bob)
         print(bobby)
 
         return 'false'
-    def UltimateAnalytics(self,current_entry, drugWebsite):
-        #This filter performs the most intensive analysis possible
-        #It will initially be fed a current drug entry and attempt to extrapolate
-        #both the number of occurances and the most likely phase information
-        totalChecks = self.indices(drugWebsite,current_entry )
-        #Total checks contains all the instances in which the drug entry appears in the text
 
+    def ultimate_analytics(self, current_entry, drug_website):
+        """
+        This filter performs the most intensive analysis possible
+        It will initially be fed a current drug entry and attempt to extrapolate
+        both the number of occurances and the most likely phase information
+        :param current_entry: string
+        :param drug_website: string
+        :return: list
+        """
+        # Total checks contains all the instances in which the drug entry appears in the text
+        total_checks = self.indices(drug_website,current_entry )
         bob=[]
         truthful=[]
         bobby=[]
 
-        for q in range(0, len(totalChecks)):
-           # print(current_entry)
-            presetValue=self.BestBreakA(drugWebsite, current_entry, totalChecks[q])
-            if presetValue==[]:
-                #If the appended informatiion is lacking, a more intensive search will be possibly performed
-                presetValue=self.BetterBreak(drugWebsite, current_entry, totalChecks[q])
-            pre=list(set(presetValue))
+        for q in range(0, len(total_checks)):
+            preset_values = self.best_break(drug_website, current_entry, total_checks[q])
+            final_drug_name = self.adder_check(drug_website, current_entry, total_checks[q])
+            mechanics_info = self.mech_action( drug_website, current_entry, total_checks[q])
 
-            #print(pre)
-            phasing=self.PhaseDiognostic(drugWebsite,current_entry, totalChecks[q])
-            if phasing==False:
-                phasing=self.HighPrecisionPhase(self.strdata.split('<'),current_entry)
-                if phasing==False:
-                    phasing=self.QuickPhasing(current_entry,self.strdata.split('<'))
-            known=self.TruthCheck(pre,phasing)
-            #fullList=[True,]
-            joe=[self.company_name,current_entry,pre,phasing]
+            # If the appended informatiion is lacking, a more intensive search will be possibly performed
+            if preset_values == []:
+                preset_values = self.better_break(drug_website, current_entry, total_checks[q])
+
+            preset_list = list(set(preset_values))
+            phase_info = self.phase_diagnostic(drug_website, current_entry, total_checks[q])
+
+            if not phase_info:
+                phase_info = self.high_precision_phase(self.strdata.split('<'), current_entry)
+                if not phase_info:
+                    phase_info = self.quick_phasing(current_entry, self.strdata.split('<'))
+
+            known = self.TruthCheck(preset_list,phase_info)
+            joe = [self.company_name, final_drug_name, preset_list, phase_info, mechanics_info]
             bob.append(joe)
             truthful.append(known)
-        bobby=self.FullReference(truthful,bob)
-        if bobby==[]:
-            bob=self.HighPrecisionFilter(drugWebsite,current_entry)
-            bobby.append(bob)
-        return bobby
-    def FullReference(self,current_entry, listValues):
-        wholeV=0
-        indi=0
-        indi2=0
-        indi3=0
-        qlur=0
-        qlun=0
-        deleatable=0
-        for q in range(0, len(current_entry)):
-            if current_entry[q]==[True,True,False,False]:
-                wholeV=1
 
-            if current_entry[q]==[True,True,False,False]:
-                indi=1
-                deleatable=q
-                if wholeV==1:
-                    listValues.pop(deleatable)
-                    current_entry.pop(deleatable)
-                    return self.FullReference(current_entry,listValues)
-            if current_entry[q]==[True,True,True,False]:
-                indi2=1
-                qlur=q
-            if current_entry[q]==[True,True,False,True]:
-                indi3=1
-                qlun=q
-            if indi3==1 and indi2==1:
-                temp=listValues[qlur]
-                temp2=listValues[qlun]
-                listValues.pop(qlur)
-                listValues.pop(qlun)
+        bobby = self.full_reference(truthful, bob)
+
+        if bobby == []:
+            bob = self.HighPrecisionFilter(drug_website, current_entry)
+            bobby.append(bob)
+
+        return bobby
+
+    def full_reference(self, current_entry, list_values):
+        """
+
+        :param current_entry: string
+        :param list_values: list
+        :return: list
+        """
+        # Initializing variables
+        wholeV = 0
+        indi = 0
+        indi2 = 0
+        indi3 = 0
+        qlur = 0
+        qlun = 0
+        deletable = 0
+
+        for q in range(0, len(current_entry)):
+            if current_entry[q] == [True, True, False, False]:
+                wholeV = 1
+
+            if current_entry[q] == [True, True, False, False]:
+                indi = 1
+                deletable = q
+                if wholeV == 1:
+                    list_values.pop(deletable)
+                    current_entry.pop(deletable)
+                    return self.full_reference(current_entry, list_values)
+
+            if current_entry[q] == [True, True, True, False]:
+                indi2 = 1
+                qlur = q
+
+            if current_entry[q] == [True, True, False, True]:
+                indi3 = 1
+                qlun = q
+
+            if indi3 == 1 and indi2 == 1:
+                temp = list_values[qlur]
+                temp2 = list_values[qlun]
+                list_values.pop(qlur)
+                list_values.pop(qlun)
                 current_entry.pop(qlur)
                 current_entry.pop(qlun)
-                newV=[temp[0],temp[1],temp[2],temp2[3]]
-                newT=[True,True,True,True]
+                holder = temp[4] + ' ' + temp2[4]
+                nnewV = [temp[0], temp[1], temp[2], temp2[3], holder]
+                newT = [True, True, True, True]
                 listValues.append(newV)
                 current_entry.append(newT)
-                return self.FullReference(current_entry,listValues)
-        return listValues
-    def TruthCheck(self,background, phasing):
-        backgoundTruth=True;
-        phasingTruth=True;
+                return self.full_reference(current_entry, list_values)
+
+        return list_values
+
+    def truth_check(self, background, phase_info):
+        """
+
+        :param background: string
+        :param phase_info: string
+        :return: list
+        """
+        backgound_truth = True
+        phasing_truth = True
         if not background:
-            backgoundTruth=False;
-        if phasing==False:
-            phasingTruth=False;
+            backgound_truth = False
+        if not phase_info:
+            phasing_truth = False
 
-        return [True,True,backgoundTruth,phasingTruth]
-    def QuickPhasing(self,current_entry, drugWebsite):
-         for q in range(0, len(drugWebsite)):
-            if current_entry in drugWebsite[q]:
-                start=q-10
-                stop=q+5
+        return [True, True, backgound_truth, phasing_truth]
+
+    # FLAGGED (NOTATION NOT FIXED YET)
+    def quick_phasing(self, _current_entry, drug_website):
+        """
+
+        :param _current_entry: string
+        :param drug_website: string
+        :return: string
+        """
+        for q in range(0, len(drug_website)):
+
+            if _current_entry in drug_website[q]:
+                start = q - 10
+                stop = q + 5
+
                 for spec in range(start, stop):
-                   if 'phase' in drugWebsite[spec]:
-                     if 'phase3' in drugWebsite[spec]:
-                         return 'phase 3'
-                     elif 'phase3' in drugWebsite[spec+1]:
-                         return 'phase 3'
-                     if 'phase1' in drugWebsite[spec]:
-                         return 'phase 1'
-                     elif 'phase1' in drugWebsite[spec+1]:
-                         return 'phase 1'
-                     if 'phase2' in drugWebsite[spec]:
-                         return 'phase 2'
-                     elif 'phase2' in drugWebsite[spec+1]:
-                         return 'phase 2'
-                     if '3' in drugWebsite[spec]:
-                         return 'phase 3'
-                     elif '3' in drugWebsite[spec+1]:
-                         return 'phase 3'
-                     if '1' in drugWebsite[spec]:
-                         return 'phase 1'
-                     elif '1' in drugWebsite[spec+1]:
-                         return 'phase 1'
-                     if '2' in drugWebsite[spec]:
-                         return 'phase 2'
-                     elif '2' in drugWebsite[spec+1]:
-                         return 'phase 2'
-                     if 'III' in drugWebsite[q]:
-                         return 3
-                     elif 'III' in drugWebsite[q+1]:
-                         return 3
-                     if 'II' in drugWebsite[q]:
-                         return 2
-                     elif 'II' in drugWebsite[q+1]:
-                         return 2
-                     if 'I' in drugWebsite[q]:
-                         return 'phase 1'
-                     elif 'I' in drugWebsite[q+1]:
-                         return 'phase 1'
-                 #    else:
-                  #       return 'close'
+                    current_entry = drug_website[spec]
+                    future_entry = drug_website[spec]
 
 
+                    if 'phase' in drug_website[spec]:
+                         if 'phase3' in drug_website[spec]:
+                             return 'phase 3'
+                         elif 'phase3' in drug_website[spec+1]:
+                             return 'phase 3'
+                         if 'phase1' in drug_website[spec]:
+                             return 'phase 1'
+                         elif 'phase1' in drug_website[spec+1]:
+                             return 'phase 1'
+                         if 'phase2' in drug_website[spec]:
+                             return 'phase 2'
+                         elif 'phase2' in drug_website[spec+1]:
+                             return 'phase 2'
+                         if '3' in drug_website[spec]:
+                             return 'phase 3'
+                         elif '3' in drug_website[spec+1]:
+                             return 'phase 3'
+                         if '1' in drug_website[spec]:
+                             return 'phase 1'
+                         elif '1' in drug_website[spec+1]:
+                             return 'phase 1'
+                         if '2' in drug_website[spec]:
+                             return 'phase 2'
+                         elif '2' in drug_website[spec+1]:
+                             return 'phase 2'
+                         if 'III' in drug_website[q]:
+                             return 3
+                         elif 'III' in drug_website[q+1]:
+                             return 3
+                         if 'II' in drug_website[q]:
+                             return 2
+                         elif 'II' in drug_website[q+1]:
+                             return 2
+                         if 'I' in drug_website[q]:
+                             return 'phase 1'
+                         elif 'I' in drug_website[q+1]:
+                             return 'phase 1'
 
+        return False
 
-         return False
-# Any testing code goes here
-    def TotalWebPageParse(self,ProposedDrugs, DrugWebsite):
-        finalList=[]
-        phaseCorrect=0
-        EntryCorrect=0
-        totalEntry=0
+        def adder_check(self, drug_website, current_entry, index_number):
+            """
+
+            """
+            if '+' in drug_website[index_number+1]:
+                if self.checking_official(drug_website[index_number+2]) != 'null':
+                    temp = drug_website[index_number]
+                    temp2 = drug_website[index_number+2]
+                    temp3 = '+'
+                    intermediate = temp + temp3 + temp2
+                    return intermediate
+                else:
+                    return drug_website[index_number]
+            elif '+' in drug_website[index_number]:
+                if self.checking_official(drug_website[index_number+2]) != 'null':
+                    if '+' in drug_website[index_number]:
+                         temp = drug_website[index_number]
+                    temp2 = drug_website[index_number+2]
+                    temp3 = '+'
+                    intermediate = temp + temp3 + temp2
+                    return intermediate
+            else:
+                return current_entry
+
+    # FLAGGED (NOTATION NOT FIXED YET)
+    def total_web_page_parse(self, ProposedDrugs, DrugWebsite):
+        finalList = []
+        phaseCorrect = 0
+        EntryCorrect = 0
+        totalEntry = 0
         for q in range(0, len(ProposedDrugs)):
-            currentDrug=self.UltimateAnalytics(ProposedDrugs[q],DrugWebsite)
+            currentDrug = self.ultimate_analytics(ProposedDrugs[q], DrugWebsite)
             for z in range(0, len(currentDrug)):
                 finalList.append(currentDrug[z])
 
         for z in range(0,len(finalList)):
-            entrV=finalList[z]
-            if len(entrV)!=[]:
-                if entrV[3]==False:
-                    phaseCorrect=phaseCorrect+1
-                if entrV[2]==[]:
-                    EntryCorrect=EntryCorrect+1
-            totalEntry=totalEntry+1
+            entrV = finalList[z]
+            if len(entrV) != []:
+                if not entrV[3]:
+                    phaseCorrect = phaseCorrect + 1
+                if entrV[2] == []:
+                    EntryCorrect = EntryCorrect + 1
+            totalEntry = totalEntry+1
 
-        self.PhasesRight=phaseCorrect
-        self.InfoFilled=EntryCorrect
-        self.TotalEntries=totalEntry
+        self.PhasesRight = phaseCorrect
+        self.InfoFilled = EntryCorrect
+        self.TotalEntries = totalEntry
         return finalList
+
+# Class method to run only when called from terminal
+def main():
+    url = "https://www.biogen.com/en_us/research-pipeline/biogen-pipeline.html"
+
+    company_name = "Biogen"
+
+    full_parser = FullParser(company_name, url)
+
+    jo = full_parser.final_list
+    shmo = full_parser.second_filter
+
+    print(full_parser.total_web_page_parse(shmo,jo))
+    print(full_parser.ultimate_analytics(shmo[1],jo))
+    print(full_parser.high_precision_filter(jo,shmo[1]))
+    print(shmo[1])
+    print('Percentage of Drugs with phase information available:')
+    print((((1-(full_parser.PhasesRight/full_parser.TotalEntries))*100)))
+    print('Percentage of Drugs with treatment information available:')
+    print((((1-(full_parser.InfoFilled/full_parser.TotalEntries))*100)))
+
+
 if __name__ == "__main__":
-
-
-    # Biogen, Abbvie, Teva, Bristol-Meyer --Using Dirty HTML
-    # Roche, Astrazeneca, Lilly, Alexion, novonordisk, lundbeck,valeant ----Normal
-    # SHire, daiichisankyo--- P1 sysytem  GlaaskoSmithKliene, Dainippon Sumitomo,
-    #Close Range: , Endo Health Solutions),teijin-pharma (consider III system)
-    #Impossible: Amgen, Novaris, Ionis, Bayer, boehringer-ingelheim, allegron, Baxter, Galderma,actelion, Ipsen
-    #Better Left to PDF: Merck,Shionogi, Ono
-    #No Pipeline: Forrrext, Abbot Labs,STADA
-
-
-    # This function will return possible treatments
-    # medicine= enchant("en-medical.multi");
-    # url='http://www.alexion.com/research-development/pipeline'
-   # url='https://www.shire.com/research-and-development/pipeline'
-   # url='http://www.gsk.com/en-gb/research/what-we-are-working-on/product-pipeline/'
-   # url = "http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.html"
-   url = "https://www.biogen.com/en_us/research-pipeline/biogen-pipeline.html"
-    #url='https://www.abbvie.com/our-science/pipeline.html'
-   # url='https://www.abbvie.com/our-science/pipeline/abbv-2451.html'
-    #url='http://www.amgenpipeline.com/pipeline/'
-   # url = "https://www.astrazeneca.com/our-science/pipeline.html"
-   # url = "https://www.lilly.com/pipeline/"
-    #url='http://www.tevapharm.com/research_development/rd_focus/pipeline/'
-    #url='http://www.bms.com/research/pipeline/Pages/default.aspx'
-    #url='https://www.chugai-pharm.co.jp/english/ir/reports_downloads/pipeline.html'
-    #url='https://www.drugs.com/manufacturer/edwards-pharmaceuticals-253.html'
-    #url='http://mobile.cslbehring.com/productpipeline.htm'
-    #url='http://www.novonordisk.com/rnd/rd-pipeline.html'
-    #url='http://www.daiichisankyo.com/rd/pipeline/development_pipeline/index.html'
-    #url='http://www.gsk.com/en-gb/research/what-we-are-working-on/product-pipeline/'
-    #url='http://www.ds-pharma.com/rd/clinical/pipeline.html'
-    #url='http://www.valeant.com/operational-expertise/valeant-united-states/pipeline' ---Works Well
-    #url='http://investor.lundbeck.com/pipeline.cfm'
- #   url='http://www.endo.com/endopharma/r-d/clinical-research/clinical-trials-and-studies'
-    #url= 'https://www1.actelion.com/en/scientists/development-pipeline/index.page'
-  #  url='http://www.teijin-pharma.com/business/research.html'
-   # url='http://www.ucb.com/our-science/pipeline'
-   company_name = "Biogen"
-
-   full_parser = FullParser(company_name, url)
-   full_parser.start()
-
-   jo=full_parser.FinalList2
-   shmo=full_parser.SecondFilter
-   full_parser.Masterful(shmo[1],jo)
-   #full_parser.PreciseMasterful(shmo[12],jo,shmo[11])
-   #full_parser.Masterful(shmo[3],jo)
-    #full_parser.Masterful(shmo[4],jo)
-    #full_parser.Masterful(shmo[21],jo)
-    #print(full_parser.FullReference([[True, True, False, True], [True, True, True, False], [True, True, False, False]],[['Roche', 'Pertuzumab', [], 'phase 3'], ['Roche', 'Pertuzumab', ['cancer', 'breast'], False],['Roche', 'Pertuzumab', [], False]]))
-    #full_parser.BetterBreak(jo,shmo[2], 7655)
-    #full_parser.BetterBreak(jo,shmo[2], 7715)
-    #full_parser.BetterBreak(jo,shmo[2], 7771)
-    #print(full_parser.PhaseDiognostic(jo,shmo[2], 7771))
-    #print(full_parser.PhaseDiognostic(jo,shmo[2], 7655))
-    #print(full_parser.strdata.split('<'))
-    #print(full_parser.HighPrecisionFilter(full_parser.strdata.split('<'),shmo[4]))
-    #print(full_parser.HighPrecisionFilter(jo,shmo[4]))
-   print(full_parser.UltimateAnalytics(shmo[1],jo))
-   print(full_parser.HighPrecisionPhase(full_parser.strdata.split('<'),shmo[0]))
-   print(full_parser.QuickPhasing(shmo[0],full_parser.strdata.split('<') ))
-   print(shmo[1])
-   print(full_parser.TotalWebPageParse(shmo,jo))
-   print(full_parser.UltimateAnalytics(shmo[1],jo))
-   print(full_parser.HighPrecisionFilter(jo,shmo[1]))
-   print(shmo[1])
-   print('Percentage of Drugs with phase information available:')
-   print((((1-(full_parser.PhasesRight/full_parser.TotalEntries))*100)))
-   print('Percentage of Drugs with treatment information available:')
-   print((((1-(full_parser.InfoFilled/full_parser.TotalEntries))*100)))
-
-    #print(full_parser.TotalEntries)
-
-    # print(full_parser.strdata.split('<'))
+    main()
