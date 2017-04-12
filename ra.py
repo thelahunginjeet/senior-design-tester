@@ -6,20 +6,36 @@ import enchant
 import pandas
 
 class FullParser:
-    eng = enchant.Dict("en_US")  # English dictionary to compare
 
     def __init__(self, _company_name, url):
         # Getting data from website
         r = requests.get(url)
 
         # Setting information into class variable
+        self.eng = enchant.Dict("en_US")  # English dictionary to compare
         self.company_name = _company_name
         data = r.text
 
         # Creating and searching lists
         final_list = self.create_list(data)
-        (self.final_list, self.second_filter) = self.search_list(final_list)
+        (final_list, second_filter) = self.search_list(final_list)
 
+        # Starts computation
+        self.start(final_list, second_filter)
+
+    # MAIN
+    def start(self, final_list, second_filter):
+        """
+        Runs program and determines anlytics
+        """
+        print(self.total_web_page_parse(second_filter, final_list))
+        print(self.ultimate_analytics(second_filter[1], final_list))
+        print(self.high_precision_filter(final_list, second_filter[1]))
+        print(second_filter[1])
+        print('Percentage of Drugs with phase information available:')
+        print((((1-(self.PhasesRight/self.TotalEntries))*100)))
+        print('Percentage of Drugs with treatment information available:')
+        print((((1-(self.InfoFilled/self.TotalEntries))*100)))
 
     """ PRE PROCESSERS """
 
@@ -260,6 +276,38 @@ class FullParser:
                              entry.append(drug_website[y])
         return entry
 
+    def mech_action(self, drug_website, current_entry, index_number):
+        """
+        This method can extract a block of words around the drug name regarding
+        the mechanism
+        :param drug_website: list
+        :param current_entry: string
+        :param index_number: int
+        :return: list
+        """
+        return_list = []
+        pwl = enchant.request_pwl_dict("mechanisms.txt")
+        start = 0
+        if index_number >= 11:
+                start = index_number - 11
+        else:
+                start = 0
+        end = index_number + 15
+        for x in range(index_number, end):
+            if self.checking_official(drug_website[x+1]) == 'null':
+                if pwl.check(drug_website[x]):
+                    return_list.append(drug_website[x])
+            else:
+                break
+
+        for x in range(1, 10):
+            if self.checking_official(drug_website[index_number-x]) == 'null':
+                if pwl.check(drug_website[index_number-x]):
+                    return_list.append(drug_website[index_number-x])
+            else:
+                break
+
+        return return_list
 
     """ BREAKERS """
     # FLAGGED FOR REMOVAL IN NEXT COMMIT (NOT USED)
@@ -692,7 +740,7 @@ class FullParser:
                 if not phase_info:
                     phase_info = self.quick_phasing(current_entry, self.strdata.split('<'))
 
-            known = self.TruthCheck(preset_list,phase_info)
+            known = self.truth_check(preset_list,phase_info)
             joe = [self.company_name, final_drug_name, preset_list, phase_info, mechanics_info]
             bob.append(joe)
             truthful.append(known)
@@ -700,7 +748,7 @@ class FullParser:
         bobby = self.full_reference(truthful, bob)
 
         if bobby == []:
-            bob = self.HighPrecisionFilter(drug_website, current_entry)
+            bob = self.high_precision_filter(drug_website, current_entry)
             bobby.append(bob)
 
         return bobby
@@ -856,6 +904,31 @@ class FullParser:
             else:
                 return current_entry
 
+    def adder_check(self, drug_website, current_entry, index_number):
+        """
+
+        """
+        if '+' in drug_website[index_number+1]:
+            if self.checking_official(drug_website[index_number+2]) != 'null':
+
+                temp = drug_website[index_number]
+                temp2 = drug_website[index_number+2]
+                temp3 = '+'
+                intermediate = temp + temp3 + temp2
+                return intermediate
+            else:
+                return drug_website[index_number]
+        elif '+' in drug_website[index_number]:
+            if self.checking_official(drug_website[index_number+2]) != 'null':
+                if '+' in drug_website[index_number]:
+                     temp = drug_website[index_number]
+                temp2 = drug_website[index_number+2]
+                temp3 = '+'
+                intermediate = temp + temp3 + temp2
+                return intermediate
+        else:
+            return current_entry
+
     # FLAGGED (NOTATION NOT FIXED YET)
     def total_web_page_parse(self, ProposedDrugs, DrugWebsite):
         finalList = []
@@ -884,23 +957,8 @@ class FullParser:
 # Class method to run only when called from terminal
 def main():
     url = "https://www.biogen.com/en_us/research-pipeline/biogen-pipeline.html"
-
     company_name = "Biogen"
-
     full_parser = FullParser(company_name, url)
-
-    jo = full_parser.final_list
-    shmo = full_parser.second_filter
-
-    print(full_parser.total_web_page_parse(shmo,jo))
-    print(full_parser.ultimate_analytics(shmo[1],jo))
-    print(full_parser.high_precision_filter(jo,shmo[1]))
-    print(shmo[1])
-    print('Percentage of Drugs with phase information available:')
-    print((((1-(full_parser.PhasesRight/full_parser.TotalEntries))*100)))
-    print('Percentage of Drugs with treatment information available:')
-    print((((1-(full_parser.InfoFilled/full_parser.TotalEntries))*100)))
-
 
 if __name__ == "__main__":
     main()
