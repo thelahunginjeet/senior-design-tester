@@ -757,18 +757,19 @@ class FullParser:
                 current_entry.pop(qlun)
                 mechi_truth=False
                 inner_truth=False
-                holder=temp[4]+' '+temp2[4]
-                if temp[5]!=False:
-                    mechi_truth_possible=temp[5]
-                    mechi_final.append(mechi_truth_possible)
-                if temp2[5]!=False:
-                    mechi_truth_possibleB=temp2[5]
+    
+                
+                if temp[4]!=False:
+                        mechi_truth_possible=temp[4]
+                        mechi_final.append(mechi_truth_possible)
+                if temp2[4]!=False:
+                    mechi_truth_possibleB=temp2[4]
                     mechi_final.append(mechi_truth_possibleB)
                 if mechi_final!=[]:
                     mechi_truth=mechi_final.append(mechi_truth_possibleB)
                     inner_truth=True
 
-                newV=[temp[0],temp[1],temp[2],temp2[3],holder,mechi_truth]
+                newV=[temp[0],temp[1],temp[2],temp2[3],mechi_truth]
                 newT=[True,True,True,True,inner_truth ]
                 list_values.append(newV)
                 current_entry.append(newT)
@@ -930,7 +931,7 @@ class FullParser:
 
 # Class method to run only when called from terminal
 def main():
-    url = "http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.html"
+    url = url = "https://www.lilly.com/pipeline/"
     # url = "https://www.biogen.com/en_us/research-pipeline/biogen-pipeline.html"
     company_name = "Shire"
     full_parser = FullParser(company_name, url)
