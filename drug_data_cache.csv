@@ -1,0 +1,103 @@
+	Company Name	Product Name	Treatment Area	Phase	Mechanism of Action
+0	shire	SHP609	['Genetic', 'Diseases']	3	
+1	shire	SHP640	['Genetic', 'Diseases']	2	
+2	shire	BAX826	['Disease', 'Willebrand']	1	False
+3	shire	SHP623	[]	1	False
+4	shire	SHP607	['Diseases', 'Genetic']	2	False
+5	shire	SHP621	['Oncology']	3	
+6	shire	SHP555	['ADHD', 'Chronic', 'Constipation']	3	
+7	shire	SHP647	['Ulcerative']	3	
+8	shire	SM101	['(SLE)']	1	False
+9	shire	SHP622	"[""Friedreich's"", 'Ataxia']"	1	
+10	shire	SHP652	['Lupus', '(SLE)']	3	
+11	shire	SHP626	[]	2	
+12	shire	SHP655	[]	1	
+13	shire	SHP656	['Hemophilia', 'A']	3	
+14	shire	SHP620	['CMV', 'Oncology']	3	
+15	shire	SHP465	['Oncology', 'ADHD', 'Chronic', 'Constipation']	3	
+16	shire	SHP625	['Syndrome']	2	
+17	shire	BAX930	['Hemophilia', 'A']	1	False
+18	shire	SHP643	['Genetic', 'Diseases']	3	
+19	shire	SHP611	['Genetic', 'Diseases']	3	
+20	shire	SHP631	['Genetic', 'Diseases']	1	
+21	biogen	Infliximab	[]	False	
+22	biogen	BIIB067	['ALS', 'sclerosis']	2	False
+23	biogen	BIIB067	['ALS']	2	False
+24	biogen	BIIB074	['lupus', 'disease']	2	False
+25	biogen	BIIB074	[]	2	False
+26	biogen	obinutuzumab.	['disease']	False	False
+27	biogen	BIIB059	['Lupus', 'fibrosis', 'disease', 'chronic', 'inflammatory']	2	False
+28	biogen	BDCA2	[]	2	False
+29	biogen	BDCA2	['lupus', 'inflammatory']	2	False
+30	biogen	E2609	"[""Alzheimer's"", 'disease', 'common']"	3	False
+31	biogen	E2609	[]	3	False
+32	biogen	E2609	['non-Hodgkin’s']	3	False
+33	biogen	Opicinumab	['sclerosis', 'disease']	2	False
+34	biogen	Obinutuzumab	['lymphoma', 'lymphocytic', 'non-Hodgkin’s', 'chronic']	3	False
+35	biogen	Obinutuzumab	[]	3	False
+36	biogen	BAN2401	['disease', 'common']	2	False
+37	biogen	BAN2401	['brain']	2	False
+38	biogen	BIIB061	"['sclerosis', 'disease', ""Parkinson's""]"	2	False
+39	biogen	BIIB061	[]	2	False
+40	biogen	obinutuzumab	[]	3	False
+41	biogen	obinutuzumab	['cancer']	3	False
+42	biogen	BIIB054	"['disease', ""Parkinson's""]"	2	False
+43	biogen	BIIB054	[]	2	False
+44	biogen	Aducanumab	['disease', 'common']	3	False
+45	biogen	Aducanumab	[]	3	False
+46	biogen	BG00011	['pulmonary', 'fibrosis', 'brain', 'disease', 'Pulmonary', 'Idiopathic']	2	False
+47	biogen	BG00011	['fibrosis']	2	False
+48	biogen	Dapirolizumab	['Lupus', 'disease', 'chronic', 'inflammatory']	2	False
+49	biogen	Dapirolizumab	['lupus', 'disease']	2	False
+50	biogen	aducanumab	"[""Alzheimer's"", 'disease']"	3	False
+51	biogen	natalizumab	[]	2	False
+52	biogen	daclizumab	[]	False	
+53	biogen	BACE1	"[""Alzheimer's"", 'disease', 'common']"	False	
+54	biogen	rituximab	[]	False	
+55	biogen	fampridine	[]	False	
+56	biogen	Natalizumab	['stroke', 'Crohn’s', 'ischemic', 'lupus', 'disease', 'Acute', 'sclerosis']	2	False
+57	biogen	Natalizumab	['acute', 'lymphocytic', 'brain', 'inflammatory']	2	False
+58	chugai pharma	ERY974	['tumors']	1	False
+59	chugai pharma	nemolizumab	['dermatitis']	2	False
+60	chugai pharma	URC102	['Gout']	2	False
+61	chugai pharma	CKI27	['tumors']	1	False
+62	chugai pharma	emtansine	['conjugate', 'cancer', 'Breast', 'lymphoma']	3	False
+63	chugai pharma	PCO371	[]	2	False
+64	chugai pharma	pertuzumab	['cancer', 'Breast']	2	False
+65	chugai pharma	SA237	['sclerosis', 'Neuromyelitis']	3	False
+66	chugai pharma	RG7412	['disease']	3	False
+67	chugai pharma	emicizumab	['Hemophilia', 'A']	3	False
+68	chugai pharma	Anti-HER2	['conjugate', 'lymphoma']	3	False
+69	chugai pharma	Anti-C5	[]	2	False
+70	chugai pharma	RG3502	['cancer', 'Breast']	3	False
+71	chugai pharma	RG3637	['pulmonary', 'fibrosis', 'Hemophilia', 'Idiopathic', 'A']	3	False
+72	chugai pharma	polatuzumab	['conjugate', 'tumors']	1	False
+73	chugai pharma	tocilizumab	['vasculitis']	False	False
+74	chugai pharma	RG6078	['tumors']	1	False
+75	chugai pharma	Anti-Glypican-3	['tumors']	1	False
+76	chugai pharma	codrituzumab	['tumors']	3	False
+77	chugai pharma	RG1273	['cancer', 'Breast', 'Malignant']	2	False
+78	chugai pharma	RO5424802	['cancer']	False	
+79	chugai pharma	RG7604	['conjugate', 'tumors']	1	False
+80	chugai pharma	RG435	[]	3	False
+81	chugai pharma	RG7596	['conjugate']	1	False
+82	chugai pharma	EOS789	['Autoimmune', 'Diseases']	1	False
+83	chugai pharma	Anti-IL-6	['Neuromyelitis']	3	False
+84	chugai pharma	Anti-IL-31	['dermatitis']	2	False
+85	chugai pharma	atezolizumab	[]	3	False
+86	chugai pharma	trastuzumab	['cancer', 'Breast']	3	False
+87	chugai pharma	obinutuzumab	['lymphoma']	3	False
+88	chugai pharma	RO5137382	['Breast', 'cancer']	3	
+89	chugai pharma	RG7440	['tumors']	1	False
+90	chugai pharma	bevacizumab	['Malignant']	3	False
+91	chugai pharma	RG7446	[]	3	False
+92	chugai pharma	URAT1	['Gout']	2	False
+93	chugai pharma	RG1450	['disease']	3	False
+94	chugai pharma	Anti-IL-13	['fibrosis', 'Idiopathic', 'pulmonary']	2	False
+95	chugai pharma	lebrikizumab	['fibrosis', 'Idiopathic', 'pulmonary']	3	False
+96	chugai pharma	CIM331	[]	2	False
+97	chugai pharma	alectinib	['cancer']	3	False
+98	chugai pharma	Code4519	[]	Unknown	
+99	chugai pharma	RG7916	['atrophy']	1	False
+100	chugai pharma	crenezumab	['disease']	1	False
+101	chugai pharma	gantenerumab	['disease']	3	False
