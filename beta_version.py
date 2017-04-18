@@ -3,7 +3,7 @@ import re
 from bs4 import BeautifulSoup as bs
 import requests
 import enchant
-import pandas
+# import pandas as pd
 
 class FullParser:
 
@@ -28,7 +28,11 @@ class FullParser:
         """
         Runs program and determines anlytics
         """
-        self.total_web_page_parse(second_filter, final_list)
+        # Getting drug data
+        self.__final_drug_data = self.total_web_page_parse(second_filter, final_list)
+        # self.__drug_data_frame = pd.DataFrame(prelim_drug_data)
+
+        # Getting analytics
         self.ultimate_analytics(second_filter[1], final_list)
         self.high_precision_filter(final_list, second_filter[1])
 
@@ -273,6 +277,8 @@ class FullParser:
                     return_list.append(drug_website[index_number-x])
             else:
                 break
+        if return_list==[]:
+            return False;
 
         return return_list
 
@@ -316,6 +322,10 @@ class FullParser:
             start = 0
 
         end = index_number + 15
+        if end >= len(drug_website):
+            end = len(drug_website)-1
+
+
 
         for x in range(start, end):
             if pwl.check(drug_website[x]):
@@ -340,7 +350,7 @@ class FullParser:
         else:
             start = 0
 
-        end = index_number+15
+        end = index_number+17
 
         for x in range(index_number, end):
             if self.checking_official(drug_website[x+1]) == 'null':
@@ -367,9 +377,12 @@ class FullParser:
         else:
             start=0;
         end=indexNumber+15
+        if end>=len(drugWebsite):
+            end=len(drugWebsite)-1;
         for x in range(start, end):
 
                  currentEntry=drugWebsite[x]
+
                  futureEntry=drugWebsite[x+1]
                  pattern1=re.compile('^[Phase]')
                  pattern2=re.compile('^[phase]')
@@ -380,29 +393,29 @@ class FullParser:
                  #bob.append(drugWebsite[99])
                  if self.reiterated_phases(currentEntry)==True:
                      if 'phase3' in currentEntry:
-                         return 'phase 3'
+                         return '3'
                      elif 'phase3' in futureEntry:
-                         return 'phase 3'
+                         return '3'
                      if 'phase1' in currentEntry:
-                         return 'phase 1'
+                         return '1'
                      elif 'phase1' in futureEntry:
-                         return 'phase 1'
+                         return '1'
                      if 'phase2' in currentEntry:
-                         return 'phase 2'
+                         return '2'
                      elif 'phase2' in futureEntry:
-                         return 'phase 2'
+                         return '2'
                      if '3' in currentEntry:
-                         return 'phase 3'
+                         return '3'
                      elif '3' in futureEntry:
-                         return 'phase 3'
+                         return '3'
                      if '1' in currentEntry:
-                         return 'phase 1'
+                         return '1'
                      elif '1' in futureEntry:
-                         return 'phase 1'
+                         return '1'
                      if '2' in currentEntry:
-                         return 'phase 2'
+                         return '2'
                      elif '2' in futureEntry:
-                         return 'phase 2'
+                         return '2'
                      if 'III' in currentEntry:
                          return 3
                      elif 'III' in futureEntry:
@@ -412,15 +425,15 @@ class FullParser:
                      elif 'II' in futureEntry:
                          return 2
                      if 'I' in currentEntry:
-                         return 'phase 1'
+                         return '1'
                      elif 'I' in futureEntry:
-                         return 'phase 1'
+                         return '1'
                      elif 'P1' in currentEntry:
-                         return 'phase 1'
+                         return '1'
                      elif 'P2' in currentEntry:
-                         return 'phase 2'
+                         return '2'
                      elif 'P3' in currentEntry:
-                         return 'phase 3'
+                         return '3'
 
                      else :
                          return False
@@ -562,7 +575,6 @@ class FullParser:
     # FLAGGED FOR REMOVAL IN FINAL COMMIT (NOT USED)
     def masterful(self, drug_website, current_entry):
         """
-
         :param drug_website: string
         :param current_entry: string
         :return: list
@@ -645,11 +657,19 @@ class FullParser:
                     # print("running")
                     phase_info = self.quick_phasing(current_entry, self.strdata.split('<'))
                     # print(phase_info)
-            known = self.truth_check(preset_list, phase_info)
+            known = self.advanced_truth_check(preset_list, phase_info,mechanics_info )
             joe = [self.company_name, final_drug_name, preset_list, phase_info, mechanics_info]
             bob.append(joe)
+            truthful.append(known)
+        bobby = self.complete_reference(truthful, bob)
 
-        bobby = self.full_reference(truthful, bob)
+
+        new_k = []
+        for elem in bobby:
+            if elem not in new_k:
+                new_k.append(elem)
+        bobby = new_k
+        #bobby=self.merge_same_name(bobby)
 
         if bobby == []:
             bob = self.high_precision_filter(drug_website, current_entry)
@@ -659,7 +679,6 @@ class FullParser:
 
     def full_reference(self, current_entry, list_values):
         """
-
         :param current_entry: string
         :param list_values: list
         :return: list
@@ -709,9 +728,89 @@ class FullParser:
 
         return list_values
 
+    def complete_reference(self, current_entry, list_values):
+        """
+        :param current_entry: string
+        :param list_values: list
+        :return: list
+        """
+        wholeV=0
+        indi=0
+        indi2=0
+        indi3=0
+        qlur=0
+        qlun=0
+        deleatable=0
+        for q in range(0, len(current_entry)):
+            if current_entry[q]==[True,True,False,False,False]:
+                wholeV=1
+
+            if current_entry[q]==[True,True,False,False,False]:
+                indi=1
+                deleatable=q
+                if wholeV==1:
+                    list_values.pop(deleatable)
+                    current_entry.pop(deleatable)
+                    return self.complete_reference(current_entry,list_values)
+            if current_entry[q]==[True,True,True,False,True] or current_entry[q]==[True,True,True,False,False]:
+                indi2=1
+                qlur=q
+            if current_entry[q]==[True,True,False,True, True] or current_entry[q]==[True,True,False,True,False]:
+                indi3=1
+                qlun=q
+            if indi3==1 and indi2==1:
+                mechi_final=[]
+                temp=list_values[qlur]
+                temp2=list_values[qlun]
+                list_values.pop(qlur)
+                list_values.pop(qlun)
+                current_entry.pop(qlur)
+                current_entry.pop(qlun)
+                mechi_truth=False
+                inner_truth=False
+
+
+                if temp[4]!=False:
+                        mechi_truth_possible=temp[4]
+                        mechi_final.append(mechi_truth_possible)
+                if temp2[4]!=False:
+                    mechi_truth_possibleB=temp2[4]
+                    mechi_final.append(mechi_truth_possibleB)
+                if mechi_final!=[]:
+                    mechi_truth=mechi_final.append(mechi_truth_possibleB)
+                    inner_truth=True
+
+                newV=[temp[0],temp[1],temp[2],temp2[3],mechi_truth]
+                newT=[True,True,True,True,inner_truth ]
+                list_values.append(newV)
+                current_entry.append(newT)
+                return self.complete_reference(current_entry,list_values)
+        return list_values
+
+    def merge_same_name(self, total_drugs):
+        for q in range(0, len(total_drugs)):
+            if q<(len(total_drugs)-1):
+                current_entry=total_drugs[q]
+                future_entry=total_drugs[q+1]
+                if future_entry[1]==current_entry[1]:
+                    if future_entry[3]==current_entry[3]:
+                        if future_entry[4]==current_entry[4]:
+                            if future_entry[2]==current_entry[2]:
+                                new_total_drugs=total_drugs.pop(q)
+                                return self.merge_same_name(new_total_drugs)
+                            else:
+                                mergedlist = future_entry[2] + future_entry[2]
+                                new_target= list(set(mergedlist))
+                                total_drugs.pop(q)
+                                total_drugs.pop(q)
+                                new_entry=[current_entry[0],current_entry[1],new_target, current_entry[3],current_entry[4]]
+
+                                total_drugs.insert(q,new_entry)
+                                return self.merge_same_name(total_drugs)
+        return total_drugs
+
     def truth_check(self, background, phase_info):
         """
-
         :param background: string
         :param phase_info: string
         :return: list
@@ -725,10 +824,27 @@ class FullParser:
 
         return [True, True, backgound_truth, phasing_truth]
 
+    def advanced_truth_check(self, background, phase_info,mechi_info):
+        """
+        :param background: string
+        :param phase_info: string
+        :return: list
+        """
+        backgound_truth = True
+        phasing_truth = True
+        mechi_truth = True
+        if not background:
+            backgound_truth = False
+        if not phase_info:
+            phasing_truth = False
+        if not mechi_info:
+            mechi_truth=False
+
+        return [True, True, backgound_truth, phasing_truth,mechi_truth]
+
     # FLAGGED (NOTATION NOT FIXED YET)
     def quick_phasing(self, _current_entry, drug_website):
         """
-
         :param _current_entry: string
         :param drug_website: string
         :return: string
@@ -746,29 +862,29 @@ class FullParser:
 
                     if 'phase' in drug_website[spec]:
                          if 'phase3' in drug_website[spec]:
-                             return 'phase 3'
+                             return '3'
                          elif 'phase3' in drug_website[spec+1]:
-                             return 'phase 3'
+                             return '3'
                          if 'phase1' in drug_website[spec]:
-                             return 'phase 1'
+                             return '1'
                          elif 'phase1' in drug_website[spec+1]:
-                             return 'phase 1'
+                             return '1'
                          if 'phase2' in drug_website[spec]:
-                             return 'phase 2'
+                             return '2'
                          elif 'phase2' in drug_website[spec+1]:
-                             return 'phase 2'
+                             return '2'
                          if '3' in drug_website[spec]:
-                             return 'phase 3'
+                             return '3'
                          elif '3' in drug_website[spec+1]:
-                             return 'phase 3'
+                             return '3'
                          if '1' in drug_website[spec]:
-                             return 'phase 1'
+                             return '1'
                          elif '1' in drug_website[spec+1]:
-                             return 'phase 1'
+                             return '1'
                          if '2' in drug_website[spec]:
-                             return 'phase 2'
+                             return '2'
                          elif '2' in drug_website[spec+1]:
-                             return 'phase 2'
+                             return '2'
                          if 'III' in drug_website[q]:
                              return 3
                          elif 'III' in drug_website[q+1]:
@@ -778,16 +894,14 @@ class FullParser:
                          elif 'II' in drug_website[q+1]:
                              return 2
                          if 'I' in drug_website[q]:
-                             return 'phase 1'
+                             return '1'
                          elif 'I' in drug_website[q+1]:
-                             return 'phase 1'
+                             return '1'
 
         return False
 
-
     def adder_check(self, drug_website, current_entry, index_number):
         """
-
         """
         if '+' in drug_website[index_number+1]:
             if self.checking_official(drug_website[index_number+2]) != 'null':
@@ -833,12 +947,12 @@ class FullParser:
         self.PhasesRight = phaseCorrect
         self.InfoFilled = EntryCorrect
         self.TotalEntries = totalEntry
+        self.FinalList = finalList
         return finalList
 
     @property
     def final_drug_data(self):
-        # return __final_drug_data
-        pass
+        return self.__final_drug_data
 
     @property
     def drug_data_scrape_rate(self):
@@ -850,10 +964,16 @@ class FullParser:
 
 # Class method to run only when called from terminal
 def main():
-    url='https://www.shire.com/research-and-development/pipeline'
-    # url = "https://www.biogen.com/en_us/research-pipeline/biogen-pipeline.html"
-    company_name = "Shire"
+    #url='http://www.gsk.com/en-gb/research/what-we-are-working-on/product-pipeline/'
+    url = "https://www.biogen.com/en_us/research-pipeline/biogen-pipeline.html"
+    company_name = "biogen"
     full_parser = FullParser(company_name, url)
+
+    # df = pd.DataFrame(full_parser.FinalList)
+    # cols = ['Company Name', 'Product Name','Treatment area','Phase','Mechanism of Action' ]
+    # df.columns = cols
+    # print(df)
+    # df.to_csv('testingAlpha', sep='\t')
 
 if __name__ == "__main__":
     main()
