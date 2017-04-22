@@ -1,38 +1,22 @@
-	Company Name	Product Name	Treatment Area	Phase	Mechanism of Action
-0	biogen	BACE1	"[""Alzheimer's"", 'disease', 'common']"	False	
-1	biogen	E2609	"['common', ""Alzheimer's"", 'disease']"	3	False
-2	biogen	E2609	[]	3	False
-3	biogen	E2609	['non-Hodgkin’s']	3	False
-4	biogen	rituximab	[]	False	
-5	biogen	Opicinumab	['disease', 'sclerosis']	2	False
-6	biogen	BIIB074	['lupus', 'disease']	2	False
-7	biogen	BIIB074	[]	2	False
-8	biogen	Dapirolizumab	['Lupus', 'inflammatory', 'chronic', 'disease']	2	False
-9	biogen	Dapirolizumab	['lupus', 'disease']	2	False
-10	biogen	BIIB059	['fibrosis', 'Lupus', 'inflammatory', 'disease', 'chronic']	2	False
-11	biogen	Obinutuzumab	['non-Hodgkin’s', 'lymphoma', 'chronic', 'lymphocytic']	3	False
-12	biogen	Obinutuzumab	[]	3	False
-13	biogen	BAN2401	['common', 'disease']	2	False
-14	biogen	BAN2401	['brain']	2	False
-15	biogen	fampridine	[]	False	
-16	biogen	BG00011	['fibrosis', 'Idiopathic', 'pulmonary', 'disease', 'Pulmonary', 'brain']	2	False
-17	biogen	BG00011	['fibrosis']	2	False
-18	biogen	natalizumab	[]	2	False
-19	biogen	BDCA2	[]	2	False
-20	biogen	BDCA2	['inflammatory', 'lupus']	2	False
-21	biogen	BIIB061	"[""Parkinson's"", 'disease', 'sclerosis']"	2	False
-22	biogen	BIIB061	[]	2	False
-23	biogen	Infliximab	[]	False	
-24	biogen	Natalizumab	['Crohn’s', 'lupus', 'Acute', 'disease', 'ischemic', 'stroke', 'sclerosis']	2	False
-25	biogen	Natalizumab	['inflammatory', 'acute', 'brain', 'lymphocytic']	2	False
-26	biogen	daclizumab	[]	False	
-27	biogen	BIIB054	"[""Parkinson's"", 'disease']"	2	False
-28	biogen	BIIB054	[]	2	False
-29	biogen	BIIB067	['ALS', 'sclerosis']	2	False
-30	biogen	BIIB067	['ALS']	2	False
-31	biogen	obinutuzumab.	['disease']	False	False
-32	biogen	obinutuzumab	[]	3	False
-33	biogen	obinutuzumab	['cancer']	3	False
-34	biogen	Aducanumab	['common', 'disease']	3	False
-35	biogen	Aducanumab	[]	3	False
-36	biogen	aducanumab	"[""Alzheimer's"", 'disease']"	3	False
+	Company Name	Product Name	Treatment Area	Phase	Mechanism of Action	Pipeline/PDF Url	Flags
+0	shire	SHP626	[]	2	False	https://www.shire.com/research-and-development/pipeline	[]
+1	shire	SHP621	['Oncology']	3	False	https://www.shire.com/research-and-development/pipeline	[]
+2	shire	SHP465	['Oncology', 'ADHD', 'Chronic', 'Constipation']	3	False	https://www.shire.com/research-and-development/pipeline	[]
+3	shire	SHP623	[]	1	False	https://www.shire.com/research-and-development/pipeline	[]
+4	shire	SHP622	"[""Friedreich's"", 'Ataxia']"	1	False	https://www.shire.com/research-and-development/pipeline	[]
+5	shire	SHP607	['Genetic', 'Diseases']	2	False	https://www.shire.com/research-and-development/pipeline	[]
+6	shire	SHP631	['Genetic', 'Diseases']	1	False	https://www.shire.com/research-and-development/pipeline	[]
+7	shire	SHP656	['Hemophilia', 'A']	3	False	https://www.shire.com/research-and-development/pipeline	[]
+8	shire	SM101	['(SLE)']	1	False	https://www.shire.com/research-and-development/pipeline	[]
+9	shire	BAX930	['A', 'Hemophilia']	1	False	https://www.shire.com/research-and-development/pipeline	[]
+10	shire	SHP652	['Lupus', '(SLE)']	3	False	https://www.shire.com/research-and-development/pipeline	[]
+11	shire	SHP609	['Genetic', 'Diseases']	3	False	https://www.shire.com/research-and-development/pipeline	[]
+12	shire	SHP611	['Genetic', 'Diseases']	3	False	https://www.shire.com/research-and-development/pipeline	[]
+13	shire	SHP643	['Genetic', 'Diseases']	3	False	https://www.shire.com/research-and-development/pipeline	[]
+14	shire	SHP647	['Ulcerative']	3	False	https://www.shire.com/research-and-development/pipeline	[]
+15	shire	SHP655	[]	1	False	https://www.shire.com/research-and-development/pipeline	[]
+16	shire	SHP620	['CMV', 'Oncology']	3	False	https://www.shire.com/research-and-development/pipeline	[]
+17	shire	BAX826	['Willebrand', 'Disease']	1	False	https://www.shire.com/research-and-development/pipeline	[]
+18	shire	SHP625	['Syndrome']	2	False	https://www.shire.com/research-and-development/pipeline	[]
+19	shire	SHP555	['ADHD', 'Chronic', 'Constipation']	3	False	https://www.shire.com/research-and-development/pipeline	[]
+20	shire	SHP640	['Genetic', 'Diseases']	2	False	https://www.shire.com/research-and-development/pipeline	[]
