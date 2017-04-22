@@ -45,3 +45,4 @@ df.columns = cols
 df.to_csv('drug_data_cache.csv', sep='\t')
 # print(df)
 print("Completed Succesfully, open csv")
+print(df.head())

@@ -30,19 +30,16 @@ class FullParser:
         """
         # Getting drug data
         self.__final_drug_data = self.total_web_page_parse(second_filter, final_list)
-        # self.__drug_data_frame = pd.DataFrame(prelim_drug_data)
 
         # Getting analytics
         self.ultimate_analytics(second_filter[1], final_list)
         self.high_precision_filter(final_list, second_filter[1])
 
-        # print('Percentage of Drugs with phase information available:')
+        # Saving drug phase scrape rate
         self.__drug_data_scrape_rate = (((1-(self.PhasesRight/self.TotalEntries))*100))
-        # print(self.__drug_data_scrape_rate)
 
-        # print('Percentage of Drugs with treatment information available:')
+        # Saving drug mechanism scrape rate
         self.__drug_mech_scrape_rate = (((1-(self.InfoFilled/self.TotalEntries))*100))
-        # print(self.__drug_mech_scrape_rate)
 
     """ PRE PROCESSERS """
 
@@ -948,6 +945,7 @@ class FullParser:
         self.InfoFilled = EntryCorrect
         self.TotalEntries = totalEntry
         self.FinalList = finalList
+        print(finalList)
         return finalList
 
     @property
@@ -964,16 +962,9 @@ class FullParser:
 
 # Class method to run only when called from terminal
 def main():
-    #url='http://www.gsk.com/en-gb/research/what-we-are-working-on/product-pipeline/'
-    url = "https://www.biogen.com/en_us/research-pipeline/biogen-pipeline.html"
     company_name = "biogen"
+    url = "https://www.biogen.com/en_us/research-pipeline/biogen-pipeline.html"
     full_parser = FullParser(company_name, url)
-
-    # df = pd.DataFrame(full_parser.FinalList)
-    # cols = ['Company Name', 'Product Name','Treatment area','Phase','Mechanism of Action' ]
-    # df.columns = cols
-    # print(df)
-    # df.to_csv('testingAlpha', sep='\t')
 
 if __name__ == "__main__":
     main()
