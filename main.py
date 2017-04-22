@@ -1,7 +1,7 @@
 # Imports
 import requests
 from google_bot import GoogleBot
-from beta_version import FullParser
+from Gamma import FullParser
 import pandas as pd
 
 
@@ -43,6 +43,6 @@ df = pd.DataFrame(total)
 cols = ['Company Name', 'Product Name', 'Treatment Area', 'Phase', 'Mechanism of Action']
 df.columns = cols
 df.to_csv('drug_data_cache.csv', sep='\t')
-# print(df)
+print(df)
 print("Completed Succesfully, open csv")
-print(df.head())
+# print(df.head())
