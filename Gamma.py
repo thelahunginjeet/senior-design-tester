@@ -690,8 +690,8 @@ class FullParser:
             if elem not in new_k:
                 new_k.append(elem)
         bobby = new_k
-        self.fixingContent(bobby,current_entry)
-        #bobby=self.merge_same_name(bobby)
+        bobby=self.fixingContent(bobby,current_entry)
+        
 
         if bobby == []:
             bob = self.high_precision_filter(drug_website, current_entry)
@@ -979,7 +979,7 @@ class FullParser:
             PhaseMContent=self.appending_updates(phase2Content,PhaseMContent,2) 
         if len(phase3Content)>0:
             PhaseMContent=self.appending_updates(phase3Content,PhaseMContent,3) 
-        print(PhaseMContent,totalSize)
+        return PhaseMContent
     def fixingContents(self, drug_list,commonName):
         phase1Content=[]
         phase2Content=[]
