@@ -690,7 +690,7 @@ class FullParser:
             if elem not in new_k:
                 new_k.append(elem)
         bobby = new_k
-      #  bobby=self.fixingContents(bobby,current_entry)
+        self.fixingContent(bobby,current_entry)
         #bobby=self.merge_same_name(bobby)
 
         if bobby == []:
@@ -947,7 +947,39 @@ class FullParser:
             return current_entry
 
     # FLAGGED (NOTATION NOT FIXED YET)
-    
+    def fixingContent(self, drug_list,commonName):
+        phase1Content=[]
+        phase2Content=[]
+        phase3Content=[]
+        phaseUContent=[]
+        PhaseMContent=[]
+        totalSize=len(drug_list)
+        if totalSize<=1:
+            
+            return drug_list
+        else: 
+            for q in range(0, len(drug_list)):
+                currentEntry=drug_list[q]
+                if currentEntry[1]!=commonName:
+                    PhaseMContent.append(currentEntry)
+                else:
+                    if currentEntry[3]==1:
+                        phase1Content.append(currentEntry)
+                    
+                    elif currentEntry[3]==2:
+                        phase2Content.append(currentEntry)
+                    
+                    elif currentEntry[3]==3:
+                        phase3Content.append(currentEntry)
+                    else:
+                        phaseUContent.append(currentEntry)
+        if len(phase1Content)>0:
+            PhaseMContent=self.appending_updates(phase1Content,PhaseMContent,1) 
+        if len(phase2Content)>0:
+            PhaseMContent=self.appending_updates(phase2Content,PhaseMContent,2) 
+        if len(phase3Content)>0:
+            PhaseMContent=self.appending_updates(phase3Content,PhaseMContent,3) 
+        print(PhaseMContent,totalSize)
     def fixingContents(self, drug_list,commonName):
         phase1Content=[]
         phase2Content=[]
@@ -1090,7 +1122,7 @@ class FullParser:
 # Class method to run only when called from terminal
 def main():
     #url='http://www.gsk.com/en-gb/research/what-we-are-working-on/product-pipeline/'
-    url = "https://www.biogen.com/en_us/research-pipeline/biogen-pipeline.html"
+    url = "http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm"
     company_name = "biogen"
     full_parser = FullParser(company_name, url)
 
