@@ -71,6 +71,6 @@ df = pd.DataFrame(total)
 # cols = ['Company Name', 'Product Name', 'Treatment Area', 'Phase', 'Mechanism of Action']
 df.columns = ['Company Name', 'Product Name', 'Treatment Area', 'Phase', 'Mechanism of Action', 'Pipeline/PDF Url', 'Flags']
 df.to_csv('drug_data_cache.csv', sep='\t')
-# print(df)
+print(df)
 print("Completed Succesfully, open csv")
-print(df.head())
+# print(df.head())

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 	Company Name	Product Name	Treatment Area	Phase	Mechanism of Action	Pipeline/PDF Url	Flags
 0	shire	SHP626	[]	2	False	https://www.shire.com/research-and-development/pipeline	[]
 1	shire	SHP621	['Oncology']	3	False	https://www.shire.com/research-and-development/pipeline	[]
@@ -20,3 +21,43 @@
 18	shire	SHP625	['Syndrome']	2	False	https://www.shire.com/research-and-development/pipeline	[]
 19	shire	SHP555	['ADHD', 'Chronic', 'Constipation']	3	False	https://www.shire.com/research-and-development/pipeline	[]
 20	shire	SHP640	['Genetic', 'Diseases']	2	False	https://www.shire.com/research-and-development/pipeline	[]
+=======
+	Company Name	Product Name	Treatment Area	Phase	Mechanism of Action
+0	biogen	BIIB067	['ALS', 'sclerosis']	2	False
+1	biogen	BIIB067	['ALS']	2	False
+2	biogen	obinutuzumab.	['disease']	False	False
+3	biogen	natalizumab	[]	2	False
+4	biogen	daclizumab	[]	False	False
+5	biogen	fampridine	[]	False	False
+6	biogen	aducanumab	"['disease', ""Alzheimer's""]"	3	False
+7	biogen	Obinutuzumab	['lymphoma', 'lymphocytic', 'non-Hodgkin’s', 'chronic']	3	False
+8	biogen	Obinutuzumab	[]	3	False
+9	biogen	BIIB074	['disease', 'lupus']	2	False
+10	biogen	BIIB074	[]	2	False
+11	biogen	obinutuzumab	[]	3	False
+12	biogen	obinutuzumab	['cancer']	3	False
+13	biogen	Aducanumab	['common', 'disease']	3	False
+14	biogen	Aducanumab	[]	3	False
+15	biogen	BDCA2	[]	2	False
+16	biogen	BDCA2	['inflammatory', 'lupus']	2	False
+17	biogen	BAN2401	['common', 'disease']	2	False
+18	biogen	BAN2401	['brain']	2	False
+19	biogen	Infliximab	[]	False	False
+20	biogen	BACE1	"[""Alzheimer's"", 'disease', 'common']"	False	False
+21	biogen	Natalizumab	['disease', 'sclerosis', 'Acute', 'lupus', 'ischemic', 'stroke', 'Crohn’s']	2	False
+22	biogen	Natalizumab	['acute', 'inflammatory', 'lymphocytic', 'brain']	2	False
+23	biogen	BIIB059	['Lupus', 'disease', 'fibrosis', 'inflammatory', 'chronic']	2	False
+24	biogen	Dapirolizumab	['Lupus', 'inflammatory', 'disease', 'chronic']	2	False
+25	biogen	Dapirolizumab	['disease', 'lupus']	2	False
+26	biogen	rituximab	[]	False	False
+27	biogen	BIIB061	"[""Parkinson's"", 'disease', 'sclerosis']"	2	False
+28	biogen	BIIB061	[]	2	False
+29	biogen	E2609	"['common', 'disease', ""Alzheimer's""]"	3	False
+30	biogen	E2609	[]	3	False
+31	biogen	E2609	['non-Hodgkin’s']	3	False
+32	biogen	Opicinumab	['disease', 'sclerosis']	2	False
+33	biogen	BG00011	['Idiopathic', 'disease', 'pulmonary', 'fibrosis', 'brain', 'Pulmonary']	2	False
+34	biogen	BG00011	['fibrosis']	2	False
+35	biogen	BIIB054	"[""Parkinson's"", 'disease']"	2	False
+36	biogen	BIIB054	[]	2	False
+>>>>>>> master
