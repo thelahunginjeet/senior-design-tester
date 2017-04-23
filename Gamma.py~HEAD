@@ -1,22 +1,14 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Sat Apr 22 22:32:13 2017
-
-@author: fatirahmed
-"""
-
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
 Created on Sat Apr 22 15:58:43 2017
+
 @author: fatirahmed
 """
 import re
 from bs4 import BeautifulSoup as bs
 import requests
 import enchant
-import pandas as pd
 
 class FullParser:
 
@@ -29,7 +21,7 @@ class FullParser:
         self.mechs = enchant.request_pwl_dict("mechanisms.txt")
         self.company_name = _company_name
         data = r.text
-        self.find_pdf(data)
+        self.__feedback_link_info = self.find_pdf(data, url)
 
         # Creating and searching lists
         final_list = self.create_list(data)
@@ -171,9 +163,19 @@ class FullParser:
         else:
             return 'null'
 
-    def find_pdf(self, data):
+    def find_pdf(self, data, url):
         primitive_soup = bs(data, "lxml")
+        found_link = False
+        the_link = None
+        p1 = re.compile(r'(.+)?(pipeline)(.+)?\.pdf$', re.I)
+        for link in primitive_soup.find_all('a', href=True):
+            if re.match(p1, link['href']):
+                found_link = True
+                the_link = link['href']
+            else:
+                the_link = url
 
+        return (found_link, the_link)
 
     """ PHASE IDENTIFIERS """
 
@@ -297,7 +299,7 @@ class FullParser:
             else:
                 break
         if return_list==[]:
-            return [];
+            return False;
 
         return return_list
 
@@ -690,8 +692,7 @@ class FullParser:
             if elem not in new_k:
                 new_k.append(elem)
         bobby = new_k
-        bobby=self.fixingContent(bobby,current_entry)
-        
+        #bobby=self.merge_same_name(bobby)
 
         if bobby == []:
             bob = self.high_precision_filter(drug_website, current_entry)
@@ -802,7 +803,7 @@ class FullParser:
                     mechi_truth=mechi_final.append(mechi_truth_possibleB)
                     inner_truth=True
 
-                newV=[temp[0],temp[1],temp[2],temp2[3],mechi_final]
+                newV=[temp[0],temp[1],temp[2],temp2[3],mechi_truth]
                 newT=[True,True,True,True,inner_truth ]
                 list_values.append(newV)
                 current_entry.append(newT)
@@ -947,132 +948,8 @@ class FullParser:
             return current_entry
 
     # FLAGGED (NOTATION NOT FIXED YET)
-    def fixingContent(self, drug_list,commonName):
-        phase1Content=[]
-        phase2Content=[]
-        phase3Content=[]
-        phaseUContent=[]
-        PhaseMContent=[]
-        totalSize=len(drug_list)
-        if totalSize<=1:
-            
-            return drug_list
-        else: 
-            for q in range(0, len(drug_list)):
-                currentEntry=drug_list[q]
-                if currentEntry[1]!=commonName:
-                    PhaseMContent.append(currentEntry)
-                else:
-                    if currentEntry[3]==1:
-                        phase1Content.append(currentEntry)
-                    
-                    elif currentEntry[3]==2:
-                        phase2Content.append(currentEntry)
-                    
-                    elif currentEntry[3]==3:
-                        phase3Content.append(currentEntry)
-                    else:
-                        phaseUContent.append(currentEntry)
-        if len(phase1Content)>0:
-            PhaseMContent=self.appending_updates(phase1Content,PhaseMContent,1) 
-        if len(phase2Content)>0:
-            PhaseMContent=self.appending_updates(phase2Content,PhaseMContent,2) 
-        if len(phase3Content)>0:
-            PhaseMContent=self.appending_updates(phase3Content,PhaseMContent,3) 
-        return PhaseMContent
-    def fixingContents(self, drug_list,commonName):
-        phase1Content=[]
-        phase2Content=[]
-        phase3Content=[]
-        phaseUContent=[]
-        PhaseMContent=[]
-        for q in range(0, len(drug_list)):
-            currentEntry=drug_list[q]
-            if currentEntry[1]==commonName:
-                if currentEntry[3]==1:
-                    phase1Content.append(currentEntry)
-                    
-                if currentEntry[3]==2:
-                    phase2Content.append(currentEntry)
-                    
-                if currentEntry[3]==3:
-                    phase3Content.append(currentEntry)
-                else:
-                    phaseUContent.append(currentEntry)
-            else:
-                PhaseMContent.append(currentEntry)
-        a=len(phase1Content)
-        b=len(phase2Content)
-        c=len(phase3Content)
-        if a==0 and b==0 and c==0:
-            for q in range(0, len(phaseUContent)):
-                PhaseMContent.append(phaseUContent)
-            
-            
-            return PhaseMContent
-        else:
-            if a>0:
-                a=a
-             #   PhaseMContent=self.appending_updates(phase1Content,PhaseMContent,1)
-            if b>0:
-                b=b
-              #  PhaseMContent=self.appending_updates(phase2Content,PhaseMContent,2)
-            if c>0:
-                PhaseMContent=self.appending_updates(phase3Content,PhaseMContent,3)
-                
-        return PhaseMContent
-            #Merge the various
-    def appending_updates(self, phase1Content,PhaseMContent,phase_int):
-            entry1Mech=[]
-            entry1treat=[]
-            a=len(phase1Content)
-            currentEntry=phase1Content[0]
-            entry1Final=[currentEntry[0], currentEntry[1],entry1Mech,phase_int,entry1treat]
-            oneConstant=0
-            oneConstant_=0
-            for q in range(0, a):
-                currentEntry=phase1Content[q]
-                if currentEntry[2]==[] and currentEntry[4]==[] and q>(len(currentEntry)-1):
-                    oneConstant=1
-                else:
-                    entry1Final=[currentEntry[0], currentEntry[1],entry1treat,phase_int,entry1Mech]
-                if currentEntry[2]!= [] and currentEntry[4]!= False:
-                    PhaseMContent.append(currentEntry)
-                    oneConstant_=len(PhaseMContent)
-                elif currentEntry[2]!= [] and currentEntry[4]== []: 
-                    if oneConstant_>0:
-                        temperary=PhaseMContent.pop(oneConstant_-1)
-                        sub=[]
-                        sub=temperary[2]+currentEntry[2]
-                        sub=list(set(sub))
-                        subV=[temperary[0],temperary[1],sub,temperary[3],temperary[4]]
-                        PhaseMContent.append(temperary)
-                        oneConstant_=0
-                    else:
-                        entry1treat=entry1treat+currentEntry[2]
-                        entry1Mech=entry1Mech+currentEntry[4]
-                        entry1Final=[currentEntry[0], currentEntry[1],entry1treat,phase_int,entry1Mech]
-
-                elif currentEntry[2]== [] and currentEntry[4]!= []: 
-                    if oneConstant_>0:
-                        temperary=PhaseMContent.pop[oneConstant_-1]
-                        sub=[]
-                        sub=temperary[4]+currentEntry[4]
-                        sub=list(set(sub))
-                        subV=[temperary[0],temperary[1],temperary[2],temperary[3],sub]
-                        PhaseMContent.append(subV)
-                        oneConstant_=0
-                    else:
-                        entry1treat=entry1treat+currentEntry[2]
-                        entry1Mech=entry1Mech+currentEntry[4]
-                        entry1Final=[currentEntry[0], currentEntry[1],entry1treat,phase_int,entry1Mech]
-               
-                PhaseMContent.append(entry1Final)
-                return PhaseMContent
     def total_web_page_parse(self, ProposedDrugs, DrugWebsite):
         finalList = []
-        lowList=[]
-        highList = []
         phaseCorrect = 0
         EntryCorrect = 0
         totalEntry = 0
@@ -1080,11 +957,6 @@ class FullParser:
             currentDrug = self.ultimate_analytics(ProposedDrugs[q], DrugWebsite)
             for z in range(0, len(currentDrug)):
                 finalList.append(currentDrug[z])
-                drug_entry=currentDrug[z]
-                if drug_entry[2]!=[] and drug_entry[3]!=False:
-                    highList.append(currentDrug[z])
-                else:
-                    lowList.append(currentDrug[z])
 
         for z in range(0,len(finalList)):
             entrV = finalList[z]
@@ -1099,8 +971,6 @@ class FullParser:
         self.InfoFilled = EntryCorrect
         self.TotalEntries = totalEntry
         self.FinalList = finalList
-        self.HighList = highList
-        self.LowList=lowList
         return finalList
 
     @property
@@ -1119,17 +989,22 @@ class FullParser:
     def drug_mech_scrape_rate(self):
         return self.__drug_mech_scrape_rate
 
+    @property
+    def feedback_link_info(self):
+        return self.__feedback_link_info
+
 # Class method to run only when called from terminal
 def main():
     #url='http://www.gsk.com/en-gb/research/what-we-are-working-on/product-pipeline/'
-    url = "http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm"
-    company_name = "biogen"
+    url = "https://www.biogen.com/en_us/research-pipeline/biogen-pipeline.html"
+    url = "http://www.sourcesolution.com/speakup/directory/view/Abbott_Laboratories/Pipeline"
+    company_name = "abbot laboratories"
     full_parser = FullParser(company_name, url)
 
-    df = pd.DataFrame(full_parser.HighList)
+    # df = pd.DataFrame(full_parser.FinalList)
     # cols = ['Company Name', 'Product Name','Treatment area','Phase','Mechanism of Action' ]
     #df.columns = cols
-    print(df)
+    # print(df)
     # df.to_csv('testingAlpha', sep='\t')
 
 if __name__ == "__main__":
