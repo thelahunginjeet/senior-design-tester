@@ -990,12 +990,34 @@ class FullParser:
                     else:
                         phaseUContent.append(currentEntry)
         if len(phase1Content)>0:
-            PhaseMContent=self.appending_updates(phase1Content,PhaseMContent,1)
+            PhaseMContent=self.app_update(phase1Content,PhaseMContent,1)
         if len(phase2Content)>0:
-            PhaseMContent=self.appending_updates(phase2Content,PhaseMContent,2)
+            PhaseMContent=self.app_update(phase2Content,PhaseMContent,2)
         if len(phase3Content)>0:
-            PhaseMContent=self.appending_updates(phase3Content,PhaseMContent,3)
+            PhaseMContent=self.app_update(phase3Content,PhaseMContent,3)
         return PhaseMContent
+    def app_update(phase1Content,PhaseMContent,phase_int):
+        
+        
+            entry1Mech=[]
+            entry1treat=[]
+            a=len(phase1Content)
+            
+            currentEntry=phase1Content[0]
+            entry1Final=[currentEntry[0], currentEntry[1],entry1Mech,phase_int,entry1treat]
+            
+            
+            
+            for q in range(0, a):
+                currentEntry=phase1Content[q]
+                sub_a=entry1Final[2]+currentEntry[2]
+                sub_a=list(set(sub_a))
+                sub_b=entry1Final[2]+currentEntry[4]
+                sub_b=list(set(sub_b))
+                entry1Final=[entry1Final[0],entry1Final[1],sub_a,entry1Final[3],sub_b ]
+            
+            PhaseM=PhaseMContent.append(entry1Final)
+            return PhaseM
 
     def fixingContents(self, drug_list,commonName):
         phase1Content=[]
