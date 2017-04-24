@@ -18,7 +18,7 @@ INSTALLATION
 
 1. Clone or extract repo in designated location
 2. Open terminal at location
-3. run 'pip install -r requirements.txt'
+3. run ```pip install -r requirements.txt```
 
 
 CONFIGURATION
@@ -28,7 +28,7 @@ CONFIGURATION
 2. run 'python main.py'
 3. Open your choice of R IDE at the project location
 4. import two dataframes into R
-'''
+```
     drug_data = read.csv("drug_data_cache.csv", header=TRUE, sep="\t", stringsAsFactors = FALSE)
-'''
-    'log_file = read.csv("log_entries_cache.csv", header=TRUE, sep="\t", stringsAsFactors = FALSE)'
+    log_file = read.csv("log_entries_cache.csv", header=TRUE, sep="\t", stringsAsFactors = FALSE)
+```
