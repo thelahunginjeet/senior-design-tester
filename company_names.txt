@@ -1,21 +1,19 @@
-B.F. Ascher & Company, Inc.
-Barr Laboratories, Inc.
-Bausch & Lomb Inc.
-Baxalta Incorporated
-Baxter International Inc.
-Bayer Healthcare Consumer Care
-Bayer HealthCare Pharmaceuticals Inc.
-Bayshore Pharmaceuticals LLC
-BD Rx Inc.
-BioDelivery Sciences International, Inc.
-Biofrontera AG
 Biogen
-BioMarin Pharmaceutical Inc.
-Bionpharma Inc.
-Biovail Corporation
-Blu Pharmaceuticals LLC
-Blue Earth Diagnostics, Ltd.
-Boehringer Ingelheim Pharmaceuticals, Inc.
-Braintree Laboratories Inc.
-Breckenridge Pharmaceutical, Inc.
-Bristol-Myers Squibb Company
+tevapharm
+shire
+novartis
+pfizer
+ionis
+roche
+Acorda Therapeutics, Inc.
+AstraZeneca Pharmaceuticals LP
+Avanir Pharmaceuticals, Inc.
+chugai-pharm
+lily
+alexion
+lundbeck
+valeant
+daiichisankyo
+danippon
+sumitomo
+teijin-pharma

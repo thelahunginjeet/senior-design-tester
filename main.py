@@ -60,6 +60,11 @@ for company_name in company_names:
         # (data, found_link, flags) = preprocess(company_name, pipeline_url)
         try:
             (data, the_link, flags) = preprocess(company_name, pipeline_url)
+            # try:
+            #     (data, the_link, flags) = preprocess(company_name, pipeline_url)
+            # except:
+            #     print("Checking next link!")
+            #     (data, the_link, flags) = preprocess(company_name, pipeline_url)
         except:
             print('There was an error in the parser for this company: ' + company_name)
             data = [[company_name, company_name, ['!'], ['!'], ['!']]]

@@ -16,3 +16,7 @@ class GoogleBot:
                 pipeline_url = url
             count += 1
         return pipeline_url
+
+if __name__ == "__main__":
+    google_bot = GoogleBot("pipeline")
+    print(google_bot.find_pipeline('Biogen'))
