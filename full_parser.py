@@ -672,7 +672,7 @@ class FullParser:
         """
         # Total checks contains all the instances in which the drug entry appears in the text
         total_checks = self.indices(drug_website,current_entry )
-        bob=[]
+        prelim_addi=[]
         truthful=[]
         bobby=[]
 
@@ -696,9 +696,9 @@ class FullParser:
                     # print(phase_info)
             known = self.advanced_truth_check(preset_list, phase_info,mechanics_info )
             joe = [self.company_name, final_drug_name, preset_list, phase_info, mechanics_info]
-            bob.append(joe)
+            prelim_addi.append(joe)
             truthful.append(known)
-        bobby = self.complete_reference(truthful, bob)
+        bobby = self.complete_reference(truthful, prelim_addi)
 
 
         new_k = []
@@ -710,8 +710,8 @@ class FullParser:
 
 
         if bobby == []:
-            bob = self.high_precision_filter(drug_website, current_entry)
-            bobby.append(bob)
+            prelim_addi = self.high_precision_filter(drug_website, current_entry)
+            bobby.append(prelim_addi)
 
         return bobby
 
@@ -1046,6 +1046,7 @@ class FullParser:
         p3 = re.compile(r"\b[A-Za-z]+(mab)/b")
         p4 = re.compile(r"\b[A-Za-z]+(tide)/b")
         p5 = re.compile(r"\b(cef)[A-Za-z]+\b")
+        p6 = re.compile(r"\b[A-Za-z]+(azine)/b")
         drug_target=[]
         if re.match(p1, currentCheck):
             drug_target=['Antiviral'];
@@ -1099,6 +1100,8 @@ class FullParser:
             return ['PDE5 Inhibitor']
         elif "prost" in currentCheck:
             return ['Prostaglandin analogue']
+        elif "azine" in currentCheck:
+            return ['phenothiazine-like antipsychotics']
         elif "ine" in currentCheck:
             return ['chemical substance']
         elif "parib" in currentCheck:
@@ -1112,22 +1115,37 @@ class FullParser:
             entry1Mech=[]
             entry1treat=[]
             a=len(phase1Content)
-            intermidiatM=[]
+            distance_V=3
             currentEntry=phase1Content[0]
             entry1Final=[currentEntry[0], currentEntry[1],entry1Mech,phase_int,entry1treat]
             oneConstant=0
             oneConstant_=0
             anyconstant=0
+            
+            
             for q in range(0, a):
                 currentEntry=phase1Content[q]
                 if currentEntry[2]==[] and currentEntry[4]==[] and q<(len(currentEntry)-1):
                     oneConstant=oneConstant
 
-                elif currentEntry[2]!= [] and currentEntry[4]!= []:
+                elif currentEntry[2]!= [] and currentEntry[4]!= [] and oneConstant==0:
                     PhaseMContent.append(currentEntry)
                     oneConstant_=len(PhaseMContent)
+                    
                     anyconstant=1
-                    oneConstant=q
+                    oneConstant=7
+                elif currentEntry[2]!= [] and currentEntry[4]!= []:
+                        temperary=PhaseMContent.pop(oneConstant_-1)
+                        sub=[]
+                        sub=temperary[2]+currentEntry[2]
+                        sub=list(set(sub))
+                        sub_=temperary[4]+currentEntry[4]
+                        sub_=list(set(sub))
+                        subV=[temperary[0],temperary[1],sub,temperary[3],sub_]
+                        PhaseMContent.append(temperary)
+                        oneConstant_=0
+                        oneConstant=0
+                        anyconstant=1
 
 
 
@@ -1227,14 +1245,15 @@ class FullParser:
 # Class method to run only when called from terminal
 def main():
     #url='http://www.gsk.com/en-gb/research/what-we-are-working-on/product-pipeline/'
-    url = 'https://www.biogen.com/en_us/research-pipeline/biogen-pipeline.html'
+    url = 'https://www.lilly.com/pipeline/'
     company_name = "avanir"
     full_parser = FullParser(company_name, url)
 
-    df = pd.DataFrame(full_parser.final_drug_data_all)
+    df = pd.DataFrame(full_parser.FinalList)
     # cols = ['Company Name', 'Product Name','Treatment area','Phase','Mechanism of Action' ]
     df.columns = ['Company Name', 'Product Name','Treatment area','Phase','Mechanism of Action' ]
     print(df)
+   
     # df.to_csv('testingAlpha', sep='\t')
 
 if __name__ == "__main__":
