@@ -1,7 +1,7 @@
 # Imports
 import requests
 from google_bot import GoogleBot
-from Gamma import FullParser
+from full_parser import FullParser
 import pandas as pd
 import re
 
@@ -24,7 +24,11 @@ def preprocess(company_name, pipeline_url):
         print("scrape rate of ", company_name, ":", current_drug_data_scrape_rate)
         data = full_parser.final_drug_data_all
 
-    return (data, found_link, flags)
+    log_entry = [[company_name, flags, the_link]]
+
+
+    return (data, found_link, flags, log_entry)
+
 
 """ START SCRIPT """
 
@@ -38,6 +42,7 @@ google_bot = GoogleBot("pipeline")
 
 # Getting the link and calling the process for each one
 total = []
+log_entries = []
 for company_name in company_names:
     company_name = company_name.lower()
 
@@ -54,10 +59,8 @@ for company_name in company_names:
         print("No pipeline for " + company_name)
     else:
         # (data, found_link, flags) = preprocess(company_name, pipeline_url)
-
-
         try:
-            (data, found_link, flags) = preprocess(company_name, pipeline_url)
+            (data, found_link, flags, log_entry) = preprocess(company_name, pipeline_url)
         except:
             print('There was an error in the parser for this company: ' + company_name)
             data = [[company_name, company_name, ['!'], ['!'], ['!']]]
@@ -69,11 +72,18 @@ for company_name in company_names:
         drug_info.append(flags)
         total.append(drug_info)
 
+    log_entries.append(log_entry)
 
-df = pd.DataFrame(total)
-# cols = ['Company Name', 'Product Name', 'Treatment Area', 'Phase', 'Mechanism of Action']
-df.columns = ['Company Name', 'Product Name', 'Treatment Area', 'Phase', 'Mechanism of Action', 'Pipeline/PDF Url', 'Flags']
-df.to_csv('drug_data_cache.csv', sep='\t')
-print(df)
+
+drug_data_df = pd.DataFrame(total)
+drug_data_df.columns = ['Company Name', 'Product Name', 'Treatment Area', 'Phase', 'Mechanism of Action', 'Pipeline/PDF Url', 'Flags']
+drug_data_df.to_csv('drug_data_cache.csv', sep='\t')
+# print(drug_data_df)
+
+log_entry_df = pd.DataFrame(log_entry)
+log_entry_df.columns = ['Company Name', 'Flags', 'Pipeline/PDF Url']
+log_entry_df.to_csv('log_entries_cache.csv', sep='\t')
+print(log_entry_df)
+
 print("Completed Succesfully, open csv")
 # print(df.head())
