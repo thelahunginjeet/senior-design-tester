@@ -6,6 +6,7 @@ Created on Sat Apr 22 22:32:13 2017
 @author: fatirahmed
 """
 
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
@@ -669,7 +670,8 @@ class FullParser:
             # If the appended informatiion is lacking, a more intensive search will be possibly performed
             if preset_values == []:
                 preset_values = self.better_break(drug_website, current_entry, total_checks[q])
-
+            if mechanics_info ==[]:
+                mechanics_info=self.mechi_backup(current_entry)
             preset_list = list(set(preset_values))
             phase_info = self.phase_diagnostic(drug_website, current_entry, total_checks[q])
             if not phase_info:
@@ -1022,23 +1024,97 @@ class FullParser:
                 
         return PhaseMContent
             #Merge the various
+    def mechi_backup(self,currentCheck):
+        p1 = re.compile(r"\b[A-Za-z]+(vir)/b")
+        p2 = re.compile(r"\b[A-Za-z]+(cillin)/b")
+        p3 = re.compile(r"\b[A-Za-z]+(mab)/b")
+        p4 = re.compile(r"\b[A-Za-z]+(tide)/b")
+        p5 = re.compile(r"\b(cef)[A-Za-z]+\b")
+        drug_target=[]
+        if re.match(p1, currentCheck):
+            drug_target=['Antiviral'];
+            return drug_target
+        elif re.match(p2, currentCheck):
+            drug_target=['Penicillin-derived antibiotics'];
+            return drug_target
+        elif re.match(p5, currentCheck):
+            drug_target=['Cephem-type antibiotics'];
+            return currentCheck
+        
+        elif "ximab" in currentCheck:
+            drug_target=['Chimeric antibody'];
+            return drug_target
+        elif "zumab" in currentCheck:
+            drug_target=['humanized antibody'];
+            return drug_target
+        elif re.match(p3, currentCheck):
+            drug_target=['monoclonal antiboies'];
+            return drug_target
+        elif "tinib" in currentCheck:
+            drug_target=['tyrosine-kinase inhibitor'];
+            return drug_target
+        elif "vastatin" in currentCheck:
+            drug_target=['tyrosine-kinase inhibitor'];
+            return drug_target
+        elif "prazole" in currentCheck:
+            drug_target=['Proton-pump inhibitor'];
+            return drug_target
+        elif "lukast" in currentCheck:
+            return ['Leukotriene receptor antagonists']
+        elif "grel" in currentCheck:
+            return drug_target
+        elif "axine" in currentCheck:
+            return ['Dopamine and serotonin–norepinephrine reuptake inhibitor']
+        elif "olol" in currentCheck:
+            return ['Beta-blockers']
+        elif "oxetine" in currentCheck:
+            return ['Antidepressant related to fluoxetine']
+        elif "sartan" in currentCheck:
+            return ['Angiotensin receptor antagonists']
+        elif "pril" in currentCheck:
+            return ['Angiotensin converting enzyme inhibitor']
+        elif "oxacin" in currentCheck:
+            return ['Quinolone-derived antibiotics']
+        elif "barb" in currentCheck:
+            return ['Barbiturates']
+        elif "xaban" in currentCheck:
+            return ['Direct Xa inhibitor']
+        elif "afil" in currentCheck:
+            return ['PDE5 Inhibitor']
+        elif "prost" in currentCheck:
+            return ['Prostaglandin analogue']
+        elif "ine" in currentCheck:
+            return ['chemical substance']
+        elif "parib" in currentCheck:
+            return ['PARP inhibitor']
+        elif re.match(p4, currentCheck):
+            return ['Peptides']
+        else:
+            return []
+    
     def appending_updates(self, phase1Content,PhaseMContent,phase_int):
             entry1Mech=[]
             entry1treat=[]
             a=len(phase1Content)
+            intermidiatM=[]
             currentEntry=phase1Content[0]
             entry1Final=[currentEntry[0], currentEntry[1],entry1Mech,phase_int,entry1treat]
             oneConstant=0
             oneConstant_=0
+            anyconstant=0
             for q in range(0, a):
                 currentEntry=phase1Content[q]
-                if currentEntry[2]==[] and currentEntry[4]==[] and q>(len(currentEntry)-1):
-                    oneConstant=1
-                else:
-                    entry1Final=[currentEntry[0], currentEntry[1],entry1treat,phase_int,entry1Mech]
-                if currentEntry[2]!= [] and currentEntry[4]!= False:
+                if currentEntry[2]==[] and currentEntry[4]==[] and q<(len(currentEntry)-1):
+                    oneConstant=oneConstant
+                
+                elif currentEntry[2]!= [] and currentEntry[4]!= []:
                     PhaseMContent.append(currentEntry)
                     oneConstant_=len(PhaseMContent)
+                    anyconstant=1
+                    oneConstant=q
+                
+                    
+                    
                 elif currentEntry[2]!= [] and currentEntry[4]== []: 
                     if oneConstant_>0:
                         temperary=PhaseMContent.pop(oneConstant_-1)
@@ -1048,27 +1124,31 @@ class FullParser:
                         subV=[temperary[0],temperary[1],sub,temperary[3],temperary[4]]
                         PhaseMContent.append(temperary)
                         oneConstant_=0
+                        anyconstant=1
                     else:
                         entry1treat=entry1treat+currentEntry[2]
                         entry1Mech=entry1Mech+currentEntry[4]
                         entry1Final=[currentEntry[0], currentEntry[1],entry1treat,phase_int,entry1Mech]
+                        anyconstant=1
 
                 elif currentEntry[2]== [] and currentEntry[4]!= []: 
                     if oneConstant_>0:
-                        temperary=PhaseMContent.pop[oneConstant_-1]
+                        temperary=PhaseMContent.pop(oneConstant_-1)
                         sub=[]
                         sub=temperary[4]+currentEntry[4]
                         sub=list(set(sub))
                         subV=[temperary[0],temperary[1],temperary[2],temperary[3],sub]
                         PhaseMContent.append(subV)
                         oneConstant_=0
+                        anyconstant=1
                     else:
                         entry1treat=entry1treat+currentEntry[2]
                         entry1Mech=entry1Mech+currentEntry[4]
                         entry1Final=[currentEntry[0], currentEntry[1],entry1treat,phase_int,entry1Mech]
+                        anyconstant=1
                
-                PhaseMContent.append(entry1Final)
-                return PhaseMContent
+            PhaseMContent.append(entry1Final)
+            return PhaseMContent
     def total_web_page_parse(self, ProposedDrugs, DrugWebsite):
         finalList = []
         lowList=[]
@@ -1122,7 +1202,7 @@ class FullParser:
 # Class method to run only when called from terminal
 def main():
     #url='http://www.gsk.com/en-gb/research/what-we-are-working-on/product-pipeline/'
-    url = "http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm"
+    url = "https://www.biogen.com/en_us/research-pipeline/biogen-pipeline.html"
     company_name = "biogen"
     full_parser = FullParser(company_name, url)
 
