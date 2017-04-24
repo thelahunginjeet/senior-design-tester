@@ -20,7 +20,8 @@ INSTALLATION
 
 1. Clone or extract repo in designated location
 2. Open terminal at location
-3. run ```pip install -r requirements.txt```
+3. Run ```pip install -r requirements.txt```
+4. Populate company_names.txt file with names of company names you want to scrap. By defualt, all top pharmacueticals will be loaded. 
 
 
 
@@ -28,7 +29,7 @@ CONFIGURATION
 *************
 
 1. Open terminal at location
-2. run 'python main.py'
+2. Run ```python main.py```
 3. Open your choice of R IDE at the project location
 4. import two dataframes into R
 ```

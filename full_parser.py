@@ -188,9 +188,16 @@ class FullParser:
         :param drug_entry: string
         :return: Boolean
         """
-        p1 = re.compile(r"phase2?$", re.I)
-        # print(bool(re.match(p1, drug_entry)))
-        return bool(re.match(p1, drug_entry))
+        if 'phase' in drug_entry:
+            return True
+        elif 'Phase' in drug_entry:
+            return True
+        elif 'PHASE' in drug_entry:
+            return True
+        elif 'phase2' in drug_entry:
+            return True
+        else:
+            return False
 
     def phase_finder(self, drug_website, current_entry ):
         """
@@ -420,29 +427,29 @@ class FullParser:
                  #bob.append(drugWebsite[99])
                  if self.reiterated_phases(currentEntry)==True:
                      if 'phase3' in currentEntry:
-                         return '3'
+                         return 3
                      elif 'phase3' in futureEntry:
-                         return '3'
+                         return 3
                      if 'phase1' in currentEntry:
-                         return '1'
+                         return 1
                      elif 'phase1' in futureEntry:
-                         return '1'
+                         return 1
                      if 'phase2' in currentEntry:
-                         return '2'
+                         return 2
                      elif 'phase2' in futureEntry:
-                         return '2'
+                         return 2
                      if '3' in currentEntry:
-                         return '3'
+                         return 3
                      elif '3' in futureEntry:
-                         return '3'
+                         return 3
                      if '1' in currentEntry:
-                         return '1'
+                         return 1
                      elif '1' in futureEntry:
-                         return '1'
+                         return 1
                      if '2' in currentEntry:
-                         return '2'
+                         return 2
                      elif '2' in futureEntry:
-                         return '2'
+                         return 2
                      if 'III' in currentEntry:
                          return 3
                      elif 'III' in futureEntry:
@@ -699,7 +706,7 @@ class FullParser:
             if elem not in new_k:
                 new_k.append(elem)
         bobby = new_k
-        bobby=self.fixingContent(bobby,current_entry)
+        #bobby=self.fixingContent(bobby,current_entry)
 
 
         if bobby == []:
@@ -1220,7 +1227,7 @@ class FullParser:
 # Class method to run only when called from terminal
 def main():
     #url='http://www.gsk.com/en-gb/research/what-we-are-working-on/product-pipeline/'
-    url = "https://www.avanir.com/science/pipeline"
+    url = 'https://www.biogen.com/en_us/research-pipeline/biogen-pipeline.html'
     company_name = "avanir"
     full_parser = FullParser(company_name, url)
 
