@@ -52,7 +52,7 @@ KNOWN ISSUES
 ************
 
 * Does not run on Windows
-* Program sometimes points to wrong version of Python isntalled in system. In these cases, replace 'python' with known python installation location
+* Program sometimes points to wrong version of Python installed in system. In these cases, replace 'python' with known python installation location
 
 FUTURE ADDITIONS
 ****************
