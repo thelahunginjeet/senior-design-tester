@@ -13,16 +13,16 @@ def preprocess(company_name, pipeline_url):
     (found_link, the_link) = full_parser.feedback_link_info
     flags = []
 
-    if current_drug_data_scrape_rate < 50:
+    if current_drug_data_scrape_rate < 20:
         print("scrape rate of ", company_name, ":", current_drug_data_scrape_rate)
         data = [[company_name, company_name, ['!'], ['!'], ['!']]]
         if found_link:
             flags.append('PDF link provided')
         else:
-            flags.append('Data is not up to accuracy standards: ' + current_drug_data_scrape_rate)
+            flags.append('Data is not up to accuracy standards: ' + str(current_drug_data_scrape_rate))
     else:
         print("scrape rate of ", company_name, ":", current_drug_data_scrape_rate)
-        data = full_parser.final_drug_data_high
+        data = full_parser.final_drug_data_all
 
     return (data, found_link, flags)
 
@@ -53,6 +53,9 @@ for company_name in company_names:
         flags.append("Can't find pipeline or DNE!")
         print("No pipeline for " + company_name)
     else:
+        # (data, found_link, flags) = preprocess(company_name, pipeline_url)
+
+
         try:
             (data, found_link, flags) = preprocess(company_name, pipeline_url)
         except:

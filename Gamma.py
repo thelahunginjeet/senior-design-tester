@@ -6,12 +6,6 @@ Created on Sat Apr 22 22:32:13 2017
 @author: fatirahmed
 """
 
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Sat Apr 22 15:58:43 2017
-@author: fatirahmed
-"""
 import re
 from bs4 import BeautifulSoup as bs
 import requests
@@ -29,7 +23,7 @@ class FullParser:
         self.mechs = enchant.request_pwl_dict("mechanisms.txt")
         self.company_name = _company_name
         data = r.text
-        self.find_pdf(data)
+        self.__feedback_link_info = self.find_pdf(data, url)
 
         # Creating and searching lists
         final_list = self.create_list(data)
@@ -44,7 +38,7 @@ class FullParser:
         Runs program and determines anlytics
         """
         # Getting drug data
-        self.__final_drug_data_high = self.total_web_page_parse(second_filter, final_list)
+        (self.__final_drug_data_all, self.__final_drug_data_high, self.__final_drug_data_low) = self.total_web_page_parse(second_filter, final_list)
 
         # Getting analytics
         self.ultimate_analytics(second_filter[1], final_list)
@@ -171,8 +165,19 @@ class FullParser:
         else:
             return 'null'
 
-    def find_pdf(self, data):
+    def find_pdf(self, data, url):
         primitive_soup = bs(data, "lxml")
+        found_link = False
+        the_link = None
+        p1 = re.compile(r'(.+)?(pipeline)(.+)?\.pdf$', re.I)
+        for link in primitive_soup.find_all('a', href=True):
+            if re.match(p1, link['href']):
+                found_link = True
+                the_link = link['href']
+            else:
+                the_link = url
+
+        return (found_link, the_link)
 
 
     """ PHASE IDENTIFIERS """
@@ -369,7 +374,10 @@ class FullParser:
         else:
             start = 0
 
-        end = index_number+17
+        if len(drug_website) >= index_number+15:
+            end = len(drug_website)-1
+        else:
+            end = index_number+15
 
         for x in range(index_number, end):
             if self.checking_official(drug_website[x+1]) == 'null':
@@ -669,7 +677,8 @@ class FullParser:
             # If the appended informatiion is lacking, a more intensive search will be possibly performed
             if preset_values == []:
                 preset_values = self.better_break(drug_website, current_entry, total_checks[q])
-
+            if mechanics_info ==[]:
+                mechanics_info=self.mechi_backup(current_entry)
             preset_list = list(set(preset_values))
             phase_info = self.phase_diagnostic(drug_website, current_entry, total_checks[q])
             if not phase_info:
@@ -691,7 +700,7 @@ class FullParser:
                 new_k.append(elem)
         bobby = new_k
         bobby=self.fixingContent(bobby,current_entry)
-        
+
 
         if bobby == []:
             bob = self.high_precision_filter(drug_website, current_entry)
@@ -955,9 +964,9 @@ class FullParser:
         PhaseMContent=[]
         totalSize=len(drug_list)
         if totalSize<=1:
-            
+
             return drug_list
-        else: 
+        else:
             for q in range(0, len(drug_list)):
                 currentEntry=drug_list[q]
                 if currentEntry[1]!=commonName:
@@ -965,21 +974,22 @@ class FullParser:
                 else:
                     if currentEntry[3]==1:
                         phase1Content.append(currentEntry)
-                    
+
                     elif currentEntry[3]==2:
                         phase2Content.append(currentEntry)
-                    
+
                     elif currentEntry[3]==3:
                         phase3Content.append(currentEntry)
                     else:
                         phaseUContent.append(currentEntry)
         if len(phase1Content)>0:
-            PhaseMContent=self.appending_updates(phase1Content,PhaseMContent,1) 
+            PhaseMContent=self.appending_updates(phase1Content,PhaseMContent,1)
         if len(phase2Content)>0:
-            PhaseMContent=self.appending_updates(phase2Content,PhaseMContent,2) 
+            PhaseMContent=self.appending_updates(phase2Content,PhaseMContent,2)
         if len(phase3Content)>0:
-            PhaseMContent=self.appending_updates(phase3Content,PhaseMContent,3) 
+            PhaseMContent=self.appending_updates(phase3Content,PhaseMContent,3)
         return PhaseMContent
+
     def fixingContents(self, drug_list,commonName):
         phase1Content=[]
         phase2Content=[]
@@ -991,10 +1001,10 @@ class FullParser:
             if currentEntry[1]==commonName:
                 if currentEntry[3]==1:
                     phase1Content.append(currentEntry)
-                    
+
                 if currentEntry[3]==2:
                     phase2Content.append(currentEntry)
-                    
+
                 if currentEntry[3]==3:
                     phase3Content.append(currentEntry)
                 else:
@@ -1007,8 +1017,8 @@ class FullParser:
         if a==0 and b==0 and c==0:
             for q in range(0, len(phaseUContent)):
                 PhaseMContent.append(phaseUContent)
-            
-            
+
+
             return PhaseMContent
         else:
             if a>0:
@@ -1019,27 +1029,102 @@ class FullParser:
               #  PhaseMContent=self.appending_updates(phase2Content,PhaseMContent,2)
             if c>0:
                 PhaseMContent=self.appending_updates(phase3Content,PhaseMContent,3)
-                
+
         return PhaseMContent
             #Merge the various
+
+    def mechi_backup(self,currentCheck):
+        p1 = re.compile(r"\b[A-Za-z]+(vir)/b")
+        p2 = re.compile(r"\b[A-Za-z]+(cillin)/b")
+        p3 = re.compile(r"\b[A-Za-z]+(mab)/b")
+        p4 = re.compile(r"\b[A-Za-z]+(tide)/b")
+        p5 = re.compile(r"\b(cef)[A-Za-z]+\b")
+        drug_target=[]
+        if re.match(p1, currentCheck):
+            drug_target=['Antiviral'];
+            return drug_target
+        elif re.match(p2, currentCheck):
+            drug_target=['Penicillin-derived antibiotics'];
+            return drug_target
+        elif re.match(p5, currentCheck):
+            drug_target=['Cephem-type antibiotics'];
+            return currentCheck
+
+        elif "ximab" in currentCheck:
+            drug_target=['Chimeric antibody'];
+            return drug_target
+        elif "zumab" in currentCheck:
+            drug_target=['humanized antibody'];
+            return drug_target
+        elif re.match(p3, currentCheck):
+            drug_target=['monoclonal antiboies'];
+            return drug_target
+        elif "tinib" in currentCheck:
+            drug_target=['tyrosine-kinase inhibitor'];
+            return drug_target
+        elif "vastatin" in currentCheck:
+            drug_target=['tyrosine-kinase inhibitor'];
+            return drug_target
+        elif "prazole" in currentCheck:
+            drug_target=['Proton-pump inhibitor'];
+            return drug_target
+        elif "lukast" in currentCheck:
+            return ['Leukotriene receptor antagonists']
+        elif "grel" in currentCheck:
+            return drug_target
+        elif "axine" in currentCheck:
+            return ['Dopamine and serotonin–norepinephrine reuptake inhibitor']
+        elif "olol" in currentCheck:
+            return ['Beta-blockers']
+        elif "oxetine" in currentCheck:
+            return ['Antidepressant related to fluoxetine']
+        elif "sartan" in currentCheck:
+            return ['Angiotensin receptor antagonists']
+        elif "pril" in currentCheck:
+            return ['Angiotensin converting enzyme inhibitor']
+        elif "oxacin" in currentCheck:
+            return ['Quinolone-derived antibiotics']
+        elif "barb" in currentCheck:
+            return ['Barbiturates']
+        elif "xaban" in currentCheck:
+            return ['Direct Xa inhibitor']
+        elif "afil" in currentCheck:
+            return ['PDE5 Inhibitor']
+        elif "prost" in currentCheck:
+            return ['Prostaglandin analogue']
+        elif "ine" in currentCheck:
+            return ['chemical substance']
+        elif "parib" in currentCheck:
+            return ['PARP inhibitor']
+        elif re.match(p4, currentCheck):
+            return ['Peptides']
+        else:
+            return []
+
     def appending_updates(self, phase1Content,PhaseMContent,phase_int):
             entry1Mech=[]
             entry1treat=[]
             a=len(phase1Content)
+            intermidiatM=[]
             currentEntry=phase1Content[0]
             entry1Final=[currentEntry[0], currentEntry[1],entry1Mech,phase_int,entry1treat]
             oneConstant=0
             oneConstant_=0
+            anyconstant=0
             for q in range(0, a):
                 currentEntry=phase1Content[q]
-                if currentEntry[2]==[] and currentEntry[4]==[] and q>(len(currentEntry)-1):
-                    oneConstant=1
-                else:
-                    entry1Final=[currentEntry[0], currentEntry[1],entry1treat,phase_int,entry1Mech]
-                if currentEntry[2]!= [] and currentEntry[4]!= False:
+                if currentEntry[2]==[] and currentEntry[4]==[] and q<(len(currentEntry)-1):
+                    oneConstant=oneConstant
+
+                elif currentEntry[2]!= [] and currentEntry[4]!= []:
                     PhaseMContent.append(currentEntry)
                     oneConstant_=len(PhaseMContent)
-                elif currentEntry[2]!= [] and currentEntry[4]== []: 
+                    anyconstant=1
+                    oneConstant=q
+
+
+
+                elif currentEntry[2]!= [] and currentEntry[4]== []:
                     if oneConstant_>0:
                         temperary=PhaseMContent.pop(oneConstant_-1)
                         sub=[]
@@ -1048,27 +1133,32 @@ class FullParser:
                         subV=[temperary[0],temperary[1],sub,temperary[3],temperary[4]]
                         PhaseMContent.append(temperary)
                         oneConstant_=0
+                        anyconstant=1
                     else:
                         entry1treat=entry1treat+currentEntry[2]
                         entry1Mech=entry1Mech+currentEntry[4]
                         entry1Final=[currentEntry[0], currentEntry[1],entry1treat,phase_int,entry1Mech]
+                        anyconstant=1
 
-                elif currentEntry[2]== [] and currentEntry[4]!= []: 
+                elif currentEntry[2]== [] and currentEntry[4]!= []:
                     if oneConstant_>0:
-                        temperary=PhaseMContent.pop[oneConstant_-1]
+                        temperary=PhaseMContent.pop(oneConstant_-1)
                         sub=[]
                         sub=temperary[4]+currentEntry[4]
                         sub=list(set(sub))
                         subV=[temperary[0],temperary[1],temperary[2],temperary[3],sub]
                         PhaseMContent.append(subV)
                         oneConstant_=0
+                        anyconstant=1
                     else:
                         entry1treat=entry1treat+currentEntry[2]
                         entry1Mech=entry1Mech+currentEntry[4]
                         entry1Final=[currentEntry[0], currentEntry[1],entry1treat,phase_int,entry1Mech]
-               
-                PhaseMContent.append(entry1Final)
-                return PhaseMContent
+                        anyconstant=1
+
+            PhaseMContent.append(entry1Final)
+            return PhaseMContent
+
     def total_web_page_parse(self, ProposedDrugs, DrugWebsite):
         finalList = []
         lowList=[]
@@ -1101,7 +1191,11 @@ class FullParser:
         self.FinalList = finalList
         self.HighList = highList
         self.LowList=lowList
-        return finalList
+        return (finalList, self.HighList, self.LowList)
+
+    @property
+    def final_drug_data_all(self):
+        return self.__final_drug_data_all
 
     @property
     def final_drug_data_high(self):
@@ -1119,16 +1213,20 @@ class FullParser:
     def drug_mech_scrape_rate(self):
         return self.__drug_mech_scrape_rate
 
+    @property
+    def feedback_link_info(self):
+        return self.__feedback_link_info
+
 # Class method to run only when called from terminal
 def main():
     #url='http://www.gsk.com/en-gb/research/what-we-are-working-on/product-pipeline/'
-    url = "http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm"
-    company_name = "biogen"
+    url = "https://www.avanir.com/science/pipeline"
+    company_name = "avanir"
     full_parser = FullParser(company_name, url)
 
-    df = pd.DataFrame(full_parser.HighList)
+    df = pd.DataFrame(full_parser.final_drug_data_all)
     # cols = ['Company Name', 'Product Name','Treatment area','Phase','Mechanism of Action' ]
-    #df.columns = cols
+    df.columns = ['Company Name', 'Product Name','Treatment area','Phase','Mechanism of Action' ]
     print(df)
     # df.to_csv('testingAlpha', sep='\t')
 
