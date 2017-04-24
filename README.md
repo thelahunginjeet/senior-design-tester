@@ -7,10 +7,12 @@ INTRODUCTION
 This program will scrape pharmacuetical drug information from each respective company website and save this information into a csv file. This can be later read using R to analyze this information. It currently only reads websites in HTML format.
 
 
+
 REQUIREMENTS
 ************
 
 This software requires a working distribution of Python 3 or later.
+
 
 
 INSTALLATION
@@ -19,6 +21,7 @@ INSTALLATION
 1. Clone or extract repo in designated location
 2. Open terminal at location
 3. run ```pip install -r requirements.txt```
+
 
 
 CONFIGURATION
@@ -32,3 +35,4 @@ CONFIGURATION
     drug_data = read.csv("drug_data_cache.csv", header=TRUE, sep="\t", stringsAsFactors = FALSE)
     log_file = read.csv("log_entries_cache.csv", header=TRUE, sep="\t", stringsAsFactors = FALSE)
 ```
+
