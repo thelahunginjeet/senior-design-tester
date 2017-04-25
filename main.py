@@ -3,6 +3,7 @@ import requests
 from google_bot import GoogleBot
 from full_parser import FullParser
 import pandas as pd
+import sys
 import re
 
 
@@ -39,14 +40,29 @@ def preprocess(company_name, pipeline_url):
 
 """ START SCRIPT """
 
-# Reading links from list
-with open("company_names.txt", 'r') as companyNames:
-    company_names = companyNames.readlines()
-    company_names = [x.strip() for x in company_names]
+# filename = 'company_names.txt'
+# filename = sys.argv[1]
+# print(filename)
+try:
+    filename = sys.argv[1]
+except IndexError:
+    filename = 'company_names.txt'
+except:
+    print("Please fix the arguments entry!")
+
+
+try:
+    # Reading links from list
+    with open(filename, 'r') as companyNames:
+        company_names = companyNames.readlines()
+        company_names = [x.strip() for x in company_names]
+except FileNotFoundError:
+    print("Please enter a valid file name!")
+    sys.exit()
 
 # Creating the Google Bot
 google_bot = GoogleBot("pipeline")
-
+'''
 # Getting the link and calling the process for each one
 total = []
 log_entries = []
@@ -103,3 +119,4 @@ print(log_entry_df)
 
 print("Completed Succesfully, open csv")
 # print(df.head())
+'''
