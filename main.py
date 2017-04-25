@@ -10,16 +10,25 @@ def preprocess(company_name, pipeline_url):
     full_parser = FullParser(company_name, pipeline_url)
 
     current_drug_data_scrape_rate = round(full_parser.drug_data_scrape_rate)
-    (found_link, the_link) = full_parser.feedback_link_info
+    (found_link_pdf, the_link_pdf) = full_parser.feedback_link_info
+    (found_link_pic, the_link_pic) = full_parser.feedback_pic_info
+
     flags = []
+
+    if found_link_pic:
+        if current_drug_data_scrape_rate < 20:
+            the_link = the_link_pic
+            flags.append('Picture link provided')
+    if found_link_pdf:
+        the_link = the_link_pdf
+        flags.append('PDF link provided')
+    else:
+        the_link = pipeline_url
 
     if current_drug_data_scrape_rate < 20:
         print("scrape rate of ", company_name, ":", current_drug_data_scrape_rate)
-        data = [[company_name, company_name, ['!'], ['!'], ['!']]]
-        if found_link:
-            flags.append('PDF link provided')
-        else:
-            flags.append('Data is not up to accuracy standards: ' + str(current_drug_data_scrape_rate))
+        data = full_parser.final_drug_data_all
+        flags.append('Data is not up to accuracy standards: ' + str(current_drug_data_scrape_rate))
     else:
         print("scrape rate of ", company_name, ":", current_drug_data_scrape_rate)
         data = full_parser.final_drug_data_all
@@ -42,6 +51,7 @@ google_bot = GoogleBot("pipeline")
 total = []
 log_entries = []
 for company_name in company_names:
+    print("")
     company_name = company_name.lower()
 
     pipeline_url = google_bot.find_pipeline(company_name)
@@ -57,7 +67,8 @@ for company_name in company_names:
         flags.append("Can't find pipeline or DNE!")
         print("No pipeline for " + company_name)
     else:
-        # (data, found_link, flags) = preprocess(company_name, pipeline_url)
+        # (data, the_link, flags) = preprocess(company_name, pipeline_url)
+        # print(data)
         try:
             (data, the_link, flags) = preprocess(company_name, pipeline_url)
             # try:

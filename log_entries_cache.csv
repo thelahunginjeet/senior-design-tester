@@ -1,3 +1,20 @@
 	Company Name	Flags	Pipeline/PDF Url
 0	biogen	[]	https://www.biogen.com/en_us/research-pipeline/biogen-pipeline.html
-1	tevapharm	[]	http://www.tevapharm.com/research_development/rd_focus/pipeline/
+1	tevapharm	['PDF link provided']	/files/pipeline/Public_pipeline_Feb2017.pdf
+2	shire	[]	https://www.shire.com/research-and-development/pipeline
+3	novartis	['PDF link provided', 'Data is not up to accuracy standards: 0']	https://www.novartis.com/sites/www.novartis.com/files/novartis-pipeline-2016-annual-report.pdf
+4	pfizer	['PDF link provided']	/sites/default/files/product-pipeline/013117-Pipeline-Update.pdf
+5	ionis	['Error attempting to reach website!']	http://www.ionispharma.com/pipeline/
+6	roche	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+7	acorda therapeutics, inc.	[]	http://www.acorda.com/products/pipeline
+8	astrazeneca pharmaceuticals lp	[]	https://www.astrazeneca.com/our-science/pipeline.html
+9	avanir pharmaceuticals, inc.	[]	http://www.avanir.com/science/pipeline
+10	chugai-pharm	['PDF link provided']	/english/ir/pdf/170425ePipeline.pdf
+11	lily	[]	https://www.lilly.com/pipeline/
+12	alexion	[]	http://www.alexion.com/research-development/pipeline
+13	lundbeck	[]	http://investor.lundbeck.com/pipeline.cfm
+14	valeant	[]	http://www.valeant.com/operational-expertise/valeant-united-states/pipeline
+15	daiichisankyo	['Error attempting to reach website!']	http://www.daiichisankyo.com/rd/pipeline/
+16	danippon	['Error attempting to reach website!']	http://www.ds-pharma.com/rd/clinical/pipeline.html
+17	sumitomo	['Error attempting to reach website!']	http://www.ds-pharma.com/rd/clinical/pipeline.html
+18	teijin-pharma	"[""Can't find pipeline or DNE!""]"	http://www.teijin-pharma.com/business/research.html

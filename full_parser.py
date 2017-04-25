@@ -24,6 +24,7 @@ class FullParser:
         self.company_name = _company_name
         data = r.text
         self.__feedback_link_info = self.find_pdf(data, url)
+        self.__feedback_pic_info = self.find_pic(data, url)
 
         # Creating and searching lists
         final_list = self.create_list(data)
@@ -174,10 +175,21 @@ class FullParser:
             if re.match(p1, link['href']):
                 found_link = True
                 the_link = link['href']
-            else:
-                the_link = url
 
         return (found_link, the_link)
+
+    def find_pic(self, data, url):
+        primitive_soup = bs(data, "lxml")
+        found_link = False
+        the_link = None
+        p1 = re.compile(r'(.+)?(pipeline)(.+)?\.((jpg)|(jpeg)|(png))$')
+        for link in primitive_soup.find_all('a', href=True):
+            if re.match(p1, link['href']):
+                found_link = True
+                the_link = link['href']
+
+        return (found_link, the_link)
+
 
 
     """ PHASE IDENTIFIERS """
@@ -997,17 +1009,17 @@ class FullParser:
             PhaseMContent=self.app_update(phase3Content,PhaseMContent,3)
         return PhaseMContent
     def app_update(phase1Content,PhaseMContent,phase_int):
-        
-        
+
+
             entry1Mech=[]
             entry1treat=[]
             a=len(phase1Content)
-            
+
             currentEntry=phase1Content[0]
             entry1Final=[currentEntry[0], currentEntry[1],entry1Mech,phase_int,entry1treat]
-            
-            
-            
+
+
+
             for q in range(0, a):
                 currentEntry=phase1Content[q]
                 sub_a=entry1Final[2]+currentEntry[2]
@@ -1015,7 +1027,7 @@ class FullParser:
                 sub_b=entry1Final[2]+currentEntry[4]
                 sub_b=list(set(sub_b))
                 entry1Final=[entry1Final[0],entry1Final[1],sub_a,entry1Final[3],sub_b ]
-            
+
             PhaseM=PhaseMContent.append(entry1Final)
             return PhaseM
 
@@ -1143,8 +1155,8 @@ class FullParser:
             oneConstant=0
             oneConstant_=0
             anyconstant=0
-            
-            
+
+
             for q in range(0, a):
                 currentEntry=phase1Content[q]
                 if currentEntry[2]==[] and currentEntry[4]==[] and q<(len(currentEntry)-1):
@@ -1153,7 +1165,7 @@ class FullParser:
                 elif currentEntry[2]!= [] and currentEntry[4]!= [] and oneConstant==0:
                     PhaseMContent.append(currentEntry)
                     oneConstant_=len(PhaseMContent)
-                    
+
                     anyconstant=1
                     oneConstant=7
                 elif currentEntry[2]!= [] and currentEntry[4]!= []:
@@ -1264,18 +1276,22 @@ class FullParser:
     def feedback_link_info(self):
         return self.__feedback_link_info
 
+    @property
+    def feedback_pic_info(self):
+        return self.__feedback_pic_info
+
 # Class method to run only when called from terminal
 def main():
     #url='http://www.gsk.com/en-gb/research/what-we-are-working-on/product-pipeline/'
-    url = 'https://www.lilly.com/pipeline/'
-    company_name = "avanir"
+    url = 'http://www.pfizer.com/research/science_and_technology/product_pipeline'
+    company_name = "pfizer"
     full_parser = FullParser(company_name, url)
 
     df = pd.DataFrame(full_parser.FinalList)
     # cols = ['Company Name', 'Product Name','Treatment area','Phase','Mechanism of Action' ]
     df.columns = ['Company Name', 'Product Name','Treatment area','Phase','Mechanism of Action' ]
     print(df)
-   
+
     # df.to_csv('testingAlpha', sep='\t')
 
 if __name__ == "__main__":
