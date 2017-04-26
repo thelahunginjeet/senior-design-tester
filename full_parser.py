@@ -1008,9 +1008,15 @@ class FullParser:
         if len(phase3Content)>0:
             PhaseMContent=self.app_update(phase3Content,PhaseMContent,3)
         return PhaseMContent
+<<<<<<< Updated upstream
     def app_update(phase1Content,PhaseMContent,phase_int):
 
 
+=======
+    def app_update(self,phase1Content,PhaseMContent,phase_int):
+        
+        
+>>>>>>> Stashed changes
             entry1Mech=[]
             entry1treat=[]
             a=len(phase1Content)
@@ -1029,6 +1035,7 @@ class FullParser:
                 entry1Final=[entry1Final[0],entry1Final[1],sub_a,entry1Final[3],sub_b ]
 
             PhaseM=PhaseMContent.append(entry1Final)
+            #print PhaseM
             return PhaseM
 
     def fixingContents(self, drug_list,commonName):
@@ -1283,8 +1290,13 @@ class FullParser:
 # Class method to run only when called from terminal
 def main():
     #url='http://www.gsk.com/en-gb/research/what-we-are-working-on/product-pipeline/'
+<<<<<<< Updated upstream
     url = 'http://www.pfizer.com/research/science_and_technology/product_pipeline'
     company_name = "pfizer"
+=======
+    url = 'http://www.teijin-pharma.com/business/research.html'
+    company_name = "avanir"
+>>>>>>> Stashed changes
     full_parser = FullParser(company_name, url)
 
     df = pd.DataFrame(full_parser.FinalList)
