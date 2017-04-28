@@ -384,7 +384,10 @@ class FullParser:
         :param index_number: int
         :return: list
         """
-        return_list = []
+        start_side=0
+        end_side=0
+        return_listS = []
+        return_listE = []
         pwl = enchant.request_pwl_dict("medical.txt")
         start = 0
 
@@ -401,18 +404,39 @@ class FullParser:
         for x in range(index_number, end):
             if self.checking_official(drug_website[x+1]) == 'null':
                 if pwl.check(drug_website[x]):
-                    return_list.append(drug_website[x])
+                    return_listS.append(drug_website[x])
+                    start_side=start_side+1
             else:
                 break
 
         for x in range(1, 10):
             if self.checking_official(drug_website[index_number-x]) == 'null':
                 if pwl.check(drug_website[index_number-x]):
-                    return_list.append(drug_website[index_number-x])
+                    return_listE.append(drug_website[index_number-x])
+                    end_side=end_side+1
+            
             else:
                 break
+        if end_side>start_side and return_listE!=[] :
+            return return_listE
+        elif start_side> end_side and return_listS!=[] :
+            return return_listS
+        elif end_side==start_side and start_side>9:
+            temp_variable=len(start_side)
+            for x in range(0, temp_variable):
+                return_listE.append(return_listS[x])
+            return return_listE
+        elif end_side==start_side:
+             initial=len(return_listE)
+             later=len(return_listS)
+             if initial>=later:
+                 return return_listE
+             else:
+                 return return_listS
+       
+         
 
-        return return_list
+        
 
     def phase_diagnostic(self, drugWebsite, current_entry, indexNumber):
         bob=[]
@@ -471,15 +495,15 @@ class FullParser:
                      elif 'II' in futureEntry:
                          return 2
                      if 'I' in currentEntry:
-                         return '1'
+                         return 1
                      elif 'I' in futureEntry:
-                         return '1'
+                         return 1
                      elif 'P1' in currentEntry:
-                         return '1'
+                         return 1
                      elif 'P2' in currentEntry:
-                         return '2'
+                         return 2
                      elif 'P3' in currentEntry:
-                         return '3'
+                         return 3
 
                      else :
                          return False
@@ -718,7 +742,9 @@ class FullParser:
             if elem not in new_k:
                 new_k.append(elem)
         bobby = new_k
-        #bobby=self.fixingContent(bobby,current_entry)
+        print(bobby)
+        print("")
+       # bobby=self.fixingContent(bobby,current_entry)
 
 
         if bobby == []:
@@ -982,9 +1008,9 @@ class FullParser:
         phaseUContent=[]
         PhaseMContent=[]
         totalSize=len(drug_list)
-        if totalSize<=1:
+        if totalSize==0:
 
-            return drug_list
+            return []
         else:
             for q in range(0, len(drug_list)):
                 currentEntry=drug_list[q]
@@ -1007,16 +1033,13 @@ class FullParser:
             PhaseMContent=self.app_update(phase2Content,PhaseMContent,2)
         if len(phase3Content)>0:
             PhaseMContent=self.app_update(phase3Content,PhaseMContent,3)
-        return PhaseMContent
-<<<<<<< Updated upstream
-    def app_update(phase1Content,PhaseMContent,phase_int):
+        return drug_list
 
 
-=======
     def app_update(self,phase1Content,PhaseMContent,phase_int):
         
         
->>>>>>> Stashed changes
+
             entry1Mech=[]
             entry1treat=[]
             a=len(phase1Content)
@@ -1290,13 +1313,10 @@ class FullParser:
 # Class method to run only when called from terminal
 def main():
     #url='http://www.gsk.com/en-gb/research/what-we-are-working-on/product-pipeline/'
-<<<<<<< Updated upstream
-    url = 'http://www.pfizer.com/research/science_and_technology/product_pipeline'
-    company_name = "pfizer"
-=======
-    url = 'http://www.teijin-pharma.com/business/research.html'
-    company_name = "avanir"
->>>>>>> Stashed changes
+
+    url = 'http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm'
+    company_name = "biogen"
+
     full_parser = FullParser(company_name, url)
 
     df = pd.DataFrame(full_parser.FinalList)

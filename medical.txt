@@ -113,7 +113,6 @@ Coccidioidomycosis
 Colorectal (Colon)
 colon
 cold
-Common
 Concussion
 Congenital
 Loss
@@ -602,7 +601,6 @@ coccidioidomycosis
 colorectal (colon)
 colon
 cold
-common
 concussion
 congenital
 loss
