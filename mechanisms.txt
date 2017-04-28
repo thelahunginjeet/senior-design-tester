@@ -18,12 +18,16 @@ allosteric
 modulators
 Glutamate
 ionotropic
+allosteric
+modulator 
 subtype
 NMDA
 expression
 phencyclidine
 G-protein-coupled
 Muscarinic
+amyloid-beta
+Amyloid
 Adenosine
 Agonists
 A1receptor

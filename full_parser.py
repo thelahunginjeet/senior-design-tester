@@ -744,7 +744,8 @@ class FullParser:
         bobby = new_k
         print(bobby)
         print("")
-       # bobby=self.fixingContent(bobby,current_entry)
+        #if bobby!=[]:
+        bobby=self.removeExcess(bobby,current_entry)
 
 
         if bobby == []:
@@ -752,7 +753,68 @@ class FullParser:
             bobby.append(prelim_addi)
 
         return bobby
+    def removeExcess(self,current_list, current_entry):
+        totalsize=len(current_list)
+        action=['']
+        mechi=['']
+        finalOutput=[]
+        finalOutput1=[]
+        finalOutput2=[]
+        finalOutput3=[]
+        for x in range (0,totalsize):
+            entry_init=current_list[x]
+            
+            if entry_init[1] !=current_entry:
+                finalOutput.append(current_list[x])
+            elif entry_init[3]==1:
+                finalOutput1.append(entry_init)
+            elif entry_init[3]==2:
+                finalOutput2.append(entry_init)
+            elif entry_init[3]==3:
+                finalOutput3.append(entry_init)
+            else:
+                finalOutput.append(current_list[x])
+        analyis_par=len(finalOutput1)
+        
+        for x in range (0,analyis_par):
+            
+            temp=finalOutput1[x]
+            company_name=temp[0]
+            drug_name=temp[1]
+            action=action+temp[2]
+            mechi=mechi+temp[4]
+            finalOutput1=[company_name,drug_name,action,1,mechi]
+        action=[]
+        mechi=[]
+        analyis_par=len(finalOutput2)
+        for x in range (0,analyis_par):
+            
+            temp=finalOutput2[x]
+            company_name=temp[0]
+            drug_name=temp[1]
+            action=action+temp[2]
+            mechi=mechi+temp[4]
+            finalOutput2=[company_name,drug_name,action,2,mechi]
+       
+        action=[]
+        mechi=[]
 
+        analyis_par=len(finalOutput3)
+        for x in range (0,analyis_par):
+            
+            temp=finalOutput3[x]
+            company_name=temp[0]
+            drug_name=temp[1]
+            action=action+temp[2]
+            mechi=mechi+temp[4]
+            finalOutput3=[company_name,drug_name,action,3,mechi]
+        if finalOutput1!=[]:
+            finalOutput.append(finalOutput1)
+        elif finalOutput2!=[]:
+            finalOutput.append(finalOutput2)
+        elif finalOutput3!=[]:
+            finalOutput.append(finalOutput3)
+        return finalOutput
     def full_reference(self, current_entry, list_values):
         """
         :param current_entry: string
@@ -1033,7 +1095,7 @@ class FullParser:
             PhaseMContent=self.app_update(phase2Content,PhaseMContent,2)
         if len(phase3Content)>0:
             PhaseMContent=self.app_update(phase3Content,PhaseMContent,3)
-        return drug_list
+        return PhaseMContent
 
 
     def app_update(self,phase1Content,PhaseMContent,phase_int):
