@@ -1,0 +1,256 @@
+	Company Name	Product Name	Treatment Area	Phase	Mechanism of Action	Flags	Pipeline/PDF Url
+0	ionis	ionis	['!']	['!']	['!']	['No data found on website!']	http://www.ionispharma.com/pipeline/
+1	bayer	bayer	['!']	['!']	['!']	['No data found on website!']	http://pharma.bayer.com/en/innovation-partnering/development-pipeline/
+2	biogen	aducanumab	"[""Alzheimer's"", 'disease']"	3	[]	[]	https://www.biogen.com/en_us/research-pipeline/biogen-pipeline.html
+3	biogen	BIIB067	['loss', 'ALS', 'disease', 'sclerosis', 'brain']	2	[]	[]	https://www.biogen.com/en_us/research-pipeline/biogen-pipeline.html
+4	biogen	Dapirolizumab	['Lupus', 'B', 'inflammatory', 'lupus', 'chronic', 'disease', 'brain']	2	['humanized antibody', 'antibody']	[]	https://www.biogen.com/en_us/research-pipeline/biogen-pipeline.html
+5	biogen	Opicinumab	['vision', 'loss', 'disease', 'sclerosis', 'virus']	2	[]	[]	https://www.biogen.com/en_us/research-pipeline/biogen-pipeline.html
+6	biogen	E2609	"['non-Hodgkin’s', 'loss', 'disease', ""Alzheimer's"", 'brain']"	3	['inhibitor', 'inhibitor)', '(BACE1']	[]	https://www.biogen.com/en_us/research-pipeline/biogen-pipeline.html
+7	biogen	BIIB074	['lupus', 'disease']	2	['inhibitor)']	[]	https://www.biogen.com/en_us/research-pipeline/biogen-pipeline.html
+8	biogen	Natalizumab	['Crohn’s', 'acute', 'inflammatory', 'lymphocytic', 'stroke', 'Acute', 'sclerosis', 'ischemic', 'brain', 'Stroke']	2	['humanized antibody', 'inhibitor)']	[]	https://www.biogen.com/en_us/research-pipeline/biogen-pipeline.html
+9	biogen	Obinutuzumab	['tumors', 'lymphoma', 'B', 'non-Hodgkin’s', 'lymphocytic', 'cancer', 'chronic']	3	['humanized antibody', 'antibody']	[]	https://www.biogen.com/en_us/research-pipeline/biogen-pipeline.html
+10	biogen	BIIB054	"[""Parkinson's"", 'disease']"	2	[]	[]	https://www.biogen.com/en_us/research-pipeline/biogen-pipeline.html
+11	biogen	BAN2401	['disease', 'brain', 'loss']	2	['mAb)', 'antibody']	[]	https://www.biogen.com/en_us/research-pipeline/biogen-pipeline.html
+12	biogen	Aducanumab	['disease', 'brain', 'loss']	3	['mAb)', 'antibody']	[]	https://www.biogen.com/en_us/research-pipeline/biogen-pipeline.html
+13	biogen	obinutuzumab	['cancer']	3	['humanized antibody']	[]	https://www.biogen.com/en_us/research-pipeline/biogen-pipeline.html
+14	biogen	BG00011	['pulmonary', 'Pulmonary', 'fibrosis', 'Idiopathic', 'disease', 'brain']	2	['antibody']	[]	https://www.biogen.com/en_us/research-pipeline/biogen-pipeline.html
+15	biogen	BIIB059	['Lupus', 'inflammatory', 'lupus', 'chronic', 'disease', 'brain']	2	[]	[]	https://www.biogen.com/en_us/research-pipeline/biogen-pipeline.html
+16	roche	RG6114	['cancer', 'breast']	1	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+17	roche	RG435	['cancer', 'Oncology', 'breast', 'acute']	1	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+18	roche	RG1662	['disorders', 'A', 'brain']	2	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+19	roche	RG7882	['ovarian', 'cancer', 'A']	1	['antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+20	roche	RG7845	['autoimmune']	2	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+21	roche	RG6100	"[""Alzheimer's"", 'disease']"	1	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+22	roche	Alectinib	['tumorigenesis', 'disease', 'malignant']	1	['tyrosine-kinase inhibitor']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+23	roche	Obinutuzumab	['lupus']	2	['monoclonal']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+24	roche	crenezumab	"[""Alzheimer's"", 'disease']"	3	['humanized antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+25	roche	RG7854	['infection', 'B', 'hepatitis']	1	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+26	roche	emactuzumab+atezolizumab	['Oncology', 'tumors', 'Cancer']	1	['humanized antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+27	roche	emactuzumab	['cancer', 'tumors', 'A', 'Cancer']	1	['humanized antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+28	roche	RG6013	['hemophilia']	3	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+29	roche	cobimetinib+atezolizumab	['Oncology']	1	['tyrosine-kinase inhibitor']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+30	roche	cobimetinib+atezolizumab	['Oncology']	3	['tyrosine-kinase inhibitor']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+31	roche	cobimetinib	['Oncology', 'Cancer', 'tumours']	1	['tyrosine-kinase inhibitor']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+32	roche	cobimetinib	['cancer', 'Oncology', 'breast']	2	['tyrosine-kinase inhibitor']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+33	roche	ruxolitinib	['myelofibrosis', 'A', 'fibrosis']	1	['inhibitor', 'tyrosine-kinase inhibitor']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+34	roche	RG6061	['Oncology', 'tumors']	1	['oligonucleotide']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+35	roche	Pertuzumab	['cancer', 'breast']	3	['monoclonal', 'antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+36	roche	RG1273	['Oncology']	3	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+37	roche	RG7880	['inflammatory']	1	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+38	roche	RG6046	['chronic', 'B', 'hepatitis']	2	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+39	roche	RG7861	['conjugate', 'Staphylococcus', 'aureus']	1	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+40	roche	RG7421	['Oncology']	1	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+41	roche	RG7421	['Oncology']	2	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+42	roche	RG7421	['Oncology']	3	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+43	roche	RG7221	['Oncology']	2	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+44	roche	emicizumab	['hemophilia']	3	['humanized antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+45	roche	ipilimumab	['Oncology', 'tumors', 'Cancer', 'tumours']	1	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+46	roche	Frontline	['chronic', 'lymphocytic']	3	['chemical substance']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+47	roche	RG7203	['schizophrenia']	1	['inhibitor']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+48	roche	RG6029	['peripheral']	1	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+49	roche	Vanucizumab	['cancer']	2	['monoclonal', 'antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+50	roche	Etrolizumab	['disease', 'ulcerative']	3	['humanized antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+51	roche	RG7741	['tumors', 'lymphoma', 'tumor']	1	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+52	roche	RG6149	['asthma']	2	['monoclonal', 'antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+53	roche	codrituzumab	['cancer', 'liver']	2	['humanized antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+54	roche	RG7413	['bowel', 'disease', 'ulcerative']	3	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+55	roche	azacitidine	['myelodysplastic']	1	['chemical substance']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+56	roche	azacitidine	['myelodysplastic']	2	['chemical substance']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+57	roche	azacitidine	['acute']	3	['chemical substance']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+58	roche	RG7935	"[""Parkinson's"", 'disease']"	1	['monoclonal', 'antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+59	roche	RG6083	['atrophy']	2	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+60	roche	RG7686	['cancer', 'Oncology', 'liver']	2	['monoclonal', 'antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+61	roche	RG7446+ipilimumab	['Oncology']	1	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+62	roche	RG7446	['ovarian', 'Oncology', 'tumors', 'cancer']	1	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+63	roche	RG7446	['Oncology']	3	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+64	roche	RG6180	['Oncology']	1	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+65	roche	Gantenerumab	"['disease', ""Alzheimer's""]"	3	['monoclonal', 'antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+66	roche	nemolizumab	['dermatitis']	2	['humanized antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+67	roche	lebrikizumab	['pulmonary', 'idiopathic', 'fibrosis', 'dermatitis']	2	['humanized antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+68	roche	RG7876+atezolizumab	['Oncology']	1	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+69	roche	RG7876+vanucizumab	['Oncology']	1	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+70	roche	RG7876	['Oncology', 'tumors', 'Cancer', 'tumours']	1	['antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+71	roche	RG7625	['autoimmune']	2	['antagonist']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+72	roche	URC102	['A']	1	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+73	roche	URC102	['gout']	2	['inhibitor']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+74	roche	URC102	['A']	3	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+75	roche	RG6078+atezolizumab	['Oncology']	1	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+76	roche	RG6078	['cancer', 'tumors', 'A', 'Cancer']	1	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+77	roche	erlotinib	['Oncology']	1	['tyrosine-kinase inhibitor']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+78	roche	RG7992	['gout']	1	['antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+79	roche	RG1569	['sclerosis']	3	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+80	roche	atezolizumab+obinutuzumab	['Oncology', 'lymphoma', 'Cancer']	1	['humanized antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+81	roche	atezolizumab+erlotinib	['Oncology']	1	['humanized antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+82	roche	atezolizumab	['tumors', 'Oncology', 'prostate', 'lymphoma', 'B', 'myelodysplastic', 'Cancer', 'breast', 'cancer', 'A', 'Diabetes', 'tumours']	1	['PD-L1', 'humanized antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+83	roche	atezolizumab	['Oncology', 'prostate', 'breast', 'Cancer', 'cancer', 'ovarian', 'A']	3	['humanized antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+84	roche	Emicizumab	['hemophilia', 'congenital']	3	['antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+85	roche	Lampalizumab	['Diseases', 'chronic']	3	['monoclonal', 'antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+86	roche	RG7916	['atrophy']	2	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+87	roche	RG6168	['neuromyelitis', 'A']	3	['monoclonal', 'antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+88	roche	RG3502	['Oncology']	2	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+89	roche	RG3502	['Oncology']	3	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+90	roche	RG6026	['Oncology', 'lymphoma']	1	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+91	roche	RG6026	['lymphoma', 'myelodysplastic']	3	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+92	roche	obinutuzumab	['Oncology', 'lymphoma', 'Cancer', 'disease', 'A']	1	['humanized antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+93	roche	obinutuzumab	['lupus', 'A']	2	['humanized antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+94	roche	RG7440	['cancer', 'Oncology', 'prostate']	2	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+95	roche	Crenezumab	"['disease', ""Alzheimer's""]"	3	['monoclonal']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+96	roche	polatuzumab	['conjugate', 'tumor']	2	['antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+97	roche	pertuzumab	['cancer']	1	['humanized antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+98	roche	pertuzumab	['cancer', 'breast']	3	['humanized antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+99	roche	BRAFv600	['A']	3	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+100	roche	alectinib	['lymphoma', 'Cancer']	1	['tyrosine-kinase inhibitor']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+101	roche	RG6125	['inflammatory', 'rheumatoid', 'arthritis']	2	['monoclonal', 'antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+102	roche	lampalizumab	['atrophy']	3	['humanized antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+103	roche	Nemolizumab	['dermatitis']	2	['monoclonal', 'interleukin-31', 'antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+104	roche	RG7227	['chronic', 'B', 'hepatitis']	2	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+105	roche	RG6047	['cancer', 'breast']	1	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+106	roche	emtansine+pertuzumab	['Oncology', 'breast']	3	['chemical substance']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+107	roche	emtansine	['breast']	2	['chemical substance']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+108	roche	emtansine	['conjugate']	3	['chemical substance']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+109	roche	RG7386	['Oncology', 'tumours', 'tumour-cell']	1	['antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+110	roche	etrolizumab	['disease', 'ulcerative']	3	['humanized antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+111	roche	HIF-1	['disease']	1	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+112	roche	CSF-1	['A']	1	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+113	roche	RG7159	['Oncology', 'disease']	1	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+114	roche	RG7159	['lupus']	2	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+115	roche	RG6004	['chronic', 'B', 'hepatitis']	1	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+116	roche	RG7888+atezolizumab	['Oncology']	1	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+117	roche	RG7888	['tumors', 'A', 'Cancer']	1	['monoclonal']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+118	roche	RG7828	['Oncology']	1	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+119	roche	tocilizumab	['sclerosis', 'vasculitis']	3	['monoclonal', 'antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+120	roche	RG6152	['Diseases', 'B', 'A', 'seasonal', 'influenza']	2	['inhibitor']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+121	roche	RG7388	['Oncology']	3	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+122	roche	RG7716	['A']	2	['antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+123	roche	RG6016	['Oncology', 'tumors']	1	['inhibitor']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+124	roche	RG7601	['tumor', 'lymphocytic', 'ovarian', 'chronic', 'cancer', 'A']	1	['Bcl-2', 'inhibitor']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+125	roche	RG7601	['Oncology', 'tumor', 'lymphoma', 'B', 'myelodysplastic', 'A']	2	['Bcl-2', 'inhibitor']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+126	roche	RG7601	['tumor', 'Oncology', 'acute', 'lymphocytic', 'chronic', 'A']	3	['Bcl-2', 'inhibitor']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+127	roche	RG7155+RG7876	['Oncology']	1	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+128	roche	Atezolizumab	['cancer', 'A']	1	['antibody', 'monoclonal', 'PD-L1']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+129	roche	Atezolizumab	['cancer', 'tumours']	3	['humanized antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+130	roche	RG6069	['fibrosis']	1	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+131	roche	RG7853	['cancer', 'Oncology', 'breast', 'acute']	1	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+132	roche	RG6146	['cancer', 'Oncology']	1	['inhibitor']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+133	roche	bevacizumab	['ovarian', 'tumor', 'A']	1	['monoclonal', 'antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+134	roche	ocrelizumab	['sclerosis']	1	['humanized antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+135	roche	gantenerumab	"[""Alzheimer's"", 'disease']"	3	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+136	roche	ARN-927	['breast', 'cancer']	1	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+137	roche	RG1450	"[""Alzheimer's"", 'disease']"	3	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+138	roche	trastuzumab-DM1	['cancer', 'Oncology', 'breast']	3	['humanized antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+139	roche	RG3637	['pulmonary', 'fibrosis', 'chronic', 'idiopathic', 'disease', 'dermatitis']	2	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+140	roche	RG7813+RG7446	['Oncology']	1	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+141	roche	RG7813	['Oncology', 'tumors', 'A']	1	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+142	roche	atezolizumab.	['Oncology']	1	['humanized antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+143	roche	RG7204	['Oncology']	3	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+144	roche	RG7417	['atrophy']	3	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+145	roche	RG3616	['pulmonary', 'fibrosis', 'myelofibrosis', 'idiopathic', 'A']	1	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+146	roche	CKI27	['tumors', 'Oncology']	1	['inhibitor', 'MEK']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+147	roche	Lebrikizumab	['pulmonary', 'idiopathic', 'fibrosis', 'dermatitis']	2	['monoclonal', 'antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+148	roche	RG6000	['sclerosis', 'amyotrophic']	1	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+149	roche	RG6058	['Oncology', 'tumours']	1	['monoclonal', 'antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+150	roche		['tumors', 'Cancer']	1	['humanized antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+151	roche	vanucizumab	['tumours']	1	['humanized antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+152	roche	vanucizumab	['cancer']	2	['humanized antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+153	roche	Trastuzumab	['cancer', 'breast']	3	['humanized antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+154	roche	RG7907	['infection', 'B', 'hepatitis']	1	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+155	roche	RG7834	['chronic', 'B', 'hepatitis']	1	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+156	roche	RG7906	['disorders', 'psychiatric']	1	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+157	roche	RG1594	['sclerosis']	1	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+158	roche	RG7745	['virus', 'A', 'influenza']	2	['monoclonal', 'antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+159	roche	RG105	['Oncology']	1	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+160	roche	RG7461	['Oncology', 'A', 'tumours']	1	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+161	roche	RG7604	['Oncology']	2	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+162	roche	RG7604	['cancer', 'breast']	3	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+163	roche	RG7802	['Oncology', 'tumors', 'tumor']	1	['antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+164	roche	RG3645	['pulmonary', 'chronic', 'disease']	2	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+165	roche	Ocrelizumab	['disease', 'inflammatory', 'sclerosis']	1	['monoclonal', 'antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+166	roche	rituximab	['chronic', 'lymphocytic']	2	['Chimeric antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+167	roche	RG7314	['autism']	2	['antagonist']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+168	roche	trastuzumab	['conjugate']	1	['humanized antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+169	roche	trastuzumab	['Oncology', 'breast']	2	['humanized antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+170	roche	trastuzumab	['Oncology', 'breast']	3	['humanized antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+171	roche	RG7412	"[""Alzheimer's"", 'disease']"	3	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+172	roche	RG7990	['asthma']	1	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+173	roche	RG6185	['Oncology']	1	['inhibitor']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+174	roche		['Oncology']	1	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+175	roche	GA101	['lupus']	2	['monoclonal']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+176	roche	RG7800	['HPV', 'Oncology', 'infection', 'tumor', 'acute', 'Diseases', 'Cervical', 'Staphylococcus', 'Cancer', 'HIV', 'atrophy', 'cancer', 'MRSA', 'ovarian', 'aureus']	1	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+177	roche	immunocytokine	['tumors', 'A']	1	['antibody', 'cytokine']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+178	roche	OP0595	['Diseases']	1	['inhibitor']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+179	roche	RG7986	['lymphoma', 'B']	1	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+180	roche	RG6080	['Diseases']	1	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+181	roche	RG7596	['Oncology']	2	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+182	astrazeneca	tralokinumab	['asthma']	3	[]	[]	https://www.astrazeneca.com/our-science/pipeline.html
+183	astrazeneca	mavrilimumab	['chronic', 'gout', 'rheumatoid', 'arthritis']	2	['mAb']	[]	https://www.astrazeneca.com/our-science/pipeline.html
+184	astrazeneca	tezepelumab	['COPD', 'dermatitis']	2	['mAb']	[]	https://www.astrazeneca.com/our-science/pipeline.html
+185	astrazeneca	AZD4831	['heart']	1	[]	[]	https://www.astrazeneca.com/our-science/pipeline.html
+186	astrazeneca	durvalumab+AZD1775	['tumours']	1	[]	[]	https://www.astrazeneca.com/our-science/pipeline.html
+187	astrazeneca	durvalumab+MEDI0562	['tumours']	1	[]	[]	https://www.astrazeneca.com/our-science/pipeline.html
+188	astrazeneca	durvalumab+MEDI9447	['tumours']	1	[]	[]	https://www.astrazeneca.com/our-science/pipeline.html
+189	astrazeneca	durvalumab+monalizumab	['tumours']	1	[]	[]	https://www.astrazeneca.com/our-science/pipeline.html
+190	astrazeneca	durvalumab+selumetinib	['tumours']	1	[]	[]	https://www.astrazeneca.com/our-science/pipeline.html
+191	astrazeneca	durvalumab+tremelimumab	['tumours']	1	[]	[]	https://www.astrazeneca.com/our-science/pipeline.html
+192	astrazeneca	durvalumab+MEDI0680	['tumours']	2	[]	[]	https://www.astrazeneca.com/our-science/pipeline.html
+193	astrazeneca	durvalumab+tremelimumab	['cancer']	2	[]	[]	https://www.astrazeneca.com/our-science/pipeline.html
+194	astrazeneca	durvalumab	['lymphoma']	1	['PD-L1', 'mAb']	[]	https://www.astrazeneca.com/our-science/pipeline.html
+195	astrazeneca	durvalumab	['tumours']	2	['PD-L1', 'mAb']	[]	https://www.astrazeneca.com/our-science/pipeline.html
+196	astrazeneca	durvalumab	['cancer']	3	['PD-L1', 'mAb']	[]	https://www.astrazeneca.com/our-science/pipeline.html
+197	astrazeneca	anifrolumab	['lupus']	2	['mAb']	[]	https://www.astrazeneca.com/our-science/pipeline.html
+198	astrazeneca	anifrolumab	"['lupus', ""Alzheimer's"", 'disease']"	3	['mAb']	[]	https://www.astrazeneca.com/our-science/pipeline.html
+199	astrazeneca	MEDI-565	['tumours']	1	['mAb']	[]	https://www.astrazeneca.com/our-science/pipeline.html
+200	astrazeneca	MEDI9197	['tumours']	1	[]	[]	https://www.astrazeneca.com/our-science/pipeline.html
+201	astrazeneca	CTLA-4	['tumours']	1	['PD-L1', 'mAb']	[]	https://www.astrazeneca.com/our-science/pipeline.html
+202	astrazeneca	CTLA-4	['cancer']	2	['PD-L1', 'mAb']	[]	https://www.astrazeneca.com/our-science/pipeline.html
+203	astrazeneca	AZD1419	['asthma']	2	[]	[]	https://www.astrazeneca.com/our-science/pipeline.html
+204	astrazeneca	PT010	['asthma']	2	[]	[]	https://www.astrazeneca.com/our-science/pipeline.html
+205	astrazeneca	PT010	['COPD']	3	[]	[]	https://www.astrazeneca.com/our-science/pipeline.html
+206	astrazeneca	MEDI5872	['syndrome']	2	['mAb', 'B7RP1']	[]	https://www.astrazeneca.com/our-science/pipeline.html
+207	astrazeneca	AZD6738	['tumours']	1	[]	[]	https://www.astrazeneca.com/our-science/pipeline.html
+208	astrazeneca	AZD6738	['cancer', 'ovarian']	2	['inhibitor']	[]	https://www.astrazeneca.com/our-science/pipeline.html
+209	astrazeneca	monalizumab	['tumours']	1	['PD-L1', 'humanized antibody', 'mAb']	[]	https://www.astrazeneca.com/our-science/pipeline.html
+210	astrazeneca	MEDI4276	['conjugate', 'tumours']	1	[]	[]	https://www.astrazeneca.com/our-science/pipeline.html
+211	astrazeneca	MEDI4893	['Staphylococcus', 'aureus', 'pneumonia']	2	['mAb']	[]	https://www.astrazeneca.com/our-science/pipeline.html
+212	astrazeneca	MEDI-573	['cancer', 'breast']	2	['mAb']	[]	https://www.astrazeneca.com/our-science/pipeline.html
+213	astrazeneca	MEDI6012	['diabetes']	2	[]	[]	https://www.astrazeneca.com/our-science/pipeline.html
+214	astrazeneca	AZD8871	['COPD']	2	[]	[]	https://www.astrazeneca.com/our-science/pipeline.html
+215	astrazeneca	MEDI1873	['tumours']	1	[]	[]	https://www.astrazeneca.com/our-science/pipeline.html
+216	astrazeneca	AZD4635	['tumours']	1	['inhibitor']	[]	https://www.astrazeneca.com/our-science/pipeline.html
+217	astrazeneca	MEDI9447	['tumours']	1	['PD-L1', 'mAb']	[]	https://www.astrazeneca.com/our-science/pipeline.html
+218	astrazeneca	SGLT-2	['chronic', 'heart', 'CKD', 'diabetes']	3	['inhibitor']	[]	https://www.astrazeneca.com/our-science/pipeline.html
+219	astrazeneca	AZD0156	['Oncology', 'tumours']	1	[]	[]	https://www.astrazeneca.com/our-science/pipeline.html
+220	astrazeneca	AZD7986	['COPD']	1	[]	[]	https://www.astrazeneca.com/our-science/pipeline.html
+221	astrazeneca	MEDI5083	['tumours']	1	[]	[]	https://www.astrazeneca.com/our-science/pipeline.html
+222	astrazeneca	MEDI0562	['tumours']	1	['PD-L1', 'mAb']	[]	https://www.astrazeneca.com/our-science/pipeline.html
+223	astrazeneca	AZD2811	['B', 'tumours']	1	['inhibitor']	[]	https://www.astrazeneca.com/our-science/pipeline.html
+224	astrazeneca	selumetinib	['tumours']	1	['tyrosine-kinase inhibitor', 'inhibitor', 'MEK', 'PD-L1']	[]	https://www.astrazeneca.com/our-science/pipeline.html
+225	astrazeneca	selumetinib	['cancer', 'prostate', 'breast']	3	['inhibitor', 'tyrosine-kinase inhibitor', 'MEK']	[]	https://www.astrazeneca.com/our-science/pipeline.html
+226	astrazeneca	AZD0284	['Respiratory']	1	[]	[]	https://www.astrazeneca.com/our-science/pipeline.html
+227	astrazeneca	MEDI0680	['tumours']	1	[]	[]	https://www.astrazeneca.com/our-science/pipeline.html
+228	astrazeneca	MEDI0680	['tumours']	2	['PD-L1', 'mAb']	[]	https://www.astrazeneca.com/our-science/pipeline.html
+229	astrazeneca	AZD5634	['fibrosis']	1	[]	[]	https://www.astrazeneca.com/our-science/pipeline.html
+230	astrazeneca	MEDI8852	['A', 'influenza']	2	['mAb']	[]	https://www.astrazeneca.com/our-science/pipeline.html
+231	astrazeneca	MEDI7352	['osteoarthritis']	1	['mAb']	[]	https://www.astrazeneca.com/our-science/pipeline.html
+232	astrazeneca	MEDI4920	['syndrome']	1	[]	[]	https://www.astrazeneca.com/our-science/pipeline.html
+233	astrazeneca	IL-13	['asthma', 'COPD']	3	['mAb']	[]	https://www.astrazeneca.com/our-science/pipeline.html
+234	astrazeneca	MEDI1814	['disease']	1	['mAb']	[]	https://www.astrazeneca.com/our-science/pipeline.html
+235	astrazeneca	AZD8186	['tumours']	1	[]	[]	https://www.astrazeneca.com/our-science/pipeline.html
+236	astrazeneca	GLP-1	['chronic', 'heart', 'diabetes']	2	[]	[]	https://www.astrazeneca.com/our-science/pipeline.html
+237	astrazeneca	MEDI9314	['dermatitis']	1	['mAb']	[]	https://www.astrazeneca.com/our-science/pipeline.html
+238	astrazeneca	MEDI8897	['RSV']	2	[]	[]	https://www.astrazeneca.com/our-science/pipeline.html
+239	astrazeneca	AZD9567	['rheumatoid']	1	[]	[]	https://www.astrazeneca.com/our-science/pipeline.html
+240	astrazeneca	MEDI3726	['cancer', 'prostate']	1	['antibody']	[]	https://www.astrazeneca.com/our-science/pipeline.html
+241	astrazeneca	AZD5363	['cancer', 'breast']	2	['inhibitor']	[]	https://www.astrazeneca.com/our-science/pipeline.html
+242	astrazeneca	MEDI3902	['pneumonia']	2	['mAb']	[]	https://www.astrazeneca.com/our-science/pipeline.html
+243	astrazeneca	tremelimumab+MEDI0562	['tumours']	1	[]	[]	https://www.astrazeneca.com/our-science/pipeline.html
+244	astrazeneca	tremelimumab	['tumours']	1	['PD-L1', 'mAb']	[]	https://www.astrazeneca.com/our-science/pipeline.html
+245	astrazeneca	tremelimumab	['cancer']	2	['PD-L1', 'mAb']	[]	https://www.astrazeneca.com/our-science/pipeline.html
+246	astrazeneca	AZD4547	['tumours']	2	[]	[]	https://www.astrazeneca.com/our-science/pipeline.html
+247	astrazeneca	AZD9496	['cancer', 'breast']	1	[]	[]	https://www.astrazeneca.com/our-science/pipeline.html
+248	astrazeneca	inebilizumab	['neuromyelitis', 'Neuromyelitis', 'sclerosis']	2	['CD19', 'humanized antibody', 'mAb']	[]	https://www.astrazeneca.com/our-science/pipeline.html
+249	astrazeneca	STAT3	['lymphoma']	1	['inhibitor', 'inhibitor)', 'mAb', 'PD-L1']	[]	https://www.astrazeneca.com/our-science/pipeline.html
+250	astrazeneca	AZD1775	['tumours']	1	['inhibitor']	[]	https://www.astrazeneca.com/our-science/pipeline.html
+251	astrazeneca	AZD1775	['ovarian', 'cancer', 'tumours']	2	[]	[]	https://www.astrazeneca.com/our-science/pipeline.html
+252	astrazeneca	AZD4076	['liver']	2	['oligonucleotide']	[]	https://www.astrazeneca.com/our-science/pipeline.html
+253	astrazeneca	benralizumab	['asthma', 'COPD']	3	['humanized antibody', 'mAb']	[]	https://www.astrazeneca.com/our-science/pipeline.html
+254	astrazeneca	MEDI0700	['lupus']	1	[]	[]	https://www.astrazeneca.com/our-science/pipeline.html

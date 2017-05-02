@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
 Created on Sat Apr 22 22:32:13 2017
@@ -20,7 +19,7 @@ class FullParser:
 
         # Setting information into class variable
         self.eng = enchant.Dict("en_US")  # English dictionary to compare
-        self.mechs = enchant.request_pwl_dict("mechanisms.txt")
+        self.mechs = enchant.request_pwl_dict("dict/mechanisms.txt")
         self.company_name = _company_name
         data = r.text
         self.__feedback_link_info = self.find_pdf(data, url)
@@ -42,14 +41,24 @@ class FullParser:
         (self.__final_drug_data_all, self.__final_drug_data_high, self.__final_drug_data_low) = self.total_web_page_parse(second_filter, final_list)
 
         # Getting analytics
-        self.ultimate_analytics(second_filter[1], final_list)
-        self.high_precision_filter(final_list, second_filter[1])
+        proceed = True
+        try:
+            self.ultimate_analytics(second_filter[1], final_list)
+            self.high_precision_filter(final_list, second_filter[1])
+        except IndexError:
+            self.__drug_data_scrape_rate = -1
+            self.__drug_mech_scrape_rate = -1
+            proceed = False
+
 
         # Saving drug phase scrape rate
-        self.__drug_data_scrape_rate = (((1-(self.PhasesRight/self.TotalEntries))*100))
-
-        # Saving drug mechanism scrape rate
-        self.__drug_mech_scrape_rate = (((1-(self.InfoFilled/self.TotalEntries))*100))
+        if proceed:
+            try:
+                self.__drug_data_scrape_rate = (((1-(self.PhasesRight/self.TotalEntries))*100))
+            except ZeroDivisionError:
+                self.__drug_data_scrape_rate = 0
+            # Saving drug mechanism scrape rate
+            self.__drug_mech_scrape_rate = (((1-(self.InfoFilled/self.TotalEntries))*100))
 
     """ PRE PROCESSERS """
 
@@ -300,7 +309,7 @@ class FullParser:
         :return: list
         """
         return_list = []
-        pwl = enchant.request_pwl_dict("mechanisms.txt")
+        pwl = enchant.request_pwl_dict("dict/mechanisms.txt")
         start = 0
         if index_number >= 11:
                 start = index_number - 11
@@ -329,7 +338,7 @@ class FullParser:
     # FLAGGED FOR BETTER VERSION (ONLY USED ONCE)
     def block_breaker(self, drug_website, current_entry):
         return_list = []
-        pwl = enchant.request_pwl_dict("medical.txt")
+        pwl = enchant.request_pwl_dict("dict/medical.txt")
 
         total_checks = self.indices(drug_website, current_entry )
 
@@ -356,7 +365,7 @@ class FullParser:
         :return: list
         """
         return_list = []
-        pwl = enchant.request_pwl_dict("medical.txt")
+        pwl = enchant.request_pwl_dict("dict/medical.txt")
         start = 0
 
         if index_number >= 11:
@@ -384,8 +393,11 @@ class FullParser:
         :param index_number: int
         :return: list
         """
-        return_list = []
-        pwl = enchant.request_pwl_dict("medical.txt")
+        start_side=0
+        end_side=0
+        return_listS = []
+        return_listE = []
+        pwl = enchant.request_pwl_dict("dict/medical.txt")
         start = 0
 
         if index_number >= 11:
@@ -401,18 +413,39 @@ class FullParser:
         for x in range(index_number, end):
             if self.checking_official(drug_website[x+1]) == 'null':
                 if pwl.check(drug_website[x]):
-                    return_list.append(drug_website[x])
+                    return_listS.append(drug_website[x])
+                    start_side=start_side+1
             else:
                 break
 
         for x in range(1, 10):
             if self.checking_official(drug_website[index_number-x]) == 'null':
                 if pwl.check(drug_website[index_number-x]):
-                    return_list.append(drug_website[index_number-x])
+                    return_listE.append(drug_website[index_number-x])
+                    end_side=end_side+1
+
             else:
                 break
+        if end_side>start_side and return_listE!=[] :
+            return return_listE
+        elif start_side> end_side and return_listS!=[] :
+            return return_listS
+        elif end_side==start_side and start_side>9:
+            temp_variable=len(start_side)
+            for x in range(0, temp_variable):
+                return_listE.append(return_listS[x])
+            return return_listE
+        elif end_side==start_side:
+             initial=len(return_listE)
+             later=len(return_listS)
+             if initial>=later:
+                 return return_listE
+             else:
+                 return return_listS
 
-        return return_list
+
+
+
 
     def phase_diagnostic(self, drugWebsite, current_entry, indexNumber):
         bob=[]
@@ -471,15 +504,15 @@ class FullParser:
                      elif 'II' in futureEntry:
                          return 2
                      if 'I' in currentEntry:
-                         return '1'
+                         return 1
                      elif 'I' in futureEntry:
-                         return '1'
+                         return 1
                      elif 'P1' in currentEntry:
-                         return '1'
+                         return 1
                      elif 'P2' in currentEntry:
-                         return '2'
+                         return 2
                      elif 'P3' in currentEntry:
-                         return '3'
+                         return 3
 
                      else :
                          return False
@@ -495,7 +528,7 @@ class FullParser:
         :return: list
         """
         return_list = []
-        pwl = enchant.request_pwl_dict("medical.txt")
+        pwl = enchant.request_pwl_dict("dict/medical.txt")
         start = 0
 
         if index_number >= 2:
@@ -718,15 +751,69 @@ class FullParser:
             if elem not in new_k:
                 new_k.append(elem)
         bobby = new_k
-        #bobby=self.fixingContent(bobby,current_entry)
 
+        #if bobby!=[]:
+        bobby=self.removeExcess(bobby,current_entry)
+       # print(bobby)
 
         if bobby == []:
             prelim_addi = self.high_precision_filter(drug_website, current_entry)
             bobby.append(prelim_addi)
 
         return bobby
+    def removeExcess(self,current_list, current_entry):
+        totalsize=len(current_list)
+        action=[]
+        mechi=[]
+        finalOutput=[]
+        finalOutput1=[]
+        finalOutput2=[]
+        finalOutput3=[]
+       # print(current_entry)
+        for x in range (0,totalsize):
+            entry_init=current_list[x]
+            #print(entry_init[1])
+            if current_entry!=entry_init[1] :
 
+                finalOutput.append(current_list[x])
+            elif entry_init[3]==1:
+                finalOutput1.append(entry_init)
+            elif entry_init[3]==2:
+                finalOutput2.append(entry_init)
+            elif entry_init[3]==3:
+                finalOutput3.append(entry_init)
+            else:
+                mechi=mechi
+           #     finalOutput.append(current_list[x])
+
+        finalOutput1=self.reduce_individual(current_entry,finalOutput1)
+        finalOutput2=self.reduce_individual(current_entry,finalOutput2)
+        finalOutput3=self.reduce_individual(current_entry,finalOutput3)
+        if  finalOutput1!=[]:
+            finalOutput.append(finalOutput1)
+        if  finalOutput2!=[]:
+            finalOutput.append(finalOutput2)
+        if  finalOutput3!=[]:
+            finalOutput.append(finalOutput3)
+        return finalOutput
+    def reduce_individual(self,current_entry, list_values ):
+        sizing=len(list_values)
+        mechi=[]
+        treatmethod=[]
+        new_entry=[]
+        if sizing==0:
+            return []
+        else:
+            for x in range (0,sizing):
+                topentry=list_values[x]
+                mechi=mechi+topentry[2]
+                mechi=list(set(mechi))
+                treatmethod=treatmethod+topentry[4]
+                treatmethod=list(set(treatmethod))
+            topentry=list_values[0]
+
+            new_entry=[topentry[0],topentry[1],mechi,topentry[3],treatmethod]
+        return new_entry
     def full_reference(self, current_entry, list_values):
         """
         :param current_entry: string
@@ -960,6 +1047,7 @@ class FullParser:
                 temp2 = drug_website[index_number+2]
                 temp3 = '+'
                 intermediate = temp + temp3 + temp2
+
                 return intermediate
             else:
                 return drug_website[index_number]
@@ -970,6 +1058,7 @@ class FullParser:
                 temp2 = drug_website[index_number+2]
                 temp3 = '+'
                 intermediate = temp + temp3 + temp2
+
                 return intermediate
         else:
             return current_entry
@@ -982,9 +1071,9 @@ class FullParser:
         phaseUContent=[]
         PhaseMContent=[]
         totalSize=len(drug_list)
-        if totalSize<=1:
+        if totalSize==0:
 
-            return drug_list
+            return []
         else:
             for q in range(0, len(drug_list)):
                 currentEntry=drug_list[q]
@@ -1008,7 +1097,10 @@ class FullParser:
         if len(phase3Content)>0:
             PhaseMContent=self.app_update(phase3Content,PhaseMContent,3)
         return PhaseMContent
-    def app_update(phase1Content,PhaseMContent,phase_int):
+
+
+    def app_update(self,phase1Content,PhaseMContent,phase_int):
+
 
 
             entry1Mech=[]
@@ -1029,6 +1121,7 @@ class FullParser:
                 entry1Final=[entry1Final[0],entry1Final[1],sub_a,entry1Final[3],sub_b ]
 
             PhaseM=PhaseMContent.append(entry1Final)
+            #print PhaseM
             return PhaseM
 
     def fixingContents(self, drug_list,commonName):
@@ -1283,8 +1376,10 @@ class FullParser:
 # Class method to run only when called from terminal
 def main():
     #url='http://www.gsk.com/en-gb/research/what-we-are-working-on/product-pipeline/'
-    url = 'http://www.pfizer.com/research/science_and_technology/product_pipeline'
-    company_name = "pfizer"
+
+    url = 'https://www.lilly.com/pipeline/'
+    company_name = "biogen"
+
     full_parser = FullParser(company_name, url)
 
     df = pd.DataFrame(full_parser.FinalList)

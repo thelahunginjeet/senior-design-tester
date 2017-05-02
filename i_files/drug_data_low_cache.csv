@@ -1,0 +1,65 @@
+	Company Name	Product Name	Treatment Area	Phase	Mechanism of Action	Flags	Pipeline/PDF Url
+0	ionis	ionis	['!']	['!']	['!']	['No data found on website!']	http://www.ionispharma.com/pipeline/
+1	bayer	bayer	['!']	['!']	['!']	['No data found on website!']	http://pharma.bayer.com/en/innovation-partnering/development-pipeline/
+2	biogen	BACE1	"[""Alzheimer's"", 'disease']"	False	[]	[]	https://www.biogen.com/en_us/research-pipeline/biogen-pipeline.html
+3	biogen	natalizumab	[]	2	['humanized antibody']	[]	https://www.biogen.com/en_us/research-pipeline/biogen-pipeline.html
+4	biogen	obinutuzumab.	['disease']	False	[]	[]	https://www.biogen.com/en_us/research-pipeline/biogen-pipeline.html
+5	biogen	daclizumab	[]	False	[]	[]	https://www.biogen.com/en_us/research-pipeline/biogen-pipeline.html
+6	biogen	rituximab	[]	False	[]	[]	https://www.biogen.com/en_us/research-pipeline/biogen-pipeline.html
+7	biogen	Infliximab	[]	False	[]	[]	https://www.biogen.com/en_us/research-pipeline/biogen-pipeline.html
+8	biogen	fampridine	[]	False	[]	[]	https://www.biogen.com/en_us/research-pipeline/biogen-pipeline.html
+9	roche	Angiopoietin-2	[]	3	['antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+10	roche	Emactuzumab	[]	1	['monoclonal', 'antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+11	roche	Nav1.7	['peripheral']	False	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+12	roche	ABT-199	[]	3	['Bcl-2', 'inhibitor']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+13	roche	Anti-OX40	[]	1	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+14	roche	VISION4	[]	2	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+15	roche	PCO371	[]	1	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+16	roche	ranibizumab	[]	2	['humanized antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+17	roche	ranibizumab	[]	3	['humanized antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+18	roche	RG6107	[]	1	['inhibitor', 'monoclonal']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+19	roche	ERY974	[]	1	['antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+20	roche	GDC-0199	[]	3	['Bcl-2', 'inhibitor']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+21	roche	Ranibizumab	[]	2	['monoclonal', 'antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+22	roche	NLG919	[]	False	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+23	roche	ACE910	[]	3	['antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+24	roche	MDM2-p53	[]	3	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+25	roche	RG105	[]	3	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+26	roche	RG3645	[]	3	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+27	roche	rituximab	[]	3	['monoclonal', 'antibody']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+28	roche	FPI-1459	[]	1	['inhibitor']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+29	roche	MOXR0916	[]	False	['monoclonal']	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+30	roche	T-DM1	[]	3	[]	[]	http://www.roche.com/research_and_development/who_we_are_how_we_work/pipeline.htm
+31	astrazeneca	DPP-4	['diabetes', 'diabetes']	False	[]	[]	https://www.astrazeneca.com/our-science/pipeline.html
+32	astrazeneca	volitinib	[]	2	['tyrosine-kinase inhibitor']	[]	https://www.astrazeneca.com/our-science/pipeline.html
+33	astrazeneca	durvalumab+AZD5069	[]	2	[]	[]	https://www.astrazeneca.com/our-science/pipeline.html
+34	astrazeneca	durvalumab+AZD9150	[]	2	[]	[]	https://www.astrazeneca.com/our-science/pipeline.html
+35	astrazeneca	durvalumab+tremelimumab	[]	2	[]	[]	https://www.astrazeneca.com/our-science/pipeline.html
+36	astrazeneca	durvalumab+tremelimumab	[]	3	[]	[]	https://www.astrazeneca.com/our-science/pipeline.html
+37	astrazeneca	AZD9412	[]	False	[]	[]	https://www.astrazeneca.com/our-science/pipeline.html
+38	astrazeneca	CTLA-4	[]	3	['PD-L1', 'mAb']	[]	https://www.astrazeneca.com/our-science/pipeline.html
+39	astrazeneca	AZD5718	[]	1	['FLAP']	[]	https://www.astrazeneca.com/our-science/pipeline.html
+40	astrazeneca	MEDI0382	[]	2	[]	[]	https://www.astrazeneca.com/our-science/pipeline.html
+41	astrazeneca	trametinib	[]	1	['inhibitor', 'tyrosine-kinase inhibitor', 'MEK', 'PD-L1']	[]	https://www.astrazeneca.com/our-science/pipeline.html
+42	astrazeneca	savolitinib	[]	2	[]	[]	https://www.astrazeneca.com/our-science/pipeline.html
+43	astrazeneca	AURA3	[]	False	[]	[]	https://www.astrazeneca.com/our-science/pipeline.html
+44	astrazeneca	SGLT2	['diabetes', 'diabetes']	False	[]	[]	https://www.astrazeneca.com/our-science/pipeline.html
+45	astrazeneca	selumetinib	[]	2	['tyrosine-kinase inhibitor']	[]	https://www.astrazeneca.com/our-science/pipeline.html
+46	astrazeneca	investigationprostate	[]	Unknown	False	[]	https://www.astrazeneca.com/our-science/pipeline.html
+47	astrazeneca	CXCR2	[]	2	['PD-L1', 'mAb']	[]	https://www.astrazeneca.com/our-science/pipeline.html
+48	astrazeneca	MEDI7734	[]	1	[]	[]	https://www.astrazeneca.com/our-science/pipeline.html
+49	astrazeneca	AZD9150	[]	1	[]	[]	https://www.astrazeneca.com/our-science/pipeline.html
+50	astrazeneca	AZD9150	[]	2	['PD-L1', 'mAb']	[]	https://www.astrazeneca.com/our-science/pipeline.html
+51	astrazeneca	AZD5069	[]	2	[]	[]	https://www.astrazeneca.com/our-science/pipeline.html
+52	astrazeneca	acalabrutinib	[]	3	['inhibitor', 'tyrosine-kinase inhibitor']	[]	https://www.astrazeneca.com/our-science/pipeline.html
+53	astrazeneca	moxetumomab	[]	3	[]	[]	https://www.astrazeneca.com/our-science/pipeline.html
+54	astrazeneca	linaclotide	['bowel', 'syndrome', 'constipation', 'bowel', 'syndrome']	False	[]	[]	https://www.astrazeneca.com/our-science/pipeline.html
+55	astrazeneca	tremelimumab	[]	3	['PD-L1', 'mAb']	[]	https://www.astrazeneca.com/our-science/pipeline.html
+56	astrazeneca	MEDI8111	[]	1	[]	[]	https://www.astrazeneca.com/our-science/pipeline.html
+57	astrazeneca	AZD3241	['atrophy', 'atrophy']	False	[]	[]	https://www.astrazeneca.com/our-science/pipeline.html
+58	astrazeneca	STAT3	[]	2	['inhibitor', 'mAb', 'PD-L1']	[]	https://www.astrazeneca.com/our-science/pipeline.html
+59	astrazeneca	AZD7594	[]	1	[]	[]	https://www.astrazeneca.com/our-science/pipeline.html
+60	astrazeneca	AZD7594	[]	2	[]	[]	https://www.astrazeneca.com/our-science/pipeline.html
+61	astrazeneca	AZD8601	[]	1	[]	[]	https://www.astrazeneca.com/our-science/pipeline.html
+62	astrazeneca	P2Y12	['stroke', 'diabetes']	False	['antagonist']	[]	https://www.astrazeneca.com/our-science/pipeline.html
+63	astrazeneca	MEDI4166	[]	2	[]	[]	https://www.astrazeneca.com/our-science/pipeline.html

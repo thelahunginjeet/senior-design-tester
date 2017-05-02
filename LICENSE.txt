@@ -1,0 +1,18 @@
+Pharmacuetical Web Scraping Software System
+Copyright (c) 2017 Metrum Research Group
+
+This program fully belongs to Metrum Research Group (MRG). MRG holds all the rights to distribute and/or modify this to their liking. 
+
+This program was created as part of a Biomedical Engineering Senior Design Project at the University of Connecticut. The authors working in conjunction with Dr. Kevin Brown (advisor) and Dr. Marc Gastonguay (client) developed this software to scrape public drug information and create a single uniform database to search drugs. 
+
+Authors:
+Siddhardha Moparthi
+Fatir Qureshi
+Priyal Bhargava
+Andrew Hederman
+
+Advisor:
+Dr. Kevin Brown
+
+Client:
+Dr. Marc Gastonguay
